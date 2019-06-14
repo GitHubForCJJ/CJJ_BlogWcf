@@ -1,0 +1,1824 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FastDev.DBFactory</name>
+    </assembly>
+    <members>
+        <member name="T:FastDev.DBFactory.DBOperator">
+            <summary>
+            数据库操作基类
+            文件功能描述：模块类，SqlServer数据库操作类，在这里实现了该数据库的相关特性
+            依赖说明：无依赖，不要直接实例化，通过DBHelper来调用具体的实例。
+            异常处理：捕获但不处理异常。
+            </summary>
+        </member>
+        <member name="F:FastDev.DBFactory.DBOperator.CommandTimeout">
+            <summary>
+            命令执行时长（秒，默认为30）
+            </summary>
+        </member>
+        <member name="F:FastDev.DBFactory.DBOperator.comm">
+            <summary>
+            SQL命令
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.Open">
+            <summary>
+            打开数据库连接
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.Close">
+            <summary>
+            关闭数据库连接
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.BeginTrans">
+            <summary>
+            开始事务
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.CommitTrans">
+            <summary>
+            执行事务
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.RollbackTrans">
+            <summary>
+            事务回滚
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.CreateCommand(System.String)">
+            <summary>
+            创建一个命令
+            </summary>
+            <param name="command">SQL语句或命令</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.CreateCommand(System.String,System.Object[])">
+            <summary>
+            构造包含参数的SQL语句或命令
+            </summary>
+            <param name="command">SQL语句或命令</param>
+            <param name="value">参数值列表</param>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.GetParamsList(System.Object[])">
+            <summary>
+            生成参数列表
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.ExecuteNonQuery(System.String)">
+            <summary>
+            执行SQL语句，返回受影响记录条数
+            </summary>
+            <param name="sql">SQL语句</param>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.ExecuteDataSet(System.String)">
+            <summary>
+            A2返回一个DataSet
+            </summary>
+            <param name="sql">SQL语句或命令</param>
+            <returns>DataSet</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.ExecuteScalar(System.String)">
+            <summary>
+            A3执行一条SQL语句，返回一个object
+            </summary>
+            <param name="sql">SQL语句或命令</param>
+            <returns>object</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.ExecuteReader(System.String)">
+            <summary>
+            执行一条SQL语句，返回一个DbDataReader
+            </summary>
+            <param name="sql">SQL语句或命令</param>
+            <returns>DbDataReader</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.ExecuteDataTable(System.String)">
+            <summary>
+            执行SQL语句，返回DataTable
+            </summary>
+            <param name="sql">SQL语句（为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.ExecuteNonQueryParams(System.String,System.Object[])">
+            <summary>
+            B1执行一个语句不返回任何值
+            </summary>
+            <param name="sql">SQL语句或命令</param>
+            <param name="value">参数值列表</param>
+            <returns>受影响行数</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.ExecuteDataSetParams(System.String,System.Object[])">
+            <summary>
+            B2返回一个DataSet
+            </summary>
+            <param name="sql">SQL语句或命令</param>
+            <param name="value">参数值列表</param>
+            <returns>DataSet</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.ExecuteScalarParams(System.String,System.Object[])">
+            <summary>
+            B3执行一条SQL语句，返回一个object
+            </summary>
+            <param name="sql">SQL语句或命令</param>
+            <param name="value">参数值列表</param>
+            <returns>object</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.ExecuteReaderParams(System.String,System.Object[])">
+            <summary>
+            B4执行一条SQL语句，返回一个DbDataReader
+            </summary>
+            <param name="sql">SQL语句或命令</param>
+            <param name="value">参数值列表</param>
+            <returns>DbDataReader</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.ExecuteDataTableParams(System.String,System.Object[])">
+            <summary>
+            执行SQL语句，返回DataTable
+            </summary>
+            <param name="sql">SQL语句或命令（为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <param name="value">参数值列表</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.ExecuteDataSetPage(System.String,System.Int32,System.Int32)">
+            <summary>
+            分页查询，返回DataSet
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.ExecuteDataSetPageParams(System.String,System.Int32,System.Int32,System.Object[])">
+            <summary>
+            分页查询，返回DataSet
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <param name="value">参数列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.ExecuteDataSetPageByOrderByParams(System.String,System.Int32,System.Int32,System.String,System.Object[])">
+            <summary>
+            分页查询，返回DataSet
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <param name="orderby">order排序字段用于分页排序 兼容MSSQL</param>
+            <param name="value">参数列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.ExecuteDataTablePage(System.String,System.Int32,System.Int32)">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.ExecuteDataTablePageParams(System.String,System.Int32,System.Int32,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <param name="value">参数列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.ExecuteDataTablePageParams(System.String,System.Int32,System.Int32,System.String,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <param name="orderby">分页排序字段</param>
+            <param name="value">参数列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.ExecuteDataTablePageParams(System.String,System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.String,System.Object[])">
+            <summary>
+            分页查询，返回DataTable，该方法已经过时（为了照顾SQLServer2005以下版本）
+            </summary>
+            <param name="tableName">表名</param>
+            <param name="fields">要返回的字段列表，逗号分隔</param>
+            <param name="keyField">主键字段名，如果是Oracle或Mysql可以为空（""）</param>
+            <param name="groupBy">GROUP BY子句,不包含GROUP BY关键字</param>
+            <param name="orderBy">排序字段，可以为空，多个字段需用逗号分隔</param>
+            <param name="pageSize">页面大小</param>
+            <param name="pageIndex">当前页（页号从1开始）</param>
+            <param name="condition">筛选条件，可以为空，不带"WHERE"关键字</param>
+            <param name="value">参数列表</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.ExecuteDataTablePageParamsWithLimit(System.String,System.Int32,System.Int32,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="limit">数据条数</param>
+            <param name="offSet">跳过的条数</param>
+            <param name="value">参数列表</param>
+            <returns>DataTable.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.GetFieldsList(System.String)">
+            <summary>
+            根据表名，获取字段列表
+            </summary>
+            <param name="tableName">表名</param>
+            <returns>表字段列表</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.ShowParamsList(System.Collections.Generic.List{System.Object})">
+            <summary>
+            显示参数列表
+            </summary>
+            <param name="paramsList"></param>
+            <returns></returns>
+        </member>
+        <member name="P:FastDev.DBFactory.DBOperator.DataBaseName">
+            <summary>
+            The data base name
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.DropTable(System.String)">
+            <summary>
+            删除数据库表
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns>System.String.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.CreateTable(FastDev.DBFactory.TableStructure)">
+            <summary>
+            创建数据库表
+            </summary>
+            <param name="tableStr">The table string.</param>
+            <returns>System.String.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.GetColType(System.String,System.Int32)">
+            <summary>
+            Gets the type of the col.
+            </summary>
+            <param name="TypeName">Name of the type.</param>
+            <param name="Length">The length.</param>
+            <returns>System.String.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.IsExistTable(System.String)">
+            <summary>
+            判断表是否存在
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns>Result.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.GetTableNameByTime(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            根据时间获取表名 不包含视图
+            </summary>
+            <param name="tablePrefix">表名前缀</param>
+            <param name="timeBegin">开始时间</param>
+            <param name="timeEnd">结束时间</param>
+            <returns>List&lt;System.String&gt;.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.GetTableView(System.String)">
+            <summary>
+            获取当前数据库下的表和视图
+            </summary>
+            <param name="dbName">数据库名称</param>
+            <returns>Dictionary&lt;System.String, System.String&gt;.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBOperator.GetColumeByTable(System.String)">
+            <summary>
+            根据表名查询表结构
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns>DataTable.</returns>
+        </member>
+        <member name="T:FastDev.DBFactory.Model.FieldType">
+            <summary>
+            FieldType
+            </summary>
+        </member>
+        <member name="F:FastDev.DBFactory.Model.FieldType.整形Int">
+            <summary>
+            The 整形 int
+            </summary>
+        </member>
+        <member name="F:FastDev.DBFactory.Model.FieldType.字符串">
+            <summary>
+            The 字符串
+            </summary>
+        </member>
+        <member name="F:FastDev.DBFactory.Model.FieldType.时间">
+            <summary>
+            The 时间
+            </summary>
+        </member>
+        <member name="T:FastDev.DBFactory.TableColumn">
+            <summary>
+            表列
+            </summary>	
+        </member>
+        <member name="P:FastDev.DBFactory.TableColumn.ColName">
+            <summary>
+            列名
+            </summary>
+            <value>The name of the col.</value>
+        </member>
+        <member name="P:FastDev.DBFactory.TableColumn.FieldType">
+            <summary>
+            数据类型
+            </summary>
+            <value>The name of the col.</value>
+        </member>
+        <member name="P:FastDev.DBFactory.TableColumn.DataLength">
+            <summary>
+            长度
+            </summary>
+            <value>The name of the col.</value>
+        </member>
+        <member name="P:FastDev.DBFactory.TableColumn.DefaultValue">
+            <summary>
+            字段默认值
+            </summary>
+            <value>The name of the col.</value>
+        </member>
+        <member name="P:FastDev.DBFactory.TableColumn.IsPriKey">
+            <summary>
+            是否为表主键 true 主键 false非主键
+            </summary>
+            <value>The name of the col.</value>
+        </member>
+        <member name="P:FastDev.DBFactory.TableColumn.CanNull">
+            <summary>
+            是否为非空类型 true 可空 false非空
+            </summary>
+            <value>The name of the col.</value>
+        </member>
+        <member name="P:FastDev.DBFactory.TableColumn.Unsigned">
+            <summary>
+            针对int 是否为无符号 true无符号 false有符号
+            </summary>
+            <value>The name of the col.</value>
+        </member>
+        <member name="P:FastDev.DBFactory.TableColumn.IsAutoAdd">
+            <summary>
+            是否自增ID 针对Int 有效
+            </summary>
+            <value>The name of the col.</value>
+        </member>
+        <member name="P:FastDev.DBFactory.TableColumn.ColRemark">
+            <summary>
+            字段描述
+            </summary>
+            <value>The name of the col.</value>
+        </member>
+        <member name="T:FastDev.DBFactory.TableStructure">
+            <summary>
+            数据库表结构模型
+            </summary>	
+        </member>
+        <member name="P:FastDev.DBFactory.TableStructure.TableName">
+            <summary>
+            表名
+            </summary>
+            <value>The name of the table.</value>
+        </member>
+        <member name="P:FastDev.DBFactory.TableStructure.TableRemark">
+            <summary>
+            表描述
+            </summary>
+            <value>The name of the table.</value>
+        </member>
+        <member name="P:FastDev.DBFactory.TableStructure.TableColumns">
+            <summary>
+            表列
+            </summary>
+            <value>The table columns.</value>
+        </member>
+        <member name="T:FastDev.DBFactory.DBHelper">
+            <summary>
+            数据库操作类，支持多数据库
+            文件功能描述：公共类，数据库操作类，通过本类可以快速方便地进行常用数据库操作，而不必关心数据库特性
+            依赖说明：通过Config获取数据库配置信息，配置文件中需要配置：DataBaseType和ConnString两个配置项
+            异常处理：捕获但不会处理异常。
+            </summary>
+            <seealso cref="T:System.IDisposable" />
+        </member>
+        <member name="F:FastDev.DBFactory.DBHelper._disposed">
+            <summary>
+            释放标记
+            </summary>
+        </member>
+        <member name="F:FastDev.DBFactory.DBHelper.ConfigKeyForDataBaseType">
+            <summary>
+            配置文件中数据库类型定义的键名
+            </summary>
+        </member>
+        <member name="F:FastDev.DBFactory.DBHelper.WriteConn">
+            <summary>
+            常规数据库实例 配置文件中数据库连接字符串的键名
+            </summary>
+        </member>
+        <member name="F:FastDev.DBFactory.DBHelper.ReadConn">
+            <summary>
+            只读数据库实例 配置文件中数据库连接字符串的键名
+            </summary>
+        </member>
+        <member name="P:FastDev.DBFactory.DBHelper.DbType">
+            <summary>
+            数据库类型
+            </summary>
+        </member>
+        <member name="P:FastDev.DBFactory.DBHelper.ConnStr">
+            <summary>
+            数据库连接字符串
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.#ctor">
+            <summary>
+            构造函数,数据库类型及连接字符串会读取默认配置项DataBaseType、ConnString
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.#ctor(FastDev.DBFactory.DBOperator)">
+            <summary>
+            构造函数,数据库类型及连接字符串会读取默认配置项DataBaseType、ConnString
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FastDev.DBFactory.DBHelper" /> class.
+            </summary>
+            <param name="ReadOnly">if set to <c>true</c> [read only].</param>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.#ctor(System.Boolean,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:FastDev.DBFactory.DBHelper" /> class.
+            </summary>
+            <param name="ReadOnly">if set to <c>true</c> [read only].</param>
+            <param name="dbType">Type of the database.</param>
+            <param name="connStr">The connection string.</param>
+            <exception cref="T:System.Exception">数据库连接未配置,无法正常连接数据库,请在配置文件appSettings节点下配置ConnString,可扩展配置ConnStringRead(只读实例)</exception>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.#ctor(System.String,System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="dbType">数据库类型（MYSQL/ORACLE/SQLSERVER/POSTGRESQL）</param>
+            <param name="connStr">连接字符串</param>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="connStr">连接字符串</param>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.Finalize">
+            <summary>
+            析构函数 为了防止忘记显式的调用Dispose方法
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.Dispose(System.Boolean)">
+            <summary>
+            非密封类可重写的Dispose方法，方便子类继承时可重写
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.Dispose">
+            <summary>
+            显示关闭连接
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.Close">
+            <summary>
+            关闭连接
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.GetDBOperator(System.String,System.String)">
+            <summary>
+            创建数据库工厂实例
+            </summary>
+            <param name="dbType">数据库类型</param>
+            <param name="connStr">连接字符串</param>
+            <returns>数据库操作实例</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.BeginTrans">
+            <summary>
+            开始事务操作
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.CommitTrans">
+            <summary>
+            提交事务
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.RollbackTrans">
+            <summary>
+            事务回滚
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteNonQuery(System.String)">
+            <summary>
+            执行SQL语句，返回受影响记录条数
+            </summary>
+            <param name="sql">SQL语句</param>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteNonQuery(System.String,System.Object[])">
+            <summary>
+            执行SQL语句，返回受影响记录条数
+            </summary>
+            <param name="sql">SQL语句或命令（参数用问号?占位。为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <param name="value">参数值列表</param>
+            <returns>受影响记录条数</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteNonQueryParams(System.String,System.Object[])">
+            <summary>
+            执行SQL语句，返回受影响记录条数
+            </summary>
+            <param name="sql">SQL语句或命令（参数用问号?占位。为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <param name="value">参数值列表</param>
+            <returns>受影响记录条数</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteScalar(System.String)">
+            <summary>
+            执行一条SQL语句，返回第一行第一列object
+            </summary>
+            <param name="sql">SQL语句（为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <returns>object</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteScalarInt(System.String)">
+            <summary>
+            执行一条SQL语句，返回第一行第一列int
+            </summary>
+            <param name="sql">SQL语句（为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <returns>int</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteScalarString(System.String)">
+            <summary>
+            执行一条SQL语句，返回第一行第一列string
+            </summary>
+            <param name="sql">SQL语句（为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <returns>string</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteScalar(System.String,System.Object[])">
+            <summary>
+            执行一条SQL语句，返回一个object
+            </summary>
+            <param name="sql">SQL语句或命令（为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <param name="value">参数值列表</param>
+            <returns>object</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteScalarInt(System.String,System.Object[])">
+            <summary>
+            执行一条SQL语句，返回一个int
+            </summary>
+            <param name="sql">SQL语句或命令（为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <param name="value">参数值列表</param>
+            <returns>int</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteScalarString(System.String,System.Object[])">
+            <summary>
+            执行一条SQL语句，返回一个string
+            </summary>
+            <param name="sql">SQL语句或命令（为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <param name="value">参数值列表</param>
+            <returns>string</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteScalarParams(System.String,System.Object[])">
+            <summary>
+            执行一条SQL语句，返回一个object
+            </summary>
+            <param name="sql">SQL语句或命令（为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <param name="value">参数值列表</param>
+            <returns>object</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteScalarIntParams(System.String,System.Object[])">
+            <summary>
+            执行一条SQL语句，返回一个int
+            </summary>
+            <param name="sql">SQL语句或命令（为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <param name="value">参数值列表</param>
+            <returns>int</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteScalarStringParams(System.String,System.Object[])">
+            <summary>
+            执行一条SQL语句，返回一个string
+            </summary>
+            <param name="sql">SQL语句或命令（为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <param name="value">参数值列表</param>
+            <returns>string</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteDataRow(System.String)">
+            <summary>
+            执行SQL语句，返回DataRow
+            </summary>
+            <param name="sql">SQL语句（为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <returns>DataRow</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteDataRow(System.String,System.Object[])">
+            <summary>
+            执行SQL语句，返回DataRow
+            </summary>
+            <param name="sql">SQL语句或命令（为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <param name="value">参数值列表</param>
+            <returns>DataRow</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteDataRowParams(System.String,System.Object[])">
+            <summary>
+            执行SQL语句，返回DataRow
+            </summary>
+            <param name="sql">SQL语句或命令（为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <param name="value">参数值列表</param>
+            <returns>DataRow</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteDataTable(System.String,System.Object[])">
+            <summary>
+            执行SQL语句，返回DataTable
+            </summary>
+            <param name="sql">SQL语句（为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <param name="value">The value.</param>
+            <returns>DataTable</returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteDataTableParams(System.String,System.Object[])">
+            <summary>
+            执行SQL语句，返回DataTable
+            </summary>
+            <param name="sql">SQL语句或命令（为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <param name="value">参数值列表</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteDataSet(System.String)">
+            <summary>
+            执行SQL语句，返回DataSet
+            </summary>
+            <param name="sql">SQL语句（为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteDataSet(System.String,System.Object[])">
+            <summary>
+            执行SQL语句，返回DataSet
+            </summary>
+            <param name="sql">SQL语句或命令（为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <param name="value">参数值列表</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteDataSetParams(System.String,System.Object[])">
+            <summary>
+            执行SQL语句，返回DataSet
+            </summary>
+            <param name="sql">SQL语句或命令（为了Oracle上能够使用，表的别名前不要加AS）</param>
+            <param name="value">参数值列表</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteDataSetPage(System.String,System.Int32,System.Int32)">
+            <summary>
+            分页查询，返回DataSet
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteDataSetPage(System.String,System.Int32,System.Int32,System.Object[])">
+            <summary>
+            分页查询，返回DataSet
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <param name="value">参数列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteDataSetPageByOrderByParams(System.String,System.Int32,System.Int32,System.String,System.Object[])">
+            <summary>
+            分页查询，返回DataSet
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <param name="orderby">order排序字段用于分页排序 兼容MSSQL</param>
+            <param name="value">参数列表</param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteDataSetPageParams(System.String,System.Int32,System.Int32,System.Object[])">
+            <summary>
+            分页查询，返回DataSet
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <param name="value">参数列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteDataTablePage(System.String,System.Int32,System.Int32)">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteDataTablePage(System.String,System.Int32,System.Int32,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <param name="value">参数列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteDataTablePageParams(System.String,System.Int32,System.Int32,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <param name="value">参数列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteDataTablePageParamsWithLimit(System.String,System.Int32,System.Int32,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="limit">数据条数</param>
+            <param name="offSet">跳过的条数</param>
+            <param name="value">参数列表</param>
+            <returns>DataTable.</returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteDataTablePage(System.String,System.String,System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            分页查询，返回DataTable，该方法已经过时（为了照顾SQLServer2005以下版本）
+            </summary>
+            <param name="tableName">表名</param>
+            <param name="fields">要返回的字段列表，逗号分隔</param>
+            <param name="keyField">主键字段名，如果是Oracle或Mysql可以为空（""）</param>
+            <param name="orderBy">排序字段，可以为空，多个字段需用逗号分隔</param>
+            <param name="pageSize">页面大小</param>
+            <param name="pageIndex">当前页（页号从1开始）</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.ExecuteDataTablePageParams(System.String,System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.String,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="tableName">表名</param>
+            <param name="fields">要返回的字段列表，逗号分隔</param>
+            <param name="keyField">主键字段名，如果是Oracle或Mysql可以为空（""）</param>
+            <param name="groupBy">GROUP BY子句,不包含GROUP BY关键字</param>
+            <param name="orderBy">排序字段，可以为空，多个字段需用逗号分隔</param>
+            <param name="pageSize">页面大小</param>
+            <param name="pageIndex">当前页（页号从1开始）</param>
+            <param name="condition">筛选条件，可以为空，不带"WHERE"关键字</param>
+            <param name="value">参数列表</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.GetFieldsList(System.String)">
+            <summary>
+            根据表名，获取字段列表
+            </summary>
+            <param name="tableName">表名</param>
+            <returns>表字段列表</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.IsDuplicate(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            判断表某字段值是否重复
+            </summary>
+            <param name="tableName">表名</param>
+            <param name="fieldName">字段名</param>
+            <param name="value">字段值</param>
+            <param name="keyField">主键字段名</param>
+            <param name="keyValue">主键值</param>
+            <returns>bool</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.IsDuplicate(System.String,System.String,System.String,System.String)">
+            <summary>
+            判断表某字段是否重复
+            </summary>
+            <param name="tableName">表名</param>
+            <param name="fieldName">字段名</param>
+            <param name="oldValue">如果是修改，则为旧值；如果是添加，则为string.Empty</param>
+            <param name="newValue">新值</param>
+            <returns>bool</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.IsDuplicate(System.String,System.String,System.String,System.String,System.String[])">
+            <summary>
+            判断表某字段是否重复
+            </summary>
+            <param name="tableName">表名</param>
+            <param name="fieldName">字段名</param>
+            <param name="oldValue">如果是修改，则为旧值；如果是添加，则为string.Empty</param>
+            <param name="newValue">新值</param>
+            <param name="conditions">The conditions.</param>
+            <returns>bool</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.IsDuplicate(System.String,System.String)">
+            <summary>
+            判断表某字段是否重复
+            </summary>
+            <param name="tableName">表名</param>
+            <param name="condition">判断条件（不带关键词WHERE）</param>
+            <returns>bool</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.GetTableNameByTime(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            根据时间获取表名 不包含视图
+            </summary>
+            <param name="tablePrefix">表名前缀</param>
+            <param name="timeBegin">开始时间</param>
+            <param name="timeEnd">结束时间</param>
+            <returns>List&lt;System.String&gt;.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.DropTable(System.String)">
+            <summary>
+            创建数据库表
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns>Result.</returns>
+            <exception cref="T:System.Exception">创建表 + tableStr.TableName + 出错! + ex.Message</exception>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.CreateTable(FastDev.DBFactory.TableStructure)">
+            <summary>
+            创建数据库表
+            </summary>
+            <param name="tableStr">The table string.</param>
+            <returns>Result.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.IsExistTable(System.String)">
+            <summary>
+            判断表是否存在
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns><c>true</c> if [is exist table] [the specified table name]; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.GetTableView(System.String)">
+            <summary>
+            获取当前数据库下的表和视图
+            </summary>
+            <param name="dbName">Name of the database.</param>
+            <returns>Dictionary&lt;System.String, System.String&gt;.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.DBHelper.GetColumeByTable(System.String)">
+            <summary>
+            Gets the colume by table.
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns>DataTable.</returns>
+        </member>
+        <member name="T:FastDev.DBFactory.Providers.MySqlDapper">
+            <summary>
+            Mysql数据库实例
+            文件功能描述：模块类，SqlServer数据库操作类，在这里实现了该数据库的相关特性
+            依赖说明：无依赖，不要直接实例化，通过DBHelper来调用。
+            异常处理：捕获但不处理异常。
+            </summary>
+            <seealso cref="T:FastDev.DBFactory.DBOperator" />
+        </member>
+        <member name="F:FastDev.DBFactory.Providers.MySqlDapper._isInTransaction">
+            <summary>
+            当前是否在存储过程中
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="strConnection"></param>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.Open">
+            <summary>
+            打开数据库连接
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.Close">
+            <summary>
+            关闭数据库连接
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.BeginTrans">
+            <summary>
+            开始事务
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.CommitTrans">
+            <summary>
+            执行事务
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.RollbackTrans">
+            <summary>
+            事务回滚
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.CreateCommand(System.String)">
+            <summary>
+            创建一个命令
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.CreateCommand(System.String,System.Object[])">
+            <summary>
+            构造包含参数的SQL语句或命令
+            </summary>
+            <param name="command">SQL语句或命令</param>
+            <param name="value">参数值列表</param>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.ExecuteDataSet(System.String)">
+            <summary>
+            A2返回一个DataSet
+            </summary>
+            <param name="sql">SQL语句或命令</param>
+            <returns>DataSet</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.ExecuteDataSetParams(System.String,System.Object[])">
+            <summary>
+            B2返回一个DataSet
+            </summary>
+            <param name="sql">SQL语句或命令</param>
+            <param name="value">参数值列表</param>
+            <returns>DataSet</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.ExecuteDataSetPage(System.String,System.Int32,System.Int32)">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.ExecuteDataSetPageParams(System.String,System.Int32,System.Int32,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <param name="value">参数列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.ExecuteDataSetPageByOrderByParams(System.String,System.Int32,System.Int32,System.String,System.Object[])">
+            <summary>
+            分页查询，返回DataSet
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <param name="orderby">order排序字段用于分页排序 兼容MSSQL</param>
+            <param name="value">参数列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.ExecuteDataTablePageParams(System.String,System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.String,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="tableName">表名</param>
+            <param name="fields">要返回的字段列表，逗号分隔</param>
+            <param name="keyField">主键字段名，如果是Oracle或Mysql可以为空（""）</param>
+            <param name="groupBy">GROUP BY子句,不包含GROUP BY关键字</param>
+            <param name="orderBy">排序字段，可以为空，多个字段需用逗号分隔</param>
+            <param name="pageSize">页面大小</param>
+            <param name="pageIndex">当前页（页号从1开始）</param>
+            <param name="condition">筛选条件，可以为空，不带"WHERE"关键字</param>
+            <param name="value">参数列表</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.ExecuteDataTablePageParamsWithLimit(System.String,System.Int32,System.Int32,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="limit">数据条数</param>
+            <param name="offSet">跳过的条数</param>
+            <param name="value">参数列表</param>
+            <returns>DataTable.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.GetFieldsList(System.String)">
+            <summary>
+            根据表名，获取字段列表
+            </summary>
+            <param name="tableName">表名</param>
+            <returns>表字段列表</returns>
+        </member>
+        <member name="P:FastDev.DBFactory.Providers.MySqlDapper.DataBaseName">
+            <summary>
+            Gets the name of the database.
+            </summary>
+            <value>The name of the database.</value>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.DropTable(System.String)">
+            <summary>
+            删除数据库表
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns>System.String.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.CreateTable(FastDev.DBFactory.TableStructure)">
+            <summary>
+            创建数据库表
+            </summary>
+            <param name="tableStr">The table string.</param>
+            <returns>System.String.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.IsExistTable(System.String)">
+            <summary>
+            判断表是否存在
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns>Result.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.GetDefaultValue(System.String,System.String,System.String)">
+            <summary>
+            Gets the default value.
+            </summary>
+            <param name="defalueValue">The defalue value.</param>
+            <param name="colType">Type of the col.</param>
+            <param name="colName">Name of the col.</param>
+            <returns>System.String.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.GetTableNameByTime(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            根据时间获取表名 不包含视图
+            </summary>
+            <param name="tablePrefix">表名前缀</param>
+            <param name="timeBegin">开始时间</param>
+            <param name="timeEnd">结束时间</param>
+            <returns>List&lt;System.String&gt;.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.GetTableView(System.String)">
+            <summary>
+            Gets the table view.
+            </summary>
+            <param name="dbName">Name of the database.</param>
+            <returns>Dictionary&lt;System.String, System.String&gt;.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.MySqlDapper.GetColumeByTable(System.String)">
+            <summary>
+            Gets the colume by table.
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns>DataTable.</returns>
+        </member>
+        <member name="T:FastDev.DBFactory.Providers.Mysql">
+            <summary>
+            Mysql数据库实例
+            文件功能描述：模块类，SqlServer数据库操作类，在这里实现了该数据库的相关特性
+            依赖说明：无依赖，不要直接实例化，通过DBHelper来调用。
+            异常处理：捕获但不处理异常。
+            </summary>
+            <seealso cref="T:FastDev.DBFactory.DBOperator" />
+        </member>
+        <member name="F:FastDev.DBFactory.Providers.Mysql._isInTransaction">
+            <summary>
+            当前是否在存储过程中
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="strConnection"></param>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.Open">
+            <summary>
+            打开数据库连接
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.Close">
+            <summary>
+            关闭数据库连接
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.BeginTrans">
+            <summary>
+            开始事务
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.CommitTrans">
+            <summary>
+            执行事务
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.RollbackTrans">
+            <summary>
+            事务回滚
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.CreateCommand(System.String)">
+            <summary>
+            创建一个命令
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.CreateCommand(System.String,System.Object[])">
+            <summary>
+            构造包含参数的SQL语句或命令
+            </summary>
+            <param name="command">SQL语句或命令</param>
+            <param name="value">参数值列表</param>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.ExecuteDataSet(System.String)">
+            <summary>
+            A2返回一个DataSet
+            </summary>
+            <param name="sql">SQL语句或命令</param>
+            <returns>DataSet</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.ExecuteDataSetParams(System.String,System.Object[])">
+            <summary>
+            B2返回一个DataSet
+            </summary>
+            <param name="sql">SQL语句或命令</param>
+            <param name="value">参数值列表</param>
+            <returns>DataSet</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.ExecuteDataSetPage(System.String,System.Int32,System.Int32)">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.ExecuteDataSetPageParams(System.String,System.Int32,System.Int32,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <param name="value">参数列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.ExecuteDataSetPageByOrderByParams(System.String,System.Int32,System.Int32,System.String,System.Object[])">
+            <summary>
+            分页查询，返回DataSet
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <param name="orderby">order排序字段用于分页排序 兼容MSSQL</param>
+            <param name="value">参数列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.ExecuteDataTablePageParams(System.String,System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.String,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="tableName">表名</param>
+            <param name="fields">要返回的字段列表，逗号分隔</param>
+            <param name="keyField">主键字段名，如果是Oracle或Mysql可以为空（""）</param>
+            <param name="groupBy">GROUP BY子句,不包含GROUP BY关键字</param>
+            <param name="orderBy">排序字段，可以为空，多个字段需用逗号分隔</param>
+            <param name="pageSize">页面大小</param>
+            <param name="pageIndex">当前页（页号从1开始）</param>
+            <param name="condition">筛选条件，可以为空，不带"WHERE"关键字</param>
+            <param name="value">参数列表</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.ExecuteDataTablePageParamsWithLimit(System.String,System.Int32,System.Int32,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="limit">数据条数</param>
+            <param name="offSet">跳过的条数</param>
+            <param name="value">参数列表</param>
+            <returns>DataTable.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.GetFieldsList(System.String)">
+            <summary>
+            根据表名，获取字段列表
+            </summary>
+            <param name="tableName">表名</param>
+            <returns>表字段列表</returns>
+        </member>
+        <member name="P:FastDev.DBFactory.Providers.Mysql.DataBaseName">
+            <summary>
+            Gets the name of the database.
+            </summary>
+            <value>The name of the database.</value>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.DropTable(System.String)">
+            <summary>
+            删除数据库表
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns>System.String.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.CreateTable(FastDev.DBFactory.TableStructure)">
+            <summary>
+            创建数据库表
+            </summary>
+            <param name="tableStr">The table string.</param>
+            <returns>System.String.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.IsExistTable(System.String)">
+            <summary>
+            判断表是否存在
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns>Result.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.GetDefaultValue(System.String,System.String,System.String)">
+            <summary>
+            Gets the default value.
+            </summary>
+            <param name="defalueValue">The defalue value.</param>
+            <param name="colType">Type of the col.</param>
+            <param name="colName">Name of the col.</param>
+            <returns>System.String.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.GetTableNameByTime(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            根据时间获取表名 不包含视图
+            </summary>
+            <param name="tablePrefix">表名前缀</param>
+            <param name="timeBegin">开始时间</param>
+            <param name="timeEnd">结束时间</param>
+            <returns>List&lt;System.String&gt;.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.GetTableView(System.String)">
+            <summary>
+            Gets the table view.
+            </summary>
+            <param name="dbName">Name of the database.</param>
+            <returns>Dictionary&lt;System.String, System.String&gt;.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Mysql.GetColumeByTable(System.String)">
+            <summary>
+            Gets the colume by table.
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns>DataTable.</returns>
+        </member>
+        <member name="T:FastDev.DBFactory.Providers.Oracle">
+            <summary>
+            Oracle数据库实例
+            文件功能描述：模块类，SqlServer数据库操作类，在这里实现了该数据库的相关特性
+            依赖说明：无依赖，不要直接实例化，通过DBHelper来调用。
+            异常处理：捕获但不处理异常。
+            </summary>
+        </member>
+        <member name="F:FastDev.DBFactory.Providers.Oracle._isInTransaction">
+            <summary>
+            当前是否在存储过程中
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="strConnection"></param>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.Open">
+            <summary>
+            打开数据库连接
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.Close">
+            <summary>
+            关闭数据库连接
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.BeginTrans">
+            <summary>
+            开始事务
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.CommitTrans">
+            <summary>
+            执行事务
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.RollbackTrans">
+            <summary>
+            事务回滚
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.CreateCommand(System.String)">
+            <summary>
+            创建一个命令
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.CreateCommand(System.String,System.Object[])">
+            <summary>
+            构造包含参数的SQL语句或命令
+            </summary>
+            <param name="command">SQL语句或命令</param>
+            <param name="value">参数值列表</param>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.ExecuteDataSet(System.String)">
+            <summary>
+            A2返回一个DataSet
+            </summary>
+            <param name="sql">SQL语句或命令</param>
+            <returns>DataSet</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.ExecuteDataSetParams(System.String,System.Object[])">
+            <summary>
+            B2返回一个DataSet
+            </summary>
+            <param name="sql">SQL语句或命令</param>
+            <param name="value">参数值列表</param>
+            <returns>DataSet</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.ExecuteDataSetPage(System.String,System.Int32,System.Int32)">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.ExecuteDataSetPageParams(System.String,System.Int32,System.Int32,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <param name="value">参数列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.ExecuteDataSetPageByOrderByParams(System.String,System.Int32,System.Int32,System.String,System.Object[])">
+            <summary>
+            分页查询，返回DataSet
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <param name="orderby">order排序字段用于分页排序 兼容MSSQL</param>
+            <param name="value">参数列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.ExecuteDataTablePageParams(System.String,System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.String,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="tableName">表名</param>
+            <param name="fields">要返回的字段列表，逗号分隔</param>
+            <param name="keyField">主键字段名，如果是Oracle或Mysql可以为空（""）</param>
+            <param name="groupBy">GROUP BY子句,不包含GROUP BY关键字</param>
+            <param name="orderBy">排序字段，可以为空，多个字段需用逗号分隔</param>
+            <param name="pageSize">页面大小</param>
+            <param name="pageIndex">当前页（页号从1开始）</param>
+            <param name="condition">筛选条件，可以为空，不带"WHERE"关键字</param>
+            <param name="value">参数列表</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.ExecuteDataTablePageParamsWithLimit(System.String,System.Int32,System.Int32,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="limit">数据条数</param>
+            <param name="offSet">跳过的条数</param>
+            <param name="value">参数列表</param>
+            <returns>DataTable.</returns>
+        </member>
+        <member name="P:FastDev.DBFactory.Providers.Oracle.DataBaseName">
+            <summary>
+            Gets the name of the database.
+            </summary>
+            <value>The name of the database.</value>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.GetFieldsList(System.String)">
+            <summary>
+            根据表名，获取字段列表
+            </summary>
+            <param name="tableName">表名</param>
+            <returns>表字段列表</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.DropTable(System.String)">
+            <summary>
+            删除数据库表
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns>System.String.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.CreateTable(FastDev.DBFactory.TableStructure)">
+            <summary>
+            创建数据库表
+            </summary>
+            <param name="tableStr">The table string.</param>
+            <returns>System.String.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.IsExistTable(System.String)">
+            <summary>
+            判断表是否存在
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns>Result.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.GetTableNameByTime(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            根据时间获取表名 不包含视图
+            </summary>
+            <param name="tablePrefix">表名前缀</param>
+            <param name="timeBegin">开始时间</param>
+            <param name="timeEnd">结束时间</param>
+            <returns>List&lt;System.String&gt;.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.GetTableView(System.String)">
+            <summary>
+            Gets the table view.
+            </summary>
+            <param name="dbName">Name of the database.</param>
+            <returns>Dictionary&lt;System.String, System.String&gt;.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Oracle.GetColumeByTable(System.String)">
+            <summary>
+            Gets the colume by table.
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns>DataTable.</returns>
+        </member>
+        <!-- 对于成员“T:FastDev.DBFactory.Providers.Postgresql”忽略有格式错误的 XML 注释 -->
+        <member name="F:FastDev.DBFactory.Providers.Postgresql._isInTransaction">
+            <summary>
+            当前是否在存储过程中
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="strConnection">数据库连接字符串</param>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.Open">
+            <summary>
+            打开数据库连接
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.Close">
+            <summary>
+            关闭数据库连接
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.BeginTrans">
+            <summary>
+            开始事务
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.CommitTrans">
+            <summary>
+            执行事务
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.RollbackTrans">
+            <summary>
+            事务回滚
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.CreateCommand(System.String)">
+            <summary>
+            创建一个命令
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.CreateCommand(System.String,System.Object[])">
+            <summary>
+            构造包含参数的SQL语句或命令
+            </summary>
+            <param name="command">SQL语句或命令</param>
+            <param name="value">参数值列表</param>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.ExecuteDataSet(System.String)">
+            <summary>
+            A2返回一个DataSet
+            </summary>
+            <param name="sql">SQL语句或命令</param>
+            <returns>DataSet</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.ExecuteDataSetParams(System.String,System.Object[])">
+            <summary>
+            B2返回一个DataSet
+            </summary>
+            <param name="sql">SQL语句或命令</param>
+            <param name="value">参数值列表</param>
+            <returns>DataSet</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.ExecuteDataSetPage(System.String,System.Int32,System.Int32)">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.ExecuteDataSetPageParams(System.String,System.Int32,System.Int32,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <param name="value">参数列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.ExecuteDataSetPageByOrderByParams(System.String,System.Int32,System.Int32,System.String,System.Object[])">
+            <summary>
+            分页查询，返回DataSet
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <param name="orderby">order排序字段用于分页排序 兼容MSSQL</param>
+            <param name="value">参数列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.ExecuteDataTablePageParams(System.String,System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.String,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="tableName">表名</param>
+            <param name="fields">要返回的字段列表，逗号分隔</param>
+            <param name="keyField">主键字段名，如果是Oracle或Mysql可以为空（""）</param>
+            <param name="groupBy">GROUP BY子句,不包含GROUP BY关键字</param>
+            <param name="orderBy">排序字段，可以为空，多个字段需用逗号分隔</param>
+            <param name="pageSize">页面大小</param>
+            <param name="pageIndex">当前页（页号从1开始）</param>
+            <param name="condition">筛选条件，可以为空，不带"WHERE"关键字</param>
+            <param name="value">参数列表</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.ExecuteDataTablePageParamsWithLimit(System.String,System.Int32,System.Int32,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="limit">数据条数</param>
+            <param name="offSet">跳过的条数</param>
+            <param name="value">参数列表</param>
+            <returns>DataTable.</returns>
+        </member>
+        <member name="P:FastDev.DBFactory.Providers.Postgresql.DataBaseName">
+            <summary>
+            Gets the name of the database.
+            </summary>
+            <value>The name of the database.</value>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.GetFieldsList(System.String)">
+            <summary>
+            根据表名，获取字段列表
+            </summary>
+            <param name="tableName">表名</param>
+            <returns>表字段列表</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.DropTable(System.String)">
+            <summary>
+            删除数据库表
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns>System.String.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.CreateTable(FastDev.DBFactory.TableStructure)">
+            <summary>
+            创建数据库表
+            </summary>
+            <param name="tableStr">The table string.</param>
+            <returns>System.String.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.IsExistTable(System.String)">
+            <summary>
+            判断表是否存在
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns>Result.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.GetTableNameByTime(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            根据时间获取表名 不包含视图
+            </summary>
+            <param name="tablePrefix">表名前缀</param>
+            <param name="timeBegin">开始时间</param>
+            <param name="timeEnd">结束时间</param>
+            <returns>List&lt;System.String&gt;.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.GetTableView(System.String)">
+            <summary>
+            Gets the table view.
+            </summary>
+            <param name="dbName">Name of the database.</param>
+            <returns>Dictionary&lt;System.String, System.String&gt;.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.Postgresql.GetColumeByTable(System.String)">
+            <summary>
+            Gets the colume by table.
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns>DataTable.</returns>
+        </member>
+        <member name="T:FastDev.DBFactory.Providers.SqlServer">
+            <summary>
+            SQLServer数据库操作实例
+            文件功能描述：模块类，SqlServer数据库操作类，在这里实现了该数据库的相关特性
+            依赖说明：无依赖，不要直接实例化，通过DBHelper来调用。
+            异常处理：捕获但不处理异常。
+            </summary>
+        </member>
+        <member name="F:FastDev.DBFactory.Providers.SqlServer._isInTransaction">
+            <summary>
+            当前是否在存储过程中
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="strConnection"></param>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.Open">
+            <summary>
+            打开数据库连接
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.Close">
+            <summary>
+            关闭数据库连接
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.BeginTrans">
+            <summary>
+            开始事务
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.CommitTrans">
+            <summary>
+            执行事务
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.RollbackTrans">
+            <summary>
+            事务回滚
+            </summary>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.CreateCommand(System.String)">
+            <summary>
+            创建一个命令
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.CreateCommand(System.String,System.Object[])">
+            <summary>
+            构造包含参数的SQL语句或命令
+            </summary>
+            <param name="command">SQL语句或命令</param>
+            <param name="value">参数值列表</param>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.ExecuteDataSet(System.String)">
+            <summary>
+            A2返回一个DataSet
+            </summary>
+            <param name="sql">SQL语句或命令</param>
+            <returns>DataSet</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.ExecuteDataSetParams(System.String,System.Object[])">
+            <summary>
+            B2返回一个DataSet
+            </summary>
+            <param name="sql">SQL语句或命令</param>
+            <param name="value">参数值列表</param>
+            <returns>DataSet</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.ExecuteDataSetPage(System.String,System.Int32,System.Int32)">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.ExecuteDataSetPageParams(System.String,System.Int32,System.Int32,System.Object[])">
+            <summary>
+            分页查询，返回DataTable 约定
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <param name="value">参数列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.ExecuteDataSetPageByOrderByParams(System.String,System.Int32,System.Int32,System.String,System.Object[])">
+            <summary>
+            分页查询，返回DataSet
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="pageSize">页面大小（单页记录条数）</param>
+            <param name="pageIndex">当前页码（页号从1开始）</param>
+            <param name="orderby">order排序字段用于分页排序 兼容MSSQL</param>
+            <param name="value">参数列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.ExecuteDataTablePageParams(System.String,System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.String,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="tableName">表名</param>
+            <param name="fields">要返回的字段列表，逗号分隔</param>
+            <param name="keyField">主键字段名，如果是Oracle或Mysql可以为空（""）</param>
+            <param name="groupBy">GROUP BY子句,不包含GROUP BY关键字</param>
+            <param name="orderBy">Order By xxx desc  完整的排序字段，可以为空,为空默认主键降序，多个字段需用逗号分隔</param>
+            <param name="pageSize">页面大小</param>
+            <param name="pageIndex">当前页（页号从1开始）</param>
+            <param name="condition">筛选条件，可以为空，不带"WHERE"关键字 都以And开头</param>
+            <param name="value">参数列表</param>
+            <returns>DataTable</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.ExecuteDataTablePageParamsWithLimit(System.String,System.Int32,System.Int32,System.Object[])">
+            <summary>
+            分页查询，返回DataTable
+            </summary>
+            <param name="sql">除去分页之外的SQL语句</param>
+            <param name="limit">数据条数</param>
+            <param name="offSet">跳过的条数</param>
+            <param name="value">参数列表</param>
+            <returns>DataTable.</returns>
+        </member>
+        <member name="P:FastDev.DBFactory.Providers.SqlServer.DataBaseName">
+            <summary>
+            Gets the name of the database.
+            </summary>
+            <value>The name of the database.</value>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.GetFieldsList(System.String)">
+            <summary>
+            根据表名，获取字段列表
+            </summary>
+            <param name="tableName">表名</param>
+            <returns>表字段列表</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.DropTable(System.String)">
+            <summary>
+            删除数据库表
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns>System.String.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.CreateTable(FastDev.DBFactory.TableStructure)">
+            <summary>
+            创建数据库表
+            </summary>
+            <param name="tableStr">The table string.</param>
+            <returns>System.String.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.IsExistTable(System.String)">
+            <summary>
+            判断表是否存在
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns>Result.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.GetTableNameByTime(System.String,System.DateTime,System.DateTime)">
+            <summary>
+            根据时间获取表名 不包含视图
+            </summary>
+            <param name="tablePrefix">表名前缀</param>
+            <param name="timeBegin">开始时间</param>
+            <param name="timeEnd">结束时间</param>
+            <returns>List&lt;System.String&gt;.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.GetTableView(System.String)">
+            <summary>
+            Gets the table view.
+            </summary>
+            <param name="dbName">Name of the database.</param>
+            <returns>Dictionary&lt;System.String, System.String&gt;.</returns>
+        </member>
+        <member name="M:FastDev.DBFactory.Providers.SqlServer.GetColumeByTable(System.String)">
+            <summary>
+            Gets the colume by table.
+            </summary>
+            <param name="tableName">Name of the table.</param>
+            <returns>DataTable.</returns>
+        </member>
+    </members>
+</doc>

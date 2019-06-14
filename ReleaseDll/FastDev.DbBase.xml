@@ -1,0 +1,1015 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FastDev.DbBase</name>
+    </assembly>
+    <members>
+        <member name="T:FastDev.DbBase.BaseQuery">
+            <summary>
+            表单查询基类（针对单表的增/删/改/查的操作）
+            文件功能描述：模块类，数据库常用操作的抽象类，包含了对于单表的常见增、删、改、查及缓存操作
+            依赖说明：Config、Log、DBHelper、CacheHelper
+            异常处理：捕获异常，当出现异常时，会通过Log输出错误信息到日志文件。
+            </summary>
+        </member>
+        <member name="F:FastDev.DbBase.BaseQuery._inTrans">
+            <summary>
+            是否在事务中 默认非事务
+            </summary>
+        </member>
+        <member name="F:FastDev.DbBase.BaseQuery._db">
+            <summary>
+            数据工厂
+            </summary>
+        </member>
+        <member name="P:FastDev.DbBase.BaseQuery.DbConn">
+            <summary>
+            外部事务处理
+            </summary>
+            <value>
+            The database connection.
+            </value>
+        </member>
+        <member name="F:FastDev.DbBase.BaseQuery.ExternalDbHelper">
+            <summary>
+            外部连接 支持长连接使用
+            </summary>
+        </member>
+        <member name="F:FastDev.DbBase.BaseQuery.TableName">
+            <summary>
+            数据库中的表名
+            </summary>
+        </member>
+        <member name="F:FastDev.DbBase.BaseQuery.ItemName">
+            <summary>
+            查询项目名称
+            </summary>
+        </member>
+        <member name="F:FastDev.DbBase.BaseQuery.IsAddIntoCache">
+            <summary>
+            是否写入缓存
+            </summary>
+        </member>
+        <member name="P:FastDev.DbBase.BaseQuery.CacheKey">
+            <summary>
+            缓存键名
+            </summary>
+            <value>
+            The cache key.
+            </value>
+        </member>
+        <member name="F:FastDev.DbBase.BaseQuery.CacheTimeOut">
+            <summary>
+            缓存有效时间（分钟）
+            </summary>
+        </member>
+        <member name="F:FastDev.DbBase.BaseQuery.KeyField">
+            <summary>
+            主键字段 用于取Model的时候 默认第一条排序
+            </summary>
+        </member>
+        <member name="F:FastDev.DbBase.BaseQuery.GroupByFields">
+            <summary>
+            分组字段
+            </summary>
+        </member>
+        <member name="F:FastDev.DbBase.BaseQuery.OrderbyFields">
+            <summary>
+            排序字段
+            </summary>
+        </member>
+        <member name="F:FastDev.DbBase.BaseQuery._databaseTypeValue">
+            <summary>
+            The database type value
+            </summary>
+        </member>
+        <member name="F:FastDev.DbBase.BaseQuery._datebaseConnValue">
+            <summary>
+            The datebase connection value
+            </summary>
+        </member>
+        <member name="F:FastDev.DbBase.BaseQuery._datebaseConnValueRead">
+            <summary>
+            The datebase connection value read
+            </summary>
+        </member>
+        <member name="P:FastDev.DbBase.BaseQuery.DatabaseTypeValue">
+            <summary>
+            数据库类型
+            </summary>
+            <value>
+            The database type value.
+            </value>
+        </member>
+        <member name="P:FastDev.DbBase.BaseQuery.DatabaseConnValue">
+            <summary>
+            数据库连接串串
+            </summary>
+            <value>
+            The database connection value.
+            </value>
+        </member>
+        <member name="P:FastDev.DbBase.BaseQuery.DatabaseConnValueRead">
+            <summary>
+            数据库连接串串
+            </summary>
+            <value>
+            The database connection value read.
+            </value>
+        </member>
+        <member name="P:FastDev.DbBase.BaseQuery.DataBaseTypeKey">
+            <summary>
+            默认配置文件里面的 数据库类型配置键名
+            </summary>
+            <value>
+            The data base type key.
+            </value>
+        </member>
+        <member name="P:FastDev.DbBase.BaseQuery.DataBaseConnKey">
+            <summary>
+            默认配置文件里面的 数据库连接串配置键名
+            </summary>
+            <value>
+            The data base connection key.
+            </value>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.Add(System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.Object})">
+            <summary>
+            添加记录 返回当前添加的数据的主键值
+            </summary>
+            <param name="fieldList">字段列表</param>
+            <param name="valueList">值列表</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.Add(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            添加记录
+            </summary>
+            <param name="fieldValue">字段值列表</param>
+            <returns>
+            返回成功条数
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.Adds(System.Collections.Generic.List{System.Collections.Generic.Dictionary{System.String,System.Object}})">
+            <summary>
+            批量添加数据
+            </summary>
+            <param name="fieldValuelst">The field valuelst.</param>
+            <returns>
+            System.Int32.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.Adds``1(System.Collections.Generic.List{System.Collections.Generic.Dictionary{System.String,System.Object}})">
+            <summary>
+            批量添加数据
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="fieldValuelst">The field valuelst.</param>
+            <returns>
+            System.Int32.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.Add``1(``0)">
+            <summary>
+            添加记录
+            </summary>
+            <typeparam name="T">待添加的模型类型  此类型变量必须和数据库字段一一对应</typeparam>
+            <param name="item">模型实例</param>
+            <returns>
+            返回成功条数
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.Adds``1(System.Collections.Generic.List{``0})">
+            <summary>
+            批量添加数据
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="items">The items.</param>
+            <returns>
+            System.Int32.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.Add``1(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Adds the specified item.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="keyValues">The key values.</param>
+            <returns>
+            System.Int32.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.UpdateByKey(System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.Object},System.Object)">
+            <summary>
+            根据主键更新记录
+            </summary>
+            <param name="fieldList">要修改的字段列表</param>
+            <param name="valueList">要修改的值列表</param>
+            <param name="keyValue">主键值</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.UpdateByKey(System.Collections.Generic.Dictionary{System.String,System.Object},System.Object)">
+            <summary>
+            根据主键更新记录
+            </summary>
+            <param name="fieldValue">要修改的字段值列表</param>
+            <param name="keyValue">主键值</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.UpdateByKey``1(``0,System.Object)">
+            <summary>
+            根据主键更新记录 此方法会修改模型对对应的所有字段,调用时请注意
+            </summary>
+            <typeparam name="T">要修改的类型 此类型变量必须和数据库字段一一对应</typeparam>
+            <param name="item">要修改的类型 实例</param>
+            <param name="keyValue">主键值</param>
+            <returns>
+            返回成功条数
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.Update(System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.Object},System.String,System.Object[])">
+            <summary>
+            修改记录
+            </summary>
+            <param name="fieldList">要修改的字段列表</param>
+            <param name="valueList">要修改的值列表</param>
+            <param name="where">where子句，不带关键字，参数用问号占位</param>
+            <param name="values">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.Update(System.Collections.Generic.Dictionary{System.String,System.Object},System.String,System.Object[])">
+            <summary>
+            修改记录
+            </summary>
+            <param name="fieldValue">要修改的字段值列表</param>
+            <param name="where">where子句，不带关键字，参数用问号占位</param>
+            <param name="values">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.Update``1(System.Collections.Generic.Dictionary{System.String,System.Object},System.String,System.Object[])">
+            <summary>
+            Updates the specified field value.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="fieldValue">The field value.</param>
+            <param name="where">The where.</param>
+            <param name="values">The values.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.Update``1(``0,System.String,System.Object[])">
+            <summary>
+            修改记录
+            </summary>
+            <typeparam name="T">待修改模型</typeparam>
+            <param name="item">待修改模型 实例</param>
+            <param name="where">where子句，不带关键字，参数用问号占位</param>
+            <param name="values">参数</param>
+            <returns>
+            返回成功条数
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.Update``1(System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Updates the specified dicdata.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="valuedata">The dicdata.</param>
+            <param name="keydata">The keydata.</param>
+            <returns>
+            System.Int32.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.UpdateByKey``1(System.Collections.Generic.Dictionary{System.String,System.Object},System.Object)">
+            <summary>
+            Updates the specified dicdata.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dicdata">The dicdata.</param>
+            <param name="kID">The k identifier.</param>
+            <returns>
+            System.Int32.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.UpdateNums``1(System.String,System.Int32,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            更新数字 累计减少是方式
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="fields">字段名</param>
+            <param name="addNums">更新的数值 可以为负数 负数表示减少</param>
+            <param name="whereKey">字典条件Key</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.DeleteByKey(System.Object)">
+            <summary>
+            根据主键删除记录
+            </summary>
+            <param name="keyValue">主键值</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.Delete(System.String,System.Object[])">
+            <summary>
+            根据限定条件删除记录
+            </summary>
+            <param name="where">where子句，不带关键字，参数用问号占位</param>
+            <param name="values">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.Delete``1(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Deletes the specified keydata.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="keydata">The keydata.</param>
+            <returns>
+            System.Int32.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.DeleteByKeys(System.Collections.Generic.List{System.Int32})">
+            <summary>
+            批量删除数据 根据主键删除
+            </summary>
+            <param name="kidlst">The kid.</param>
+            <returns>
+            System.Int32.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.DeleteByKeys(System.String)">
+            <summary>
+            批量删除数据 根据主键删除
+            </summary>
+            <param name="kids">The kid.</param>
+            <returns>
+            System.Int32.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetMaxID">
+            <summary>
+            查询最大ID
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetSum(System.String,System.String,System.Object[])">
+            <summary>
+            获取记录总和
+            </summary>
+            <param name="fileds">The fileds.</param>
+            <param name="where">where子句，不带关键字，参数用问号占位</param>
+            <param name="values">参数</param>
+            <returns>
+            System.Decimal.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetListByInSelect``1(System.String,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,System.Object},System.Int32,System.Int32)">
+            <summary>
+            根据In子查询查询数据 主dic包含 orderby 可以处理排序 值 字段 fields desc
+            </summary>
+            <typeparam name="T1">主表</typeparam>
+            <param name="subTableName">子表表名</param>
+            <param name="mainTableFields">主表 in 的字段名</param>
+            <param name="subTableFields">子表查询字段</param>
+            <param name="mainDicWhere">主表的Where条件</param>
+            <param name="subDicWhere">子表的Where条件</param>
+            <param name="page">当前页数</param>
+            <param name="limit">当前页显示的数据条数</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetListByInRelationTable``1(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.Dictionary{System.String,System.Object}}},System.Collections.Generic.Dictionary{System.String,System.Object},System.Int32,System.Int32)">
+            <summary>
+            根据In子查询查询数据 主dic包含 orderby Key时 自动处理排序 值格式 fields desc
+            关联字典说明 第一个Key为主表字段 第二个Key为 子表.字段 第三个为查询条件字典
+            </summary>
+            <typeparam name="T1">主表</typeparam>
+            <param name="relationFields">3层字典 第一层Key主表关联字段  第二层Key子表关联字段 格式[表名.字段名] Value为查询条件字典</param>
+            <param name="mainDicWhere">主表的Where条件</param>
+            <param name="page">当前页数</param>
+            <param name="limit">当前页显示的数据条数</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetDataTableByInRelationTable``1(System.Collections.Generic.List{System.String},System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.Dictionary{System.String,System.Object}}},System.Collections.Generic.Dictionary{System.String,System.Object},System.Int32,System.Int32)">
+            <summary>
+            根据In子查询查询数据 主dic包含 orderby Key时 自动处理排序 值格式 fields desc
+            关联字典说明 第一个Key为主表字段 第二个Key为 子表.字段 第三个为查询条件字典
+            </summary>
+            <typeparam name="T1">主表</typeparam>
+            <param name="retFields">查询结果字段 如果有重名 自行业务逻辑加表名获得,可以传一个值 *</param>
+            <param name="relationFields">3层字典 第一层Key主表关联字段  第二层Key子表关联字段 格式[表名.字段名] Value为查询条件字典</param>
+            <param name="mainDicWhere">主表的Where条件</param>
+            <param name="page">当前页数</param>
+            <param name="limit">当前页显示的数据条数</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetDataByGroup``1(System.Collections.Generic.List{System.String},System.Collections.Generic.Dictionary{System.String,System.Object},System.Int32,System.Int32)">
+            <summary>
+            根据Where条件Group查询数据,返回的列只比对Groupby的字段多一列,coun(1) As GroupCnt 目前只支持MySql
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="groupByFields">分组字段</param>
+            <param name="dicWhere">查询条件</param>
+            <param name="page">当前页码</param>
+            <param name="limit">当前条数</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetTableFromCache">
+            <summary>
+            从缓存中获取数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetTable">
+            <summary>
+            获取列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetTable(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            获取列表 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
+            </summary>
+            <param name="fieldValues">The field values.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetTable(System.String,System.Object[])">
+            <summary>
+            获取列表
+            </summary>
+            <param name="where">where子句，不带关键字，参数用问号占位</param>
+            <param name="values">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetTable(System.String,System.String,System.Object[])">
+            <summary>
+            获取列表
+            </summary>
+            <param name="where">where子句，不带关键字，参数用问号占位</param>
+            <param name="orderFields">The order fields.</param>
+            <param name="values">参数</param>
+            <returns>
+            DataTable.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetTable(System.String,System.String,System.String,System.Object[])">
+            <summary>
+            获取列表
+            </summary>
+            <param name="where">where子句，不带关键字，参数用问号占位</param>
+            <param name="orderFields">The order fields.</param>
+            <param name="selectFields">The select fields.</param>
+            <param name="values">参数</param>
+            <returns>
+            DataTable.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetTablePage(System.Int32,System.Int32)">
+            <summary>
+            分页查询
+            </summary>
+            <param name="pageSize">分页大小</param>
+            <param name="pageIndex">页码</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetTablePage(System.Int32,System.Int32,System.String)">
+            <summary>
+            分页查询
+            </summary>
+            <param name="pageSize">分页大小</param>
+            <param name="pageIndex">页码</param>
+            <param name="orderFields">The order fields.</param>
+            <returns>
+            DataTable.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetTablePage(System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            分页查询
+            </summary>
+            <param name="pageSize">分页大小</param>
+            <param name="pageIndex">页码</param>
+            <param name="orderFields">The order fields.</param>
+            <param name="selectFields">The select fields.</param>
+            <returns>
+            DataTable.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetDataTablePage``1(System.Int32,System.Int32,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            获取查询数据 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="pageSize">Size of the page.</param>
+            <param name="pageIndex">Index of the page.</param>
+            <param name="fieldValues">The field values.</param>
+            <returns>
+            System.Data.DataTable.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetTablePage(System.Int32,System.Int32,System.String,System.String,System.Object[])">
+            <summary>
+            分页查询
+            </summary>
+            <param name="pageSize">分页大小</param>
+            <param name="pageIndex">页码</param>
+            <param name="where">where子句，不带关键字，参数用问号占位</param>
+            <param name="orderFields">排序字段</param>
+            <param name="values">参数</param>
+            <returns>
+            DataTable.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetTablePage(System.Int32,System.Int32,System.String,System.String,System.String,System.Object[])">
+            <summary>
+            分页查询
+            </summary>
+            <param name="pageSize">分页大小</param>
+            <param name="pageIndex">页码</param>
+            <param name="where">where子句，不带关键字，参数用问号占位</param>
+            <param name="orderfields">排序字段 不包含orderby</param>
+            <param name="selectFields">查询返回的字段</param>
+            <param name="values">参数</param>
+            <returns>
+            DataTable.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetTablePage(System.Int32,System.Int32,System.String,System.Object[])">
+            <summary>
+            分页查询
+            </summary>
+            <param name="pageSize">分页大小</param>
+            <param name="pageIndex">页码</param>
+            <param name="where">where子句，不带关键字，参数用问号占位</param>
+            <param name="values">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetRow(System.String,System.Object[])">
+            <summary>
+            根据限定条件查询一条记录
+            2018-10-24 增加主键排序第一条 兼容查询出来数据多 默认取值问题
+            </summary>
+            <param name="where">where子句，不带关键字，参数用问号占位</param>
+            <param name="values">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetRow(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            根据限定条件查询一条记录
+            2018-10-24 增加主键排序第一条 兼容查询出来数据多 默认取值问题
+            </summary>
+            <param name="where">where子句，不带关键字，参数用问号占位</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetRowByKey(System.Object)">
+            <summary>
+            根据主键查询一条记录
+            </summary>
+            <param name="keyValue">主键值</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetList``1(System.String,System.Object[])">
+            <summary>
+            获取列表
+            </summary>
+            <typeparam name="T">实体类型</typeparam>
+            <param name="where">where子句，不带关键字，参数用问号占位</param>
+            <param name="values">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetList``1(System.String,System.String,System.Object[])">
+            <summary>
+            获取列表
+            </summary>
+            <typeparam name="T">实体类型</typeparam>
+            <param name="where">where子句，不带关键字，参数用问号占位</param>
+            <param name="orderFields">The order fields.</param>
+            <param name="values">参数</param>
+            <returns>
+            IList&lt;T&gt;.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetList``1">
+            <summary>
+            获取列表
+            </summary>
+            <typeparam name="T">实体类型</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetList``1(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            查询数据 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="fieldValues">The field values.</param>
+            <returns>
+            IList&lt;T&gt;.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetList``1(System.String)">
+            <summary>
+            获取列表
+            </summary>
+            <typeparam name="T">实体类型</typeparam>
+            <param name="orderFields">The order fields.</param>
+            <returns>
+            IList&lt;T&gt;.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetListPage``1(System.Int32,System.Int32)">
+            <summary>
+            根据页面获取分页列表
+            </summary>
+            <typeparam name="T">实体类型</typeparam>
+            <param name="pageSize">分页大小</param>
+            <param name="pageIndex">页码</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetListPage``1(System.Int32,System.Int32,System.String,System.Object[])">
+            <summary>
+            根据页面获取分页列表
+            </summary>
+            <typeparam name="T">实体类型</typeparam>
+            <param name="pageSize">分页大小</param>
+            <param name="pageIndex">页码</param>
+            <param name="where">where子句，不带关键字，参数用问号占位</param>
+            <param name="values">参数</param>
+            <returns>
+            IList&lt;T&gt;.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetListPage``1(System.Int32,System.Int32,System.String,System.String,System.String,System.Object[])">
+            <summary>
+            根据页面获取分页列表
+            </summary>
+            <typeparam name="T">实体类型</typeparam>
+            <param name="pageSize">分页大小</param>
+            <param name="pageIndex">页码</param>
+            <param name="where">where子句，不带关键字，参数用问号占位</param>
+            <param name="orderFields">The order fields.</param>
+            <param name="selectFields">The select fields.</param>
+            <param name="values">参数</param>
+            <returns>
+            IList&lt;T&gt;.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetListPage``1(System.Int32,System.Int32,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            获取数据列表 查询数据条件字典Key可以取固定值 selectfields orderby 框架将自动处理
+            </summary>
+            <typeparam name="T">实体对象</typeparam>
+            <param name="limit">每页条数</param>
+            <param name="page">当前页码 从1开始</param>
+            <param name="fieldValues">Key Field|[b|s|e|bl|el|l] 分别表示 大于|小于|等于|前like|后like|like 不包含默认等于</param>
+            <returns>
+            IList&lt;T&gt;.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetListPage``1(System.Int32,System.Int32,System.Collections.Generic.Dictionary{System.String,System.Object},System.String)">
+            <summary>
+            查询数据 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="limit">当前页显示多少条</param>
+            <param name="page">当前第几页 从1开始</param>
+            <param name="fieldValues">查询条件</param>
+            <param name="orderby">排序字段 orderby为"",则处理字典的值</param>
+            <returns>
+            IList&lt;T&gt;.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetJsonListPage``1(System.Int32,System.Int32,System.Collections.Generic.Dictionary{System.String,System.Object},System.String)">
+            <summary>
+            查询数据 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="limit">当前页显示条数</param>
+            <param name="page">当前第几页 从1 开始</param>
+            <param name="fieldValues">查询数据条件</param>
+            <param name="orderby">排序字段 为""时处理字典值</param>
+            <returns>
+            FastJsonResult.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetEntity``1(System.String,System.Object[])">
+            <summary>
+            根据限定条件查询一条记录 返回结果所有字段
+            </summary>
+            <typeparam name="T">实体类型</typeparam>
+            <param name="where">where子句，不带关键字，参数用问号占位</param>
+            <param name="values">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetEntity``1(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            根据限定条件查询一条记录 返回结果所有字段
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="fieldValues">The field values.</param>
+            <returns>
+            T.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetEntityByKey``1(System.Object)">
+            <summary>
+            根据主键查询一条记录
+            </summary>
+            <typeparam name="T">实体类型</typeparam>
+            <param name="keyValue">主键值</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetValueByKey(System.Object,System.String)">
+            <summary>
+            根据键值获取记录某一字段值
+            </summary>
+            <param name="keyValue">The key value.</param>
+            <param name="fieldName">Name of the field.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetStringValueByKey(System.Object,System.String)">
+            <summary>
+            根据键值获取记录某一字段值
+            </summary>
+            <param name="keyValue">主键值</param>
+            <param name="fieldName">要获取的字段名</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetIntValueByKey(System.Object,System.String)">
+            <summary>
+            根据键值获取记录某一字段值
+            </summary>
+            <param name="keyValue">主键值</param>
+            <param name="fieldName">要获取的字段名</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetLongValueByKey(System.Object,System.String)">
+            <summary>
+            根据键值获取记录某一字段值
+            </summary>
+            <param name="keyValue">主键值</param>
+            <param name="fieldName">要获取的字段名</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetByteValueByKey(System.Object,System.String)">
+            <summary>
+            根据键值获取记录某一字段值
+            </summary>
+            <param name="keyValue">主键值</param>
+            <param name="fieldName">要获取的字段名</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetBoolValueByKey(System.Object,System.String)">
+            <summary>
+            根据键值获取记录某一字段值
+            </summary>
+            <param name="keyValue">主键值</param>
+            <param name="fieldName">要获取的字段名</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetCount">
+            <summary>
+            获取记录条数
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetCount``1(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Gets the count.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="fieldValues">The field values.</param>
+            <returns>
+            System.Int32.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetCount(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Gets the count.
+            </summary>
+            <param name="fieldValues">The field values.</param>
+            <returns>
+            System.Int32.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetCount(System.String,System.Object[])">
+            <summary>
+            获取记录条数
+            </summary>
+            <param name="where">where子句，不带关键字，参数用问号占位</param>
+            <param name="values">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetCountByInSelect``1(System.String,System.String,System.String,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            根据In子查询查询数据 主dic包含 orderby 可以处理排序 值 字段 fields desc
+            </summary>
+            <typeparam name="T1">主表</typeparam>
+            <param name="subTableName">子表表名</param>
+            <param name="mainTableFields">主表 in 的字段名</param>
+            <param name="subTableFields">子表查询字段</param>
+            <param name="mainDicWhere">主表的Where条件</param>
+            <param name="subDicWhere">子表的Where条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.IsDuplicate(System.Object,System.String,System.String)">
+            <summary>
+            检测字段值是否重复
+            </summary>
+            <param name="keyValue">主键值</param>
+            <param name="fieldName">重复验证的字段名</param>
+            <param name="value">重复验证的字段值</param>
+            <returns>
+              <c>true</c> if the specified key value is duplicate; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.IsExist(System.String,System.String)">
+            <summary>
+            检测字段值是否重复
+            </summary>
+            <param name="field">The field.</param>
+            <param name="value">重复验证的字段值</param>
+            <returns>
+              <c>true</c> if the specified field is exist; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.IsExist(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            检测字段值是否重复
+            </summary>
+            <param name="where">The where.</param>
+            <returns>
+              <c>true</c> if the specified where is exist; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.ToDictionary``1(``0)">
+            <summary>
+            根据模型反射得到字典
+            </summary>
+            <typeparam name="T">模型</typeparam>
+            <param name="item">模型实例</param>
+            <returns>
+            返回字典,Key:string Value:object
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.ToEntityList``1(System.Data.DataTable)">
+            <summary>
+            根据模型 反射得到字段,从DataTable里面转换得到ListModel
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="dt">The dt.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.ToEntity``1(System.Data.DataRow)">
+            <summary>
+            根据模型 反射得到字段,从DataRow反射得到实体
+            </summary>
+            <typeparam name="T">实体类型</typeparam>
+            <param name="dr">一行记录</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.ToEntity``1(System.Data.DataTable)">
+            <summary>
+            根据模型 反射得到字段,从DataRow反射得到实体
+            </summary>
+            <typeparam name="T">实体类型</typeparam>
+            <param name="dt">The dt.</param>
+            <returns>
+            T.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetWhereByDic``1(System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.List{System.Object}@)">
+            <summary>
+            字典转换为Sql语句条件
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="fieldValues">The field values.</param>
+            <param name="values">The values.</param>
+            <returns>
+            System.String.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetWhereByDic(System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.List{System.Object}@)">
+            <summary>
+            字典转换为Sql语句条件
+            </summary>
+            <param name="fieldValues">The field values.</param>
+            <param name="values">The values.</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetTableNameByDic(System.String,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Gets the table name by dic.
+            </summary>
+            <param name="tablePrefix">The table prefix.</param>
+            <param name="fieldValues">The field values.</param>
+            <returns>
+            List&lt;System.String&gt;.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.ValidQueryTime(System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            验证查询时间 用于动态表查询数据的时候获取表名 时间的键值为 CreateTime|b 大于 CreateTime|s 小于
+            </summary>
+            <param name="dic">字典列表</param>
+            <returns>
+              <c>true</c> if XXXX, <c>false</c> otherwise.
+            </returns>
+            <exception cref="T:System.Exception">查询条件未包含相关时间字段CreateTime和逻辑运算符</exception>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetListPageWithDynamic``1(System.String,System.Int32,System.Int32,System.Collections.Generic.Dictionary{System.String,System.Object},System.String)">
+            <summary>
+            Gets the list page with dynamic.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="tablePrefix">The table prefix.</param>
+            <param name="limit">The limit.</param>
+            <param name="page">The page.</param>
+            <param name="fieldValues">The field values.</param>
+            <param name="orderBy">The order by.</param>
+            <returns>
+            System.Collections.Generic.IList&lt;T&gt;.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetJsonListPageByDynamic``1(System.String,System.Int32,System.Int32,System.Collections.Generic.Dictionary{System.String,System.Object},System.String)">
+            <summary>
+            获取动态表数据 条件必须包含查询时间CreateTime和逻辑关系
+            </summary>
+            <typeparam name="T">实体类型</typeparam>
+            <param name="tablePrefix">表前缀</param>
+            <param name="limit">条数</param>
+            <param name="page">当前页码</param>
+            <param name="fieldValues">查询条件</param>
+            <param name="orderBy">排序字段</param>
+            <returns>
+            FastDev.Common.Code.FastJsonResult&lt;System.Collections.Generic.List&lt;T&gt;&gt;.
+            </returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.CountByDynamic``1(System.String,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            读取动态表Count
+            </summary>
+            <typeparam name="T">实体类型</typeparam>
+            <param name="tablePrefix">表前缀</param>
+            <param name="fieldValues">查询条件</param>
+            <returns></returns>
+        </member>
+        <member name="M:FastDev.DbBase.BaseQuery.GetCheckLogic(System.String)">
+            <summary>
+            Gets the check logic.
+            </summary>
+            <param name="fieldName">Name of the field.</param>
+            <returns>
+            System.String.
+            </returns>
+        </member>
+        <member name="T:FastDev.DbBase.TransHelper">
+            <summary>
+            TransHelpercs
+            </summary>
+            <seealso cref="T:System.IDisposable" />
+        </member>
+        <member name="F:FastDev.DbBase.TransHelper._db">
+            <summary>
+            db链接
+            </summary>
+        </member>
+        <member name="P:FastDev.DbBase.TransHelper.DbConn">
+            <summary>
+            当前事务链接
+            </summary>
+            <value>
+            The database connection.
+            </value>
+        </member>
+        <member name="M:FastDev.DbBase.TransHelper.#ctor">
+            <summary>
+            数据库工厂
+            </summary>
+            <exception cref="T:System.Exception">数据库连接未配置,无法正常连接数据库,请在配置文件appSettings节点下配置ConnString,可扩展配置ConnStringRead(只读实例)</exception>
+            <returns>DBOperator.</returns>
+        </member>
+        <member name="M:FastDev.DbBase.TransHelper.GetDBOperator(System.String,System.String)">
+            <summary>
+            创建数据库工厂实例
+            </summary>
+            <param name="dbType">数据库类型</param>
+            <param name="connStr">连接字符串</param>
+            <returns>
+            数据库操作实例
+            </returns>
+            <exception cref="T:System.Exception">未知的数据库类型：" + dbType</exception>
+        </member>
+        <member name="M:FastDev.DbBase.TransHelper.Dispose">
+            <summary>
+            释放
+            </summary>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:FastDev.DbBase.TransHelper.CommitTrans">
+            <summary>
+            事务提交
+            </summary>
+        </member>
+        <member name="M:FastDev.DbBase.TransHelper.RollbackTrans">
+            <summary>
+            事务回滚
+            </summary>
+        </member>
+    </members>
+</doc>
