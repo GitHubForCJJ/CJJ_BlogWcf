@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlogcontentRepository.cs" />
     <Compile Include="BloginfoRepository.cs" />
     <Compile Include="CategorypicRepository.cs" />
     <Compile Include="CategoryRepository.cs" />
@@ -52,10 +53,15 @@
     <Compile Include="Common\CommonRepository.cs" />
     <Compile Include="EmployeeRepository.cs" />
     <Compile Include="Fd_sys_operationlogRepository.cs" />
+    <Compile Include="LogintokenRepository.cs" />
     <Compile Include="MediaRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CJJ.Blog.Service.Model\CJJ.Blog.Service.Model.csproj">
+      <Project>{732CF467-0B88-459E-8A1D-01FCF574A77C}</Project>
+      <Name>CJJ.Blog.Service.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utils\FastDev.BaseQuery\FastDev.DbBase.csproj">
       <Project>{d78d2db0-6855-4b0f-9229-c00164b35b0c}</Project>
       <Name>FastDev.DbBase</Name>

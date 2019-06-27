@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlogcontentLogic.cs" />
     <Compile Include="BloginfoLogic.cs" />
     <Compile Include="CategoryLogic.cs" />
     <Compile Include="CategorypicLogic.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="CommentsLogic.cs" />
     <Compile Include="EmployeeLogic.cs" />
     <Compile Include="Fd_sys_operationlogLogic.cs" />
+    <Compile Include="LogintokenLogic.cs" />
     <Compile Include="MediaLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

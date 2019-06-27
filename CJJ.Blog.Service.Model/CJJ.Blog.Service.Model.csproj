@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Blogcontent.cs" />
     <Compile Include="Data\Bloginfo.cs" />
     <Compile Include="Data\Category.cs" />
     <Compile Include="Data\Categorypic.cs" />
@@ -50,8 +51,10 @@
     <Compile Include="Data\Comments.cs" />
     <Compile Include="Data\Employee.cs" />
     <Compile Include="Data\Fd_sys_operationlog.cs" />
+    <Compile Include="Data\Logintoken.cs" />
     <Compile Include="Data\Media.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\BloginfoView.cs" />
     <Compile Include="View\OperLogType.cs" />
     <Compile Include="View\OpertionUser.cs" />
   </ItemGroup>

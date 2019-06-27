@@ -23,6 +23,7 @@ using FastDev.Common.Code;
 using CJJ.Blog.Service.Models.View;
 using FastDev.Http;
 using System.Data;
+using CJJ.Blog.Service.Model.View;
 
 namespace CJJ.Blog.Service.Service
 {
@@ -43,7 +44,7 @@ namespace CJJ.Blog.Service.Service
         /// <param name="page">页数</param>
         /// <param name="limit">当前页条数</param>
         /// <returns>System.Collections.Generic.List&lt;FastDev.Service.Models.Data.Sys_menu&gt;.</returns>
-        public List<Bloginfo> GetListPage_Bloginfo(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
+        public List<BloginfoView> GetListPage_Bloginfo(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
         {
             return BloginfoLogic.GetListPage(page, limit, dicwhere).ToList();
         }
@@ -1867,7 +1868,532 @@ namespace CJJ.Blog.Service.Service
 
         #endregion
 
-/*BC47A26EB9A59406057DDDD62D0898F4*/
+
+        #region Blogcontent操作
+
+        #region 查询
+
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="page">页数</param>
+        /// <param name="limit">当前页条数</param>
+        /// <returns>System.Collections.Generic.List&lt;FastDev.Service.Models.Data.Sys_menu&gt;.</returns>
+        public List<Blogcontent> GetListPage_Blogcontent(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
+        {
+            return BlogcontentLogic.GetListPage(page, limit, dicwhere).ToList();
+        }
+
+        /// <summary>
+        /// 获取Json格式的数据
+        /// </summary>
+        /// <param name="page">当前页码</param>
+        /// <param name="limit">当前也显示条数</param>
+        /// <param name="orderby">排序字段</param>
+        /// <param name="dicwhere">查询条件</param>
+        /// <returns></returns>
+        public FastJsonResult<List<Blogcontent>> GetJsonListPage_Blogcontent(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
+        {
+            return BlogcontentLogic.GetJsonListPage(page, limit, orderby, dicwhere);
+        }
+
+        /// <summary>
+        /// 不分页获取所有数据
+        /// </summary>
+        /// <returns>List&lt;Sys_role&gt;.</returns>
+        public List<Blogcontent> GetAllList_Blogcontent()
+        {
+            return BlogcontentLogic.GetAllList();
+        }
+
+        /// <summary>
+        /// 按条件获取数据列表
+        /// </summary>
+        /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
+        /// <returns>List&lt;Sys_role&gt;.</returns>
+        public List<Blogcontent> GetList_Blogcontent(Dictionary<string, object> dicwhere)
+        {
+            return BlogcontentLogic.GetList(dicwhere);
+        }
+
+        /// <summary>
+        /// 获取数据总条数
+        /// </summary>
+        /// <returns>System.Int32.</returns>
+        public int GetCount_Blogcontent(Dictionary<string, object> dicwhere = null)
+        {
+            return BlogcontentLogic.GetCount(dicwhere);
+        }
+
+        /// <summary>
+        /// 获取Model
+        /// </summary>
+        /// <param name="kID">The k identifier.</param>
+        /// <returns>System.Int32.</returns>
+        public Blogcontent GetModelByKID_Blogcontent(int kID)
+        {
+            return BlogcontentLogic.GetModelByKID(kID);
+        }
+
+        /// <summary>
+        /// 获取Model
+        /// </summary>
+        /// <param name="kID">The k identifier.</param>
+        /// <returns>System.Int32.</returns>
+        public Blogcontent GetModelByWhere_Blogcontent(Dictionary<string, object> dicwhere)
+        {
+            return BlogcontentLogic.GetModelByWhere(dicwhere);
+        }
+
+
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="dicwhere">条件查询</param>
+        /// <returns></returns>
+        public DataTable GetDataTable_Blogcontent(Dictionary<string, object> dicwhere, int page = 1, int limit = 10)
+        {
+            return BlogcontentLogic.GetDataTable(dicwhere, page, limit);
+        }
+
+        /// <summary>
+        /// 根据In子查询查询数据
+        /// </summary>
+        /// <param name="subTableName">子表表名</param>
+        /// <param name="mainTableFields">主表 in 的字段名</param>
+        /// <param name="subTableFields">子表查询字段</param>
+        /// <param name="mainDicWhere">主表的Where条件</param>
+        /// <param name="subDicWhere">子表的Where条件</param>
+        /// <param name="page">当前页数</param>
+        /// <param name="limit">当前页显示的数据条数</param>
+        /// <returns></returns>
+        public List<Blogcontent> GetListByInSelect_Blogcontent(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
+        {
+            return BlogcontentLogic.GetListByInSelect(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit);
+        }
+
+        /// <summary>
+        /// 根据In子查询查询数据
+        /// </summary>
+        /// <param name="subTableName">子表表名</param>
+        /// <param name="mainTableFields">主表 in 的字段名</param>
+        /// <param name="subTableFields">子表查询字段</param>
+        /// <param name="mainDicWhere">主表的Where条件</param>
+        /// <param name="subDicWhere">子表的Where条件</param>
+        /// <returns></returns>
+        public int GetCountByInSelect_Blogcontent(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere)
+        {
+            return BlogcontentLogic.GetCountByInSelect(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
+        }
+
+        /// <summary>
+        /// 根据Where条件Group查询数据,返回的列只比对Groupby的字段多一列,coun(1) As GroupCnt 目前只支持MySql
+        /// </summary>
+        /// <param name="groupByFields">分组字段</param>
+        /// <param name="dicWhere">查询条件</param>
+        /// <param name="page">当前页码</param>
+        /// <param name="limit">当前条数</param>
+        /// <returns></returns>
+        public DataTable GetDataByGroup_Blogcontent(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10)
+        {
+            return BlogcontentLogic.GetDataByGroup(groupByFields, dicWhere, page, limit);
+        }
+
+        #endregion
+
+        #region 添加
+
+        /// <summary>
+        /// 添加多条数据 根据字典添加
+        /// </summary>
+        /// <param name="dicdata">添加的字典实体</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result Add_Blogcontent(Dictionary<string, object> dicdata, OpertionUser opertionUser)
+        {
+            return BlogcontentLogic.Add(dicdata, opertionUser);
+        }
+
+        /// <summary>
+        /// 添加多条数据 根据字典添加
+        /// </summary>
+        /// <param name="dicdata">添加的字典实体</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns></returns>
+        public Result Adds_Blogcontent(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser)
+        {
+            return BlogcontentLogic.Adds(dicdata, opertionUser);
+        }
+
+        /// <summary>
+        /// 添加实体
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+		/// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result AddByEntity_Blogcontent(Blogcontent entity, OpertionUser opertionUser)
+        {
+            return BlogcontentLogic.Add(entity, opertionUser);
+        }
+
+        /// <summary>
+        /// 批量添加实体
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+		/// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result AddByEntitys_Blogcontent(List<Blogcontent> entitys, OpertionUser opertionUser)
+        {
+            return BlogcontentLogic.Adds(entitys, opertionUser);
+        }
+        #endregion
+
+        #region 修改
+
+        /// <summary>
+        /// Edits the specified dicdata.
+        /// </summary>
+        /// <param name="dicdata">修改条件</param>
+        /// <param name="kID">当前数据主键KID</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result Update_Blogcontent(Dictionary<string, object> dicdata, int kID, OpertionUser opertionUser)
+        {
+            return BlogcontentLogic.Update(dicdata, kID, opertionUser);
+        }
+
+        /// <summary>
+        /// Edits the specified dicdata.
+        /// </summary>
+        /// <param name="valuedata">修改值</param>
+        /// <param name="keydata">编辑的Where条件</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result UpdateByWhere_Blogcontent(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser)
+        {
+            return BlogcontentLogic.UpdateByWhere(valuedata, keydata, opertionUser);
+        }
+
+        /// <summary>
+        /// 修改次数
+        /// </summary>
+        /// <param name="fields">需要修改的字段</param>
+        /// <param name="addNums">次数 负数表示减少 正数表示增加</param>
+        /// <param name="whereKey">字典条件</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns></returns>
+        public Result UpdateNums_Blogcontent(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
+        {
+            return BlogcontentLogic.UpdateNums(fields, addNums, whereKey, opertionUser);
+        }
+
+        #endregion
+
+        #region 删除
+        /// <summary>
+        /// 删除数据,逗号连接多条
+        /// </summary>
+        /// <param name="kid">主键ID,多个逗号连接</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result Delete_Blogcontent(string kid, OpertionUser opertionUser)
+        {
+            return BlogcontentLogic.Delete(kid, opertionUser);
+        }
+
+        /// <summary>
+        /// Deletes the specified kid.
+        /// </summary>
+        /// <param name="keydata">Where条件</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result DeleteByWhere_Blogcontent(Dictionary<string, object> keydata, OpertionUser opertionUser)
+        {
+            return BlogcontentLogic.DeleteByWhere(keydata, opertionUser);
+        }
+        #endregion
+
+        #region 数据导出
+
+        /// <summary>
+        /// Exports the excel file_ product.
+        /// </summary>
+        /// <param name="keydata">查询条件</param>
+        /// <param name="fileFullName">文件名全路径</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>FastDev.Common.Code.Result.</returns>
+        public Result ExportExcelFile_Blogcontent(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser)
+        {
+            return BlogcontentLogic.ExportExcelFile(keydata, fileFullName, opertionUser);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Logintoken操作
+
+        #region 查询
+
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="page">页数</param>
+        /// <param name="limit">当前页条数</param>
+        /// <returns>System.Collections.Generic.List&lt;FastDev.Service.Models.Data.Sys_menu&gt;.</returns>
+        public List<Logintoken> GetListPage_Logintoken(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
+        {
+            return LogintokenLogic.GetListPage(page, limit, dicwhere).ToList();
+        }
+
+        /// <summary>
+        /// 获取Json格式的数据
+        /// </summary>
+        /// <param name="page">当前页码</param>
+        /// <param name="limit">当前也显示条数</param>
+        /// <param name="orderby">排序字段</param>
+        /// <param name="dicwhere">查询条件</param>
+        /// <returns></returns>
+        public FastJsonResult<List<Logintoken>> GetJsonListPage_Logintoken(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
+        {
+            return LogintokenLogic.GetJsonListPage(page, limit, orderby, dicwhere);
+        }
+
+        /// <summary>
+        /// 不分页获取所有数据
+        /// </summary>
+        /// <returns>List&lt;Sys_role&gt;.</returns>
+        public List<Logintoken> GetAllList_Logintoken()
+        {
+            return LogintokenLogic.GetAllList();
+        }
+
+        /// <summary>
+        /// 按条件获取数据列表
+        /// </summary>
+        /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
+        /// <returns>List&lt;Sys_role&gt;.</returns>
+        public List<Logintoken> GetList_Logintoken(Dictionary<string, object> dicwhere)
+        {
+            return LogintokenLogic.GetList(dicwhere);
+        }
+
+        /// <summary>
+        /// 获取数据总条数
+        /// </summary>
+        /// <returns>System.Int32.</returns>
+        public int GetCount_Logintoken(Dictionary<string, object> dicwhere = null)
+        {
+            return LogintokenLogic.GetCount(dicwhere);
+        }
+
+        /// <summary>
+        /// 获取Model
+        /// </summary>
+        /// <param name="kID">The k identifier.</param>
+        /// <returns>System.Int32.</returns>
+        public Logintoken GetModelByKID_Logintoken(int kID)
+        {
+            return LogintokenLogic.GetModelByKID(kID);
+        }
+
+        /// <summary>
+        /// 获取Model
+        /// </summary>
+        /// <param name="kID">The k identifier.</param>
+        /// <returns>System.Int32.</returns>
+        public Logintoken GetModelByWhere_Logintoken(Dictionary<string, object> dicwhere)
+        {
+            return LogintokenLogic.GetModelByWhere(dicwhere);
+        }
+
+
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="dicwhere">条件查询</param>
+        /// <returns></returns>
+        public DataTable GetDataTable_Logintoken(Dictionary<string, object> dicwhere, int page = 1, int limit = 10)
+        {
+            return LogintokenLogic.GetDataTable(dicwhere, page, limit);
+        }
+
+        /// <summary>
+        /// 根据In子查询查询数据
+        /// </summary>
+        /// <param name="subTableName">子表表名</param>
+        /// <param name="mainTableFields">主表 in 的字段名</param>
+        /// <param name="subTableFields">子表查询字段</param>
+        /// <param name="mainDicWhere">主表的Where条件</param>
+        /// <param name="subDicWhere">子表的Where条件</param>
+        /// <param name="page">当前页数</param>
+        /// <param name="limit">当前页显示的数据条数</param>
+        /// <returns></returns>
+        public List<Logintoken> GetListByInSelect_Logintoken(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
+        {
+            return LogintokenLogic.GetListByInSelect(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit);
+        }
+
+        /// <summary>
+        /// 根据In子查询查询数据
+        /// </summary>
+        /// <param name="subTableName">子表表名</param>
+        /// <param name="mainTableFields">主表 in 的字段名</param>
+        /// <param name="subTableFields">子表查询字段</param>
+        /// <param name="mainDicWhere">主表的Where条件</param>
+        /// <param name="subDicWhere">子表的Where条件</param>
+        /// <returns></returns>
+        public int GetCountByInSelect_Logintoken(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere)
+        {
+            return LogintokenLogic.GetCountByInSelect(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
+        }
+
+        /// <summary>
+        /// 根据Where条件Group查询数据,返回的列只比对Groupby的字段多一列,coun(1) As GroupCnt 目前只支持MySql
+        /// </summary>
+        /// <param name="groupByFields">分组字段</param>
+        /// <param name="dicWhere">查询条件</param>
+        /// <param name="page">当前页码</param>
+        /// <param name="limit">当前条数</param>
+        /// <returns></returns>
+        public DataTable GetDataByGroup_Logintoken(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10)
+        {
+            return LogintokenLogic.GetDataByGroup(groupByFields, dicWhere, page, limit);
+        }
+
+        #endregion
+
+        #region 添加
+
+        /// <summary>
+        /// 添加多条数据 根据字典添加
+        /// </summary>
+        /// <param name="dicdata">添加的字典实体</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result Add_Logintoken(Dictionary<string, object> dicdata, OpertionUser opertionUser)
+        {
+            return LogintokenLogic.Add(dicdata, opertionUser);
+        }
+
+        /// <summary>
+        /// 添加多条数据 根据字典添加
+        /// </summary>
+        /// <param name="dicdata">添加的字典实体</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns></returns>
+        public Result Adds_Logintoken(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser)
+        {
+            return LogintokenLogic.Adds(dicdata, opertionUser);
+        }
+
+        /// <summary>
+        /// 添加实体
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+		/// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result AddByEntity_Logintoken(Logintoken entity, OpertionUser opertionUser)
+        {
+            return LogintokenLogic.Add(entity, opertionUser);
+        }
+
+        /// <summary>
+        /// 批量添加实体
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+		/// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result AddByEntitys_Logintoken(List<Logintoken> entitys, OpertionUser opertionUser)
+        {
+            return LogintokenLogic.Adds(entitys, opertionUser);
+        }
+        #endregion
+
+        #region 修改
+
+        /// <summary>
+        /// Edits the specified dicdata.
+        /// </summary>
+        /// <param name="dicdata">修改条件</param>
+        /// <param name="kID">当前数据主键KID</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result Update_Logintoken(Dictionary<string, object> dicdata, int kID, OpertionUser opertionUser)
+        {
+            return LogintokenLogic.Update(dicdata, kID, opertionUser);
+        }
+
+        /// <summary>
+        /// Edits the specified dicdata.
+        /// </summary>
+        /// <param name="valuedata">修改值</param>
+        /// <param name="keydata">编辑的Where条件</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result UpdateByWhere_Logintoken(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser)
+        {
+            return LogintokenLogic.UpdateByWhere(valuedata, keydata, opertionUser);
+        }
+
+        /// <summary>
+        /// 修改次数
+        /// </summary>
+        /// <param name="fields">需要修改的字段</param>
+        /// <param name="addNums">次数 负数表示减少 正数表示增加</param>
+        /// <param name="whereKey">字典条件</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns></returns>
+        public Result UpdateNums_Logintoken(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
+        {
+            return LogintokenLogic.UpdateNums(fields, addNums, whereKey, opertionUser);
+        }
+
+        #endregion
+
+        #region 删除
+        /// <summary>
+        /// 删除数据,逗号连接多条
+        /// </summary>
+        /// <param name="kid">主键ID,多个逗号连接</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result Delete_Logintoken(string kid, OpertionUser opertionUser)
+        {
+            return LogintokenLogic.Delete(kid, opertionUser);
+        }
+
+        /// <summary>
+        /// Deletes the specified kid.
+        /// </summary>
+        /// <param name="keydata">Where条件</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result DeleteByWhere_Logintoken(Dictionary<string, object> keydata, OpertionUser opertionUser)
+        {
+            return LogintokenLogic.DeleteByWhere(keydata, opertionUser);
+        }
+        #endregion
+
+        #region 数据导出
+
+        /// <summary>
+        /// Exports the excel file_ product.
+        /// </summary>
+        /// <param name="keydata">查询条件</param>
+        /// <param name="fileFullName">文件名全路径</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>FastDev.Common.Code.Result.</returns>
+        public Result ExportExcelFile_Logintoken(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser)
+        {
+            return LogintokenLogic.ExportExcelFile(keydata, fileFullName, opertionUser);
+        }
+
+        #endregion
+
+        #endregion
+
+        /*BC47A26EB9A59406057DDDD62D0898F4*/
 
 
 

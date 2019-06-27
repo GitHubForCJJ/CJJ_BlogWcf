@@ -15,7 +15,7 @@ namespace CJJ.Blog.Service.Host
 {
     class Program
     {
-        private static string ProFullname = "校园全接触-用户中心";
+        private static string ProFullname = "CJJ博客WCF服务";
         #region 设置控制台标题 禁用关闭按钮
 
         [DllImport("user32.dll", EntryPoint = "FindWindow")]
@@ -69,7 +69,7 @@ namespace CJJ.Blog.Service.Host
             Console.Out.WriteLine("");
             Console.WriteLine("         若需退出请输入 exit 按回车退出...\r\n");
 
-            Test();
+           // Test();
 
 
             string userCommand = string.Empty;

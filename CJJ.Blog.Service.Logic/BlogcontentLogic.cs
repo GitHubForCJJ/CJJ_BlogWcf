@@ -1,10 +1,10 @@
 ﻿//-----------------------------------------------------------------------------------
-// <copyright file="Bloginfo.cs" company="Go Enterprises">
+// <copyright file="Blogcontent.cs" company="Go Enterprises">
 // * copyright: (C) 2018 东走西走科技有限公司 版权所有。
 // * version  : 1.0.0.0
 // * author   : chenjianjun
-// * fileName : Bloginfo.cs
-// * history  : created by chenjianjun 2019-06-14 15:52:46
+// * fileName : Blogcontent.cs
+// * history  : created by chenjianjun 2019-06-27 15:21:33
 // </copyright>
 //-----------------------------------------------------------------------------------
 
@@ -16,28 +16,27 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using CJJ.Blog.Service.Repository;
 using CJJ.Blog.Service.Models.Data;
-using System.Data;
 using DbLog = CJJ.Blog.Service.Logic.Fd_sys_operationlogLogic;
+using System.Data;
 using FastDev.Common.Extension;
 using CJJ.Blog.Service.Models.View;
-using CJJ.Blog.Service.Model.View;
 
 namespace CJJ.Blog.Service.Logic
 {
     /// <summary>
-    /// Class Bloginfo Logic.
+    /// Class Blogcontent Logic.
     /// </summary>
-    public class BloginfoLogic
+    public class BlogcontentLogic
     {
         #region 查询
 
         /// <summary>
-        /// Gets the Bloginfo {TableNameComment} list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
+        /// Gets the Blogcontent {TableNameComment} list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="page">The page.</param>
         /// <param name="limit">The limit.</param>
         /// <returns>System.Collections.Generic.List&lt;Jbst.Service.Models.Data.Sys_menu&gt;.</returns>
-        public static List<BloginfoView> GetListPage(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
+        public static List<Blogcontent> GetListPage(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
         {
             string orderby = "";
             if (dicwhere != null && dicwhere.ContainsKey(nameof(orderby)))
@@ -49,15 +48,15 @@ namespace CJJ.Blog.Service.Logic
             {
                 dicwhere = new Dictionary<string, object>();
             }
-            if (dicwhere.Keys.Contains(nameof(Bloginfo.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Blogcontent.IsDeleted)))
             {
-                dicwhere[nameof(Bloginfo.IsDeleted)] = 0;
+                dicwhere[nameof(Blogcontent.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Bloginfo.IsDeleted), 0);
+                dicwhere.Add(nameof(Blogcontent.IsDeleted), 0);
             }
-            return BloginfoRepository.Instance.GetListBlog(page, limit, dicwhere, orderby).ToList();
+            return BlogcontentRepository.Instance.GetListPage<Blogcontent>(limit, page, dicwhere, orderby).ToList();
         }
 
         /// <summary>
@@ -68,68 +67,68 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="orderby">排序字段</param>
         /// <param name="dicwhere">查询条件</param>
         /// <returns>FastJsonResult&lt;List&lt;Product&gt;&gt;.</returns>
-        public static FastJsonResult<List<Bloginfo>> GetJsonListPage(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
+        public static FastJsonResult<List<Blogcontent>> GetJsonListPage(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
         {
             if (dicwhere == null)
             {
                 dicwhere = new Dictionary<string, object>();
             }
-            if (dicwhere.Keys.Contains(nameof(Bloginfo.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Blogcontent.IsDeleted)))
             {
-                dicwhere[nameof(Bloginfo.IsDeleted)] = 0;
+                dicwhere[nameof(Blogcontent.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Bloginfo.IsDeleted), 0);
+                dicwhere.Add(nameof(Blogcontent.IsDeleted), 0);
             }
-            return BloginfoRepository.Instance.GetJsonListPage<Bloginfo>(limit, page, dicwhere, orderby);
+            return BlogcontentRepository.Instance.GetJsonListPage<Blogcontent>(limit, page, dicwhere, orderby);
         }
 
         /// <summary>
         /// 不分页获取所有数据
         /// </summary>
-        /// <returns>List&lt;Bloginfo&gt;.</returns>
-        public static List<Bloginfo> GetAllList()
+        /// <returns>List&lt;Blogcontent&gt;.</returns>
+        public static List<Blogcontent> GetAllList()
         {
             var dic = new Dictionary<string, object>();
-            dic.Add(nameof(Bloginfo.IsDeleted), 0);
-            return BloginfoRepository.Instance.GetList<Bloginfo>(dic).ToList();
+            dic.Add(nameof(Blogcontent.IsDeleted), 0);
+            return BlogcontentRepository.Instance.GetList<Blogcontent>(dic).ToList();
         }
 
         /// <summary>
         /// 按条件获取数据列表 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
-        /// <returns>List&lt;Bloginfo&gt;.</returns>
+        /// <returns>List&lt;Blogcontent&gt;.</returns>
         public static DataTable GetDataTable(Dictionary<string, object> dicwhere, int page = 1, int limit = 10)
         {
-            if (dicwhere.Keys.Contains(nameof(Bloginfo.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Blogcontent.IsDeleted)))
             {
-                dicwhere[nameof(Bloginfo.IsDeleted)] = 0;
+                dicwhere[nameof(Blogcontent.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Bloginfo.IsDeleted), 0);
+                dicwhere.Add(nameof(Blogcontent.IsDeleted), 0);
             }
-            return BloginfoRepository.Instance.GetDataTablePage<Bloginfo>(limit, page, dicwhere);
+            return BlogcontentRepository.Instance.GetDataTablePage<Blogcontent>(limit, page, dicwhere);
         }
 
         /// <summary> 
         /// 按条件获取数据列表 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
-        /// <returns>List&lt;Bloginfo&gt;.</returns>
-        public static List<Bloginfo> GetList(Dictionary<string, object> dicwhere)
+        /// <returns>List&lt;Blogcontent&gt;.</returns>
+        public static List<Blogcontent> GetList(Dictionary<string, object> dicwhere)
         {
-            if (dicwhere.Keys.Contains(nameof(Bloginfo.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Blogcontent.IsDeleted)))
             {
-                dicwhere[nameof(Bloginfo.IsDeleted)] = 0;
+                dicwhere[nameof(Blogcontent.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Bloginfo.IsDeleted), 0);
+                dicwhere.Add(nameof(Blogcontent.IsDeleted), 0);
             }
-            return BloginfoRepository.Instance.GetList<Bloginfo>(dicwhere).ToList();
+            return BlogcontentRepository.Instance.GetList<Blogcontent>(dicwhere).ToList();
         }
 
         /// <summary>
@@ -142,15 +141,15 @@ namespace CJJ.Blog.Service.Logic
             {
                 dicwhere = new Dictionary<string, object>();
             }
-            if (dicwhere.Keys.Contains(nameof(Bloginfo.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Blogcontent.IsDeleted)))
             {
-                dicwhere[nameof(Bloginfo.IsDeleted)] = 0;
+                dicwhere[nameof(Blogcontent.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Bloginfo.IsDeleted), 0);
+                dicwhere.Add(nameof(Blogcontent.IsDeleted), 0);
             }
-            return BloginfoRepository.Instance.GetCount<Bloginfo>(dicwhere);
+            return BlogcontentRepository.Instance.GetCount<Blogcontent>(dicwhere);
         }
 
         /// <summary>
@@ -158,9 +157,9 @@ namespace CJJ.Blog.Service.Logic
         /// </summary>
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
-        public static Bloginfo GetModelByKID(int kID)
+        public static Blogcontent GetModelByKID(int kID)
         {
-            var model = BloginfoRepository.Instance.GetEntityByKey<Bloginfo>(kID);
+            var model = BlogcontentRepository.Instance.GetEntityByKey<Blogcontent>(kID);
             if (model != null && model.IsDeleted == 0)
             {
                 return model;
@@ -176,17 +175,17 @@ namespace CJJ.Blog.Service.Logic
         /// </summary>
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
-        public static Bloginfo GetModelByWhere(Dictionary<string, object> dicwhere)
+        public static Blogcontent GetModelByWhere(Dictionary<string, object> dicwhere)
         {
-            if (dicwhere.Keys.Contains(nameof(Bloginfo.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Blogcontent.IsDeleted)))
             {
-                dicwhere[nameof(Bloginfo.IsDeleted)] = 0;
+                dicwhere[nameof(Blogcontent.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Bloginfo.IsDeleted), 0);
+                dicwhere.Add(nameof(Blogcontent.IsDeleted), 0);
             }
-            return BloginfoRepository.Instance.GetEntity<Bloginfo>(dicwhere);
+            return BlogcontentRepository.Instance.GetEntity<Blogcontent>(dicwhere);
         }
 
         /// <summary>
@@ -201,26 +200,26 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="page">当前页数</param>
         /// <param name="limit">当前页显示的数据条数</param>
         /// <returns></returns>
-        public static List<Bloginfo> GetListByInSelect(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
+        public static List<Blogcontent> GetListByInSelect(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
         {
-            if (mainDicWhere.Keys.Contains(nameof(Bloginfo.IsDeleted)))
+            if (mainDicWhere.Keys.Contains(nameof(Blogcontent.IsDeleted)))
             {
-                mainDicWhere[nameof(Bloginfo.IsDeleted)] = 0;
+                mainDicWhere[nameof(Blogcontent.IsDeleted)] = 0;
             }
             else
             {
-                mainDicWhere.Add(nameof(Bloginfo.IsDeleted), 0);
+                mainDicWhere.Add(nameof(Blogcontent.IsDeleted), 0);
             }
 
-            if (subDicWhere.Keys.Contains(nameof(Bloginfo.IsDeleted)))
+            if (subDicWhere.Keys.Contains(nameof(Blogcontent.IsDeleted)))
             {
-                subDicWhere[nameof(Bloginfo.IsDeleted)] = 0;
+                subDicWhere[nameof(Blogcontent.IsDeleted)] = 0;
             }
             else
             {
-                subDicWhere.Add(nameof(Bloginfo.IsDeleted), 0);
+                subDicWhere.Add(nameof(Blogcontent.IsDeleted), 0);
             }
-            return BloginfoRepository.Instance.GetListByInSelect<Bloginfo>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit).ToList();
+            return BlogcontentRepository.Instance.GetListByInSelect<Blogcontent>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit).ToList();
         }
 
 
@@ -235,24 +234,24 @@ namespace CJJ.Blog.Service.Logic
         /// <returns></returns>
         public static int GetCountByInSelect(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere)
         {
-            if (mainDicWhere.Keys.Contains(nameof(Bloginfo.IsDeleted)))
+            if (mainDicWhere.Keys.Contains(nameof(Blogcontent.IsDeleted)))
             {
-                mainDicWhere[nameof(Bloginfo.IsDeleted)] = 0;
+                mainDicWhere[nameof(Blogcontent.IsDeleted)] = 0;
             }
             else
             {
-                mainDicWhere.Add(nameof(Bloginfo.IsDeleted), 0);
+                mainDicWhere.Add(nameof(Blogcontent.IsDeleted), 0);
             }
 
-            if (subDicWhere.Keys.Contains(nameof(Bloginfo.IsDeleted)))
+            if (subDicWhere.Keys.Contains(nameof(Blogcontent.IsDeleted)))
             {
-                subDicWhere[nameof(Bloginfo.IsDeleted)] = 0;
+                subDicWhere[nameof(Blogcontent.IsDeleted)] = 0;
             }
             else
             {
-                subDicWhere.Add(nameof(Bloginfo.IsDeleted), 0);
+                subDicWhere.Add(nameof(Blogcontent.IsDeleted), 0);
             }
-            return BloginfoRepository.Instance.GetCountByInSelect<Bloginfo>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
+            return BlogcontentRepository.Instance.GetCountByInSelect<Blogcontent>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
         }
 
         /// <summary>
@@ -265,15 +264,15 @@ namespace CJJ.Blog.Service.Logic
         /// <returns></returns>
         public static DataTable GetDataByGroup(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10)
         {
-            if (dicWhere.Keys.Contains(nameof(Bloginfo.IsDeleted)))
+            if (dicWhere.Keys.Contains(nameof(Blogcontent.IsDeleted)))
             {
-                dicWhere[nameof(Bloginfo.IsDeleted)] = 0;
+                dicWhere[nameof(Blogcontent.IsDeleted)] = 0;
             }
             else
             {
-                dicWhere.Add(nameof(Bloginfo.IsDeleted), 0);
+                dicWhere.Add(nameof(Blogcontent.IsDeleted), 0);
             }
-            return BloginfoRepository.Instance.GetDataByGroup<Bloginfo>(groupByFields, dicWhere, page, limit);
+            return BlogcontentRepository.Instance.GetDataByGroup<Blogcontent>(groupByFields, dicWhere, page, limit);
         }
 
         #endregion
@@ -288,9 +287,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result Add(Dictionary<string, object> dicwhere, OpertionUser opertionUser)
         {
-            var ret = BloginfoRepository.Instance.Add<Bloginfo>(dicwhere);
+            var ret = BlogcontentRepository.Instance.Add<Blogcontent>(dicwhere);
 
-            DbLog.WriteDbLog(nameof(Bloginfo), "添加记录", ret, dicwhere.ToJsonString(), opertionUser, OperLogType.添加);
+            DbLog.WriteDbLog(nameof(Blogcontent), "添加记录", ret, dicwhere.ToJsonString(), opertionUser, OperLogType.添加);
 
             return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
         }
@@ -301,19 +300,19 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="entity">The entity.</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public static Result Add(Bloginfo entity, OpertionUser opertionUser)
+        public static Result Add(Blogcontent entity, OpertionUser opertionUser)
         {
             try
             {
-                var ret = BloginfoRepository.Instance.Add<Bloginfo>(entity);
+                var ret = BlogcontentRepository.Instance.Add<Blogcontent>(entity);
 
-                DbLog.WriteDbLog(nameof(Bloginfo), "添加记录", ret, entity.ToJsonString(), opertionUser, OperLogType.添加);
+                DbLog.WriteDbLog(nameof(Blogcontent), "添加记录", ret, entity.ToJsonString(), opertionUser, OperLogType.添加);
 
                 return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
             }
             catch (Exception ex)
             {
-                FastDev.Log.LogHelper.WriteLog(ex, "BloginfoLogic.Add Entity异常");
+                FastDev.Log.LogHelper.WriteLog(ex, "BlogcontentLogic.Add Entity异常");
 
                 return new Result() { IsSucceed = false, Message = ex.Message };
             }
@@ -325,19 +324,19 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="entity">The entity.</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public static Result Adds(List<Bloginfo> entity, OpertionUser opertionUser)
+        public static Result Adds(List<Blogcontent> entity, OpertionUser opertionUser)
         {
             try
             {
-                var ret = BloginfoRepository.Instance.Adds<Bloginfo>(entity);
+                var ret = BlogcontentRepository.Instance.Adds<Blogcontent>(entity);
 
-                DbLog.WriteDbLog<List<Bloginfo>>(nameof(Bloginfo), "添加记录", ret, entity, opertionUser, OperLogType.添加);
+                DbLog.WriteDbLog<List<Blogcontent>>(nameof(Blogcontent), "添加记录", ret, entity, opertionUser, OperLogType.添加);
 
                 return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
             }
             catch (Exception ex)
             {
-                FastDev.Log.LogHelper.WriteLog(ex, "BloginfoLogic.Add Entity异常");
+                FastDev.Log.LogHelper.WriteLog(ex, "BlogcontentLogic.Add Entity异常");
 
                 return new Result() { IsSucceed = false, Message = ex.Message };
             }
@@ -354,15 +353,15 @@ namespace CJJ.Blog.Service.Logic
         {
             try
             {
-                var ret = BloginfoRepository.Instance.Adds<Bloginfo>(diclst);
+                var ret = BlogcontentRepository.Instance.Adds<Blogcontent>(diclst);
 
-                DbLog.WriteDbLog<List<Dictionary<string, object>>>(nameof(Bloginfo), "添加记录", ret, diclst, opertionUser, OperLogType.添加);
+                DbLog.WriteDbLog<List<Dictionary<string, object>>>(nameof(Blogcontent), "添加记录", ret, diclst, opertionUser, OperLogType.添加);
 
                 return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
             }
             catch (Exception ex)
             {
-                FastDev.Log.LogHelper.WriteLog(ex, "BloginfoLogic.Adds diclst异常");
+                FastDev.Log.LogHelper.WriteLog(ex, "BlogcontentLogic.Adds diclst异常");
 
                 return new Result() { IsSucceed = false, Message = ex.Message };
             }
@@ -380,9 +379,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result Update(Dictionary<string, object> dicwhere, int kID, OpertionUser opertionUser)
         {
-            var ret = BloginfoRepository.Instance.UpdateByKey<Bloginfo>(dicwhere, kID);
+            var ret = BlogcontentRepository.Instance.UpdateByKey<Blogcontent>(dicwhere, kID);
 
-            DbLog.WriteDbLog(nameof(Bloginfo), "修改记录", kID, dicwhere, OperLogType.编辑, opertionUser);
+            DbLog.WriteDbLog(nameof(Blogcontent), "修改记录", kID, dicwhere, OperLogType.编辑, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }
@@ -396,9 +395,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result UpdateByWhere(Dictionary<string, object> valuedata, Dictionary<string, object> dicwhere, OpertionUser opertionUser)
         {
-            var ret = BloginfoRepository.Instance.Update<Bloginfo>(valuedata, dicwhere);
+            var ret = BlogcontentRepository.Instance.Update<Blogcontent>(valuedata, dicwhere);
 
-            DbLog.WriteDbLog(nameof(Bloginfo), "批量修改记录", valuedata.ToJsonString(), valuedata, OperLogType.编辑, opertionUser);
+            DbLog.WriteDbLog(nameof(Blogcontent), "批量修改记录", valuedata.ToJsonString(), valuedata, OperLogType.编辑, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }
@@ -413,9 +412,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns></returns>
         public static Result UpdateNums(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
         {
-            var ret = BloginfoRepository.Instance.UpdateNums<Bloginfo>(fields, addNums, whereKey);
+            var ret = BlogcontentRepository.Instance.UpdateNums<Blogcontent>(fields, addNums, whereKey);
 
-            DbLog.WriteDbLog(nameof(Bloginfo), "修改记录", whereKey.ToJsonString(), whereKey, OperLogType.编辑, opertionUser);
+            DbLog.WriteDbLog(nameof(Blogcontent), "修改记录", whereKey.ToJsonString(), whereKey, OperLogType.编辑, opertionUser);
 
             return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
         }
@@ -432,20 +431,20 @@ namespace CJJ.Blog.Service.Logic
         public static Result Delete(string kid, OpertionUser opertionUser)
         {
             var deldic = new Dictionary<string, object>();
-            deldic.Add(nameof(Bloginfo.IsDeleted), 1);
+            deldic.Add(nameof(Blogcontent.IsDeleted), 1);
 
             var keydic = new Dictionary<string, object>();
             if (kid.IndexOf(",") > -1)
             {
-                keydic.Add(nameof(Bloginfo.KID) + "|i", kid);
+                keydic.Add(nameof(Blogcontent.KID) + "|i", kid);
             }
             else
             {
-                keydic.Add(nameof(Bloginfo.KID), kid);
+                keydic.Add(nameof(Blogcontent.KID), kid);
             }
-            var ret = BloginfoRepository.Instance.Update<Bloginfo>(deldic, keydic);
+            var ret = BlogcontentRepository.Instance.Update<Blogcontent>(deldic, keydic);
 
-            DbLog.WriteDbLog(nameof(Bloginfo), "删除记录", kid, null, OperLogType.删除, opertionUser);
+            DbLog.WriteDbLog(nameof(Blogcontent), "删除记录", kid, null, OperLogType.删除, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }
@@ -459,16 +458,40 @@ namespace CJJ.Blog.Service.Logic
         public static Result DeleteByWhere(Dictionary<string, object> dicwhere, OpertionUser opertionUser)
         {
             var deldic = new Dictionary<string, object>();
-            deldic.Add(nameof(Bloginfo.IsDeleted), 1);
+            deldic.Add(nameof(Blogcontent.IsDeleted), 1);
 
-            var ret = BloginfoRepository.Instance.Update<Bloginfo>(deldic, dicwhere);
+            var ret = BlogcontentRepository.Instance.Update<Blogcontent>(deldic, dicwhere);
 
-            DbLog.WriteDbLog(nameof(Bloginfo), "批量删除记录", dicwhere.ToJsonString(), dicwhere, OperLogType.删除, opertionUser);
+            DbLog.WriteDbLog(nameof(Blogcontent), "批量删除记录", dicwhere.ToJsonString(), dicwhere, OperLogType.删除, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }
         #endregion
 
+        #region 数据导出
+        /// <summary>
+        /// Exports the excel file.
+        /// </summary>
+        /// <param name="dicwhere">查询条件</param>
+        /// <param name="fileFullName">文件名全路径</param>
+		/// <param name="opertionUser">操作者信息</param>
+        /// <returns>System.String.</returns>
+        public static Result ExportExcelFile(Dictionary<string, object> dicwhere, string fileFullName, OpertionUser opertionUser)
+        {
+            Result ret = new Result();
+
+            try
+            {
+                ret.IsSucceed = FastDev.ExcelHelper.Excel.OutputToExcel(GetDataTable(dicwhere, 0, 0), fileFullName);
+            }
+            catch (Exception ex)
+            {
+                ret.IsSucceed = false;
+                ret.Message = ex.Message;
+            }
+            return ret;
+        }
+        #endregion
 
         /*BC47A26EB9A59406057DDDD62D0898F4*/
     }
