@@ -59,9 +59,11 @@ namespace CJJ.Blog.Service.Repository
             var list = new List<BloginfoView>();
             try
             {
+                var where = Getwherebydic(dicwhere);
                 using (var db = new DBHelper())
                 {
-                    var sql = $"select a.*,b.Content from bloginfo a,blogcontent b where a.kid=b.BloginfoId limit ? offset ? ";
+                 
+                    var sql = $"select a.*,b.Content from bloginfo a,blogcontent b where {where} and a.kid=b.BloginfoId limit ? offset ? ";
                     var par = new object[] { limit, (page - 1) * limit };
                     var data = db.ExecuteDataTable(sql, par);
                     list = ToEntityList<BloginfoView>(data)?.ToList();
@@ -73,6 +75,25 @@ namespace CJJ.Blog.Service.Repository
             }
 
             return list;
+        }
+
+        private string Getwherebydic(Dictionary<string, object> dic)
+        {
+            if (dic == null)
+            {
+                return "";
+            }
+            StringBuilder sub = new StringBuilder();
+            foreach(KeyValuePair<string,object> item in dic)
+            {
+                sub.AppendFormat($" '{item.Key}'='{item.Value}' and");
+            }
+            string res = "";
+            if (sub.Length > 0)
+            {
+                res = sub.ToString().Substring(0, sub.Length - 3);
+            }
+            return res;
         }
 
 		/*BC47A26EB9A59406057DDDD62D0898F4*/

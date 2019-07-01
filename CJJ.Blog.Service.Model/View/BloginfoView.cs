@@ -13,12 +13,18 @@ namespace CJJ.Blog.Service.Model.View
     [DataContract]
     public class BloginfoView
     {
+        [DataMember]
         public int KID { get; set; }
         /// <summary>
-        /// 姓名
+        /// title
         /// </summary>
         [DataMember]
         public string Title { get; set; }
+        /// <summary>
+        /// 详细title
+        /// </summary>
+        [DataMember]
+        public string DetailTitle { get; set; }
 
         /// <summary>
         /// 类型

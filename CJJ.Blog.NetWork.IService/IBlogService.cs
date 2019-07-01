@@ -1133,6 +1133,8 @@ namespace CJJ.Blog.NetWork.IService
 
         #region 查询
 
+        Result EmployeePasswordLogin
+
         /// <summary>
         /// Gets the menu list.
         /// </summary>

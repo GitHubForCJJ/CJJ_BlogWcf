@@ -111,16 +111,21 @@ namespace CJJ.Blog.Service.Models.Data
 		public string Extend6 { get; set;}
 
 		/// <summary>
-		/// 姓名
+		/// 短标题
 		/// </summary>
 		[DataMember]
 		public string Title { get; set;}
+        /// <summary>
+        /// 长标题
+        /// </summary>
+        [DataMember]
+        public string DetailTitle { get; set; }
 
-		/// <summary>
-		/// 类型
-		/// </summary>
-		[DataMember]
-		public string Type { get; set;}
+        /// <summary>
+        /// 类型
+        /// </summary>
+        [DataMember]
+		public int Type { get; set;}
 
 		/// <summary>
 		/// 是否置顶
