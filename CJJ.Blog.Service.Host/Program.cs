@@ -46,8 +46,8 @@ namespace CJJ.Blog.Service.Host
         {
             Console.Title = ProFullname;
 
-            Console.WindowWidth = 62;
-            Console.WindowHeight = 45;
+            //Console.WindowWidth = 62;
+            //Console.WindowHeight = 45;
             Console.ForegroundColor = ConsoleColor.Yellow;
             ConsoleHelper.OutNoBugMsg();
             Console.ForegroundColor = ConsoleColor.White;
