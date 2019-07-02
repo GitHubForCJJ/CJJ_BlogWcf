@@ -20,6 +20,7 @@ using DbLog = CJJ.Blog.Service.Logic.Fd_sys_operationlogLogic;
 using System.Data;
 using FastDev.Common.Extension;
 using CJJ.Blog.Service.Models.View;
+using CJJ.Blog.Service.Model.View;
 
 namespace CJJ.Blog.Service.Logic
 {
@@ -29,7 +30,32 @@ namespace CJJ.Blog.Service.Logic
     public class LogintokenLogic
     {
         #region 查询
-
+        /// <summary>
+        /// 根据token获取登录者
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public static SysLoginUser GetSysLoginUserByToken(string token)
+        {
+            SysLoginUser ret = new SysLoginUser() { IsSucceed=false};
+            if (string.IsNullOrEmpty(token))
+            {
+                return null;
+            }
+            var tokenmodel = LogintokenLogic.GetModelByWhere(new Dictionary<string, object>()
+            {
+                {nameof(Logintoken.Token),token }
+            });
+            if (tokenmodel != null && !string.IsNullOrEmpty(tokenmodel.LoginUserId))
+            {
+                var emp = EmployeeLogic.GetModelByKID(tokenmodel.LoginUserId.Toint());
+                ret.Model = emp;
+                ret.IsSucceed = true;
+                ret.TokenExpiration = tokenmodel.TokenExpiration;
+                ret.Token = tokenmodel.Token;
+            }
+            return ret;
+        }
         /// <summary>
         /// Gets the Logintoken {TableNameComment} list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>

@@ -20,6 +20,8 @@ using DbLog = CJJ.Blog.Service.Logic.Fd_sys_operationlogLogic;
 using System.Data;
 using FastDev.Common.Extension;
 using CJJ.Blog.Service.Models.View;
+using CJJ.Blog.Service.Model.View;
+using FastDev.Log;
 
 namespace CJJ.Blog.Service.Logic
 {
@@ -29,6 +31,70 @@ namespace CJJ.Blog.Service.Logic
     public class EmployeeLogic
     {
         #region 查询
+        /// <summary>
+        /// 密码登录
+        /// </summary>
+        /// <param name="useraccount"></param>
+        /// <param name="userpsw"></param>
+        /// <param name="ipaddress"></param>
+        /// <param name="agent"></param>
+        /// <param name="dns"></param>
+        /// <returns></returns>
+        public static SysLoginUser EmployeePasswordLogin(string useraccount, string userpsw, string ipaddress, string agent, string dns)
+        {
+            SysLoginUser res = new SysLoginUser() { IsSucceed = false };
+            try
+            {
+                var psw = userpsw.ToUpper();
+                var emp = EmployeeLogic.GetModelByWhere(new Dictionary<string, object>()
+            {
+                {nameof(Employee.UserAcount),useraccount },
+                   {nameof(Employee.IsDeleted),0 },
+                      {nameof(Employee.States),0 }
+            });
+                if (emp.UserPassword.ToUpper() != psw)
+                {
+                    return res;
+                }
+                var logintype = "1";
+                //总共64位，4+22+5+1+32
+                var token = $"{DateTime.Now.ToString("yyMM")}{Guid.NewGuid().ToString("N").Substring(0, 22)}{emp.KID.ToString().PadLeft(5, '0')}{logintype}{Guid.NewGuid().ToString("N")}";
+                var tokenexpir = DateTime.Now.AddDays(ConfigUnit.ExpirationTimeOut).ToString();
+                res.TokenExpiration = tokenexpir;
+                var tokenres = LogintokenLogic.Add(new Logintoken
+                {
+                    Token = token,
+                    TokenExpiration = tokenexpir,
+                    CreateTime = DateTime.Now,
+                    LoginUserId = emp.KID.ToString(),
+                    LoginUserType = 0,
+                    LoginUserAccount = emp.UserAcount,
+                    LoginResult = "登录成功",
+                    IpAddr = ipaddress,
+                    IsLogOut = 0
+                },new OpertionUser() { UserId=emp?.KID.ToString()});
+                res.IsSucceed = tokenres.IsSucceed;
+                res.Message = tokenres.IsSucceed ? "登录成功" : "登录失败";
+                if (tokenres.IsSucceed)
+                {               
+                    res.Model = emp;
+                    res.TokenExpiration = tokenexpir;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(ex, "登录出错", LogLevel.D错误事件);
+                res.IsSucceed = false;
+            }
+            return res;
+
+        }
+
+        public static SysLoginUser EmployeeMobileLogin(string useraccount, string ipaddress, string agent, string dns)
+        {
+            return new SysLoginUser();
+        }
 
         /// <summary>
         /// Gets the Employee {TableNameComment} list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理

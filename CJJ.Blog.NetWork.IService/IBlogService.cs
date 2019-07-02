@@ -1129,11 +1129,30 @@ namespace CJJ.Blog.NetWork.IService
 
         #endregion
 
-		#region Employee 操作
+        #region Employee 操作
 
         #region 查询
-
-        Result EmployeePasswordLogin
+        /// <summary>
+        /// 密码登录
+        /// </summary>
+        /// <param name="useraccount"></param>
+        /// <param name="userpsw"></param>
+        /// <param name="ipaddress"></param>
+        /// <param name="agent"></param>
+        /// <param name="dns"></param>
+        /// <returns></returns>
+        [OperationContract]
+        SysLoginUser EmployeePasswordLogin(string useraccount,string userpsw,string ipaddress,string agent,string dns);
+        /// <summary>
+        /// 手机登录
+        /// </summary>
+        /// <param name="useraccount"></param>
+        /// <param name="ipaddress"></param>
+        /// <param name="agent"></param>
+        /// <param name="dns"></param>
+        /// <returns></returns>
+        [OperationContract]
+        SysLoginUser EmployeeMobileLogin(string useraccount, string ipaddress, string agent, string dns);
 
         /// <summary>
         /// Gets the menu list.
@@ -1791,6 +1810,13 @@ namespace CJJ.Blog.NetWork.IService
         #region Logintoken 操作
 
         #region 查询
+        /// <summary>
+        /// 根据token获取登录者
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        [OperationContract]
+        SysLoginUser GetSysLoginUserByToken(string token);
 
         /// <summary>
         /// Gets the menu list.

@@ -1344,9 +1344,18 @@ namespace CJJ.Blog.Service.Service
 
         #endregion
 
-		#region Employee操作
+        #region Employee操作
 
         #region 查询
+
+        public SysLoginUser EmployeePasswordLogin(string useraccount, string userpsw, string ipaddress, string agent, string dns)
+        {
+            return EmployeeLogic.EmployeePasswordLogin(useraccount, userpsw, ipaddress, agent, dns);
+        }
+        public SysLoginUser EmployeeMobileLogin(string useraccount, string ipaddress, string agent, string dns)
+        {
+            return EmployeeLogic.EmployeeMobileLogin(useraccount, ipaddress, agent, dns);
+        }
 
         /// <summary>
         /// 查询数据
@@ -2134,7 +2143,15 @@ namespace CJJ.Blog.Service.Service
         #region Logintoken操作
 
         #region 查询
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public SysLoginUser GetSysLoginUserByToken(string token)
+        {
+            return LogintokenLogic.GetSysLoginUserByToken(token);
+        }
         /// <summary>
         /// 查询数据
         /// </summary>

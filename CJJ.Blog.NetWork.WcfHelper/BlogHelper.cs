@@ -1336,9 +1336,34 @@ namespace CJJ.Blog.NetWork.WcfHelper
 
         #endregion
 
-		#region Employee 操作
+        #region Employee 操作
 
         #region 查询
+        /// <summary>
+        /// 密码登录
+        /// </summary>
+        /// <param name="useraccount"></param>
+        /// <param name="userpsw"></param>
+        /// <param name="ipaddress"></param>
+        /// <param name="agent"></param>
+        /// <param name="dns"></param>
+        /// <returns></returns>
+        public static SysLoginUser EmployeePasswordLogin(string useraccount, string userpsw, string ipaddress, string agent, string dns)
+        {
+            return Client.EmployeePasswordLogin(useraccount, userpsw, ipaddress, agent, dns);
+        }
+        /// <summary>
+        /// 手机登录
+        /// </summary>
+        /// <param name="useraccount"></param>
+        /// <param name="ipaddress"></param>
+        /// <param name="agent"></param>
+        /// <param name="dns"></param>
+        /// <returns></returns>
+        public static SysLoginUser EmployeeMobileLogin(string useraccount, string ipaddress, string agent, string dns)
+        {
+            return Client.EmployeeMobileLogin(useraccount, ipaddress, agent, dns);
+        }
 
         /// <summary>
         /// Gets the menu list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
@@ -2116,7 +2141,15 @@ namespace CJJ.Blog.NetWork.WcfHelper
         #region Logintoken 操作
 
         #region 查询
-
+        /// <summary>
+        /// 根据token获取sysuser
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public static SysLoginUser GetSysLoginUserByToken(string token)
+        {
+            return Client.GetSysLoginUserByToken(token);
+        }
         /// <summary>
         /// Gets the menu list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
