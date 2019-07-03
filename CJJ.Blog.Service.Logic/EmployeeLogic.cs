@@ -79,6 +79,7 @@ namespace CJJ.Blog.Service.Logic
                 {               
                     res.Model = emp;
                     res.TokenExpiration = tokenexpir;
+                    res.Token = token;
                 }
 
             }
