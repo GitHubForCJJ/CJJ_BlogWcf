@@ -54,6 +54,28 @@ namespace CJJ.Blog.Service.Repository
             base.DbConn = dbConn;
         }
 
+        public BloginfoView GetBlog(int kid)
+        {
+            var bloginfoView = new BloginfoView();
+            try
+            {
+                using (var db = new DBHelper())
+                {
+
+                    var sql = $"select a.*,b.Content from bloginfo a join blogcontent b  on  a.kid=b.BloginfoId where a.kid={kid} and a.IsDeleted=0 ";
+                  
+                    var data = db.ExecuteDataTable(sql);
+                    bloginfoView = ToEntity<BloginfoView>(data);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return bloginfoView;
+        }
+
         public List<BloginfoView> GetListBlog(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null,string orderby="")
         {
             var list = new List<BloginfoView>();

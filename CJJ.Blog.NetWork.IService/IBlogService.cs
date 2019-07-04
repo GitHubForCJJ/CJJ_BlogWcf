@@ -87,7 +87,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
         [OperationContract]
-        Bloginfo GetModelByKID_Bloginfo(int kID);
+        BloginfoView GetModelByKID_Bloginfo(int kID);
 
         /// <summary>
         /// 获取Model

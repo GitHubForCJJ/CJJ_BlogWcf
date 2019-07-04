@@ -112,7 +112,7 @@ namespace CJJ.Blog.NetWork.WcfHelper
         /// </summary>
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
-        public static Bloginfo GetModelByKID_Bloginfo(int kID)
+        public static BloginfoView GetModelByKID_Bloginfo(int kID)
         {
             return Client.GetModelByKID_Bloginfo(kID);
         }

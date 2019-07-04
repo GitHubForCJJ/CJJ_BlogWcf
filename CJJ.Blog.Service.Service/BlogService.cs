@@ -95,7 +95,7 @@ namespace CJJ.Blog.Service.Service
         /// </summary>
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
-        public Bloginfo GetModelByKID_Bloginfo(int kID)
+        public BloginfoView GetModelByKID_Bloginfo(int kID)
         {
             return BloginfoLogic.GetModelByKID(kID);
         }

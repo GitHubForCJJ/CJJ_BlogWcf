@@ -82,7 +82,8 @@ namespace CJJ.Blog.Service.Logic
             {
                 dicwhere.Add(nameof(Bloginfo.IsDeleted), 0);
             }
-            return BloginfoRepository.Instance.GetJsonListPage<Bloginfo>(limit, page, dicwhere, orderby);
+            var a= BloginfoRepository.Instance.GetJsonListPage<Bloginfo>(limit, page, dicwhere, orderby);
+            return a;
         }
 
         /// <summary>
@@ -158,10 +159,10 @@ namespace CJJ.Blog.Service.Logic
         /// </summary>
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
-        public static Bloginfo GetModelByKID(int kID)
+        public static BloginfoView GetModelByKID(int kID)
         {
-            var model = BloginfoRepository.Instance.GetEntityByKey<Bloginfo>(kID);
-            if (model != null && model.IsDeleted == 0)
+            var model = BloginfoRepository.Instance.GetBlog(kID);
+            if (model != null)
             {
                 return model;
             }
@@ -288,11 +289,29 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result Add(Dictionary<string, object> dicwhere, OpertionUser opertionUser)
         {
+            var res = new Result() { IsSucceed=false};
+
+            if (!dicwhere.ContainsKey(nameof(Blogcontent.Content)))
+            {
+                return new Result { IsSucceed = false };
+            }
             var ret = BloginfoRepository.Instance.Add<Bloginfo>(dicwhere);
+            if (ret > 0)
+            {
+                var content = BlogcontentRepository.Instance.Add<Blogcontent>(new Dictionary<string, object>() {
+                {nameof(Blogcontent.BloginfoId),ret },
+                {nameof(Blogcontent.Content),dicwhere[nameof(Blogcontent.Content)] },
+                    {nameof(Blogcontent.CreateUserId),dicwhere[nameof(Blogcontent.CreateUserId)] },
+                        {nameof(Blogcontent.CreateUserName),dicwhere[nameof(Blogcontent.CreateUserName)] }
+
+            });
+                res.IsSucceed = true;
+            }
+
 
             DbLog.WriteDbLog(nameof(Bloginfo), "添加记录", ret, dicwhere.ToJsonString(), opertionUser, OperLogType.添加);
 
-            return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
+            return res;
         }
 
         /// <summary>
@@ -380,11 +399,22 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result Update(Dictionary<string, object> dicwhere, int kID, OpertionUser opertionUser)
         {
+            var res = new Result() { IsSucceed = false };
             var ret = BloginfoRepository.Instance.UpdateByKey<Bloginfo>(dicwhere, kID);
+            if (ret > 0)
+            {
+                var cont = "";
+                if (dicwhere.ContainsKey(nameof(Blogcontent.Content)))
+                {
+                    cont = dicwhere[nameof(Blogcontent.Content)].ToString();
+                }
+                var t = BlogcontentRepository.Instance.UpdateByKey<Blogcontent>(dicwhere, kID);
+                res.IsSucceed = t > 0;          
+            }
 
             DbLog.WriteDbLog(nameof(Bloginfo), "修改记录", kID, dicwhere, OperLogType.编辑, opertionUser);
 
-            return new Result() { IsSucceed = ret > 0 };
+            return res;
         }
 
         /// <summary>
