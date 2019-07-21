@@ -150,6 +150,16 @@ namespace CJJ.Blog.Service.Models.Data
 		/// </summary>
 		[DataMember]
 		public int IsOriginal { get; set;}
+        /// <summary>
+        /// blog图片
+        /// </summary>
+        [DataMember]
+        public string Blogimg { get; set; }
+        /// <summary>
+        /// 序号
+        /// </summary>
+        [DataMember]
+        public string Sorc { get; set; }
 
 
         /*BC47A26EB9A59406057DDDD62D0898F4*/
