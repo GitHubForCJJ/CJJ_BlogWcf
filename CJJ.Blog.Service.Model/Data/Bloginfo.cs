@@ -150,6 +150,11 @@ namespace CJJ.Blog.Service.Models.Data
 		/// </summary>
 		[DataMember]
 		public int IsOriginal { get; set;}
+        /// <summary>
+        /// 序号越大越靠前
+        /// </summary>
+        [DataMember]
+        public int Sorc { get; set; }
 
 
         /*BC47A26EB9A59406057DDDD62D0898F4*/
