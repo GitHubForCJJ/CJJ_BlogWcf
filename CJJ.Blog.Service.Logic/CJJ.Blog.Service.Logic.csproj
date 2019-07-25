@@ -68,6 +68,9 @@
     <Compile Include="LogintokenLogic.cs" />
     <Compile Include="MediaLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SysmenuLogic.cs" />
+    <Compile Include="SysroleLogic.cs" />
+    <Compile Include="SysuserroleLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CJJ.Blog.Service.Model\CJJ.Blog.Service.Model.csproj">

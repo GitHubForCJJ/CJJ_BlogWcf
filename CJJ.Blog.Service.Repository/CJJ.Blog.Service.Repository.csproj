@@ -57,6 +57,9 @@
     <Compile Include="LogintokenRepository.cs" />
     <Compile Include="MediaRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SysmenuRepository.cs" />
+    <Compile Include="SysroleRepository.cs" />
+    <Compile Include="SysuserroleRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CJJ.Blog.Service.Model\CJJ.Blog.Service.Model.csproj">

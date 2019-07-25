@@ -1,10 +1,10 @@
 ﻿//-----------------------------------------------------------------------------------
-// <copyright file="Employee.cs" company="Go Enterprises">
+// <copyright file="Sysmenu.cs" company="Go Enterprises">
 // * copyright: (C) 2018 东走西走科技有限公司 版权所有。
 // * version  : 1.0.0.0
 // * author   : chenjianjun
-// * fileName : Employee.cs
-// * history  : created by chenjianjun 2019-06-14 15:52:46
+// * fileName : Sysmenu.cs
+// * history  : created by chenjianjun 2019-07-25 17:28:39
 // </copyright>
 //-----------------------------------------------------------------------------------
 
@@ -20,122 +20,23 @@ using DbLog = CJJ.Blog.Service.Logic.Fd_sys_operationlogLogic;
 using System.Data;
 using FastDev.Common.Extension;
 using CJJ.Blog.Service.Models.View;
-using CJJ.Blog.Service.Model.View;
-using FastDev.Log;
 
 namespace CJJ.Blog.Service.Logic
 {
     /// <summary>
-    /// Class Employee Logic.
+    /// Class Sysmenu Logic.
     /// </summary>
-    public class EmployeeLogic
+    public class SysmenuLogic
     {
         #region 查询
-        /// <summary>
-        /// 密码登录
-        /// </summary>
-        /// <param name="useraccount"></param>
-        /// <param name="userpsw"></param>
-        /// <param name="ipaddress"></param>
-        /// <param name="agent"></param>
-        /// <param name="dns"></param>
-        /// <returns></returns>
-        public static SysLoginUser EmployeePasswordLogin(string useraccount, string userpsw, string ipaddress, string agent, string dns)
-        {
-            SysLoginUser res = new SysLoginUser() { IsSucceed = false };
-            try
-            {
-                var psw = userpsw.ToUpper();
-                var emp = EmployeeLogic.GetModelByWhere(new Dictionary<string, object>()
-            {
-                {nameof(Employee.UserAcount),useraccount },
-                   {nameof(Employee.IsDeleted),0 },
-                      {nameof(Employee.States),0 }
-            });
-                if (emp.UserPassword.ToUpper() != psw)
-                {
-                    return res;
-                }
-                var logintype = "1";
-                //总共64位，4+22+5+1+32
-                var token = $"{DateTime.Now.ToString("yyMM")}{Guid.NewGuid().ToString("N").Substring(0, 22)}{emp.KID.ToString().PadLeft(5, '0')}{logintype}{Guid.NewGuid().ToString("N")}";
-                var tokenexpir = DateTime.Now.AddDays(ConfigUnit.ExpirationTimeOut).ToString();
-                res.TokenExpiration = tokenexpir;
-                var tokenres = LogintokenLogic.Add(new Logintoken
-                {
-                    Token = token,
-                    TokenExpiration = tokenexpir,
-                    CreateTime = DateTime.Now,
-                    LoginUserId = emp.KID.ToString(),
-                    LoginUserType = 0,
-                    LoginUserAccount = emp.UserAcount,
-                    LoginResult = "登录成功",
-                    IpAddr = ipaddress,
-                    IsLogOut = 0
-                }, new OpertionUser() { UserId = emp?.KID.ToString() });
-
-                #region 获取menu列表
-
-                #endregion
-
-                res.IsSucceed = tokenres.IsSucceed;
-                res.Message = tokenres.IsSucceed ? "登录成功" : "登录失败";
-                if (tokenres.IsSucceed)
-                {
-                    res.Model = emp;
-                    res.TokenExpiration = tokenexpir;
-                    res.Token = token;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                LogHelper.WriteLog(ex, "登录出错", LogLevel.D错误事件);
-                res.IsSucceed = false;
-            }
-            return res;
-
-        }
-        /// <summary>
-        /// 更根据用户id获取用户menu
-        /// </summary>
-        /// <param name="userid"></param>
-        /// <returns></returns>
-        private static UserAuthorMenu GetMenulistByUserid(int userid)
-        {
-            var list = new UserAuthorMenu(UserMenuList=new List<);
-            if (userid <= 0)
-            {
-                return list;
-            }
-            //1是超管
-            if (userid == 1)
-            {
-                var menus = SysuserroleLogic.GetAllList();
-
-            }
-            else
-            {
-                var userrole = SysuserroleLogic.GetModelByWhere(new Dictionary<string, object>()
-                  {
-                         { nameof(Sysuserrole.Userid),userid}
-                 });
-            }
-
-        }
-
-        public static SysLoginUser EmployeeMobileLogin(string useraccount, string ipaddress, string agent, string dns)
-        {
-            return new SysLoginUser();
-        }
 
         /// <summary>
-        /// Gets the Employee {TableNameComment} list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
+        /// Gets the Sysmenu {TableNameComment} list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="page">The page.</param>
         /// <param name="limit">The limit.</param>
         /// <returns>System.Collections.Generic.List&lt;Jbst.Service.Models.Data.Sys_menu&gt;.</returns>
-        public static List<Employee> GetListPage(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
+        public static List<Sysmenu> GetListPage(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
         {
             string orderby = "";
             if (dicwhere != null && dicwhere.ContainsKey(nameof(orderby)))
@@ -147,15 +48,15 @@ namespace CJJ.Blog.Service.Logic
             {
                 dicwhere = new Dictionary<string, object>();
             }
-            if (dicwhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Sysmenu.IsDeleted)))
             {
-                dicwhere[nameof(Employee.IsDeleted)] = 0;
+                dicwhere[nameof(Sysmenu.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Employee.IsDeleted), 0);
+                dicwhere.Add(nameof(Sysmenu.IsDeleted), 0);
             }
-            return EmployeeRepository.Instance.GetListPage<Employee>(limit, page, dicwhere, orderby).ToList();
+            return SysmenuRepository.Instance.GetListPage<Sysmenu>(limit, page, dicwhere, orderby).ToList();
         }
 
         /// <summary>
@@ -166,68 +67,68 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="orderby">排序字段</param>
         /// <param name="dicwhere">查询条件</param>
         /// <returns>FastJsonResult&lt;List&lt;Product&gt;&gt;.</returns>
-        public static FastJsonResult<List<Employee>> GetJsonListPage(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
+        public static FastJsonResult<List<Sysmenu>> GetJsonListPage(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
         {
             if (dicwhere == null)
             {
                 dicwhere = new Dictionary<string, object>();
             }
-            if (dicwhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Sysmenu.IsDeleted)))
             {
-                dicwhere[nameof(Employee.IsDeleted)] = 0;
+                dicwhere[nameof(Sysmenu.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Employee.IsDeleted), 0);
+                dicwhere.Add(nameof(Sysmenu.IsDeleted), 0);
             }
-            return EmployeeRepository.Instance.GetJsonListPage<Employee>(limit, page, dicwhere, orderby);
+            return SysmenuRepository.Instance.GetJsonListPage<Sysmenu>(limit, page, dicwhere, orderby);
         }
 
         /// <summary>
         /// 不分页获取所有数据
         /// </summary>
-        /// <returns>List&lt;Employee&gt;.</returns>
-        public static List<Employee> GetAllList()
+        /// <returns>List&lt;Sysmenu&gt;.</returns>
+        public static List<Sysmenu> GetAllList()
         {
             var dic = new Dictionary<string, object>();
-            dic.Add(nameof(Employee.IsDeleted), 0);
-            return EmployeeRepository.Instance.GetList<Employee>(dic).ToList();
+            dic.Add(nameof(Sysmenu.IsDeleted), 0);
+            return SysmenuRepository.Instance.GetList<Sysmenu>(dic).ToList();
         }
 
         /// <summary>
         /// 按条件获取数据列表 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
-        /// <returns>List&lt;Employee&gt;.</returns>
+        /// <returns>List&lt;Sysmenu&gt;.</returns>
         public static DataTable GetDataTable(Dictionary<string, object> dicwhere, int page = 1, int limit = 10)
         {
-            if (dicwhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Sysmenu.IsDeleted)))
             {
-                dicwhere[nameof(Employee.IsDeleted)] = 0;
+                dicwhere[nameof(Sysmenu.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Employee.IsDeleted), 0);
+                dicwhere.Add(nameof(Sysmenu.IsDeleted), 0);
             }
-            return EmployeeRepository.Instance.GetDataTablePage<Employee>(limit, page, dicwhere);
+            return SysmenuRepository.Instance.GetDataTablePage<Sysmenu>(limit, page, dicwhere);
         }
 
         /// <summary> 
         /// 按条件获取数据列表 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
-        /// <returns>List&lt;Employee&gt;.</returns>
-        public static List<Employee> GetList(Dictionary<string, object> dicwhere)
+        /// <returns>List&lt;Sysmenu&gt;.</returns>
+        public static List<Sysmenu> GetList(Dictionary<string, object> dicwhere)
         {
-            if (dicwhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Sysmenu.IsDeleted)))
             {
-                dicwhere[nameof(Employee.IsDeleted)] = 0;
+                dicwhere[nameof(Sysmenu.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Employee.IsDeleted), 0);
+                dicwhere.Add(nameof(Sysmenu.IsDeleted), 0);
             }
-            return EmployeeRepository.Instance.GetList<Employee>(dicwhere).ToList();
+            return SysmenuRepository.Instance.GetList<Sysmenu>(dicwhere).ToList();
         }
 
         /// <summary>
@@ -240,15 +141,15 @@ namespace CJJ.Blog.Service.Logic
             {
                 dicwhere = new Dictionary<string, object>();
             }
-            if (dicwhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Sysmenu.IsDeleted)))
             {
-                dicwhere[nameof(Employee.IsDeleted)] = 0;
+                dicwhere[nameof(Sysmenu.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Employee.IsDeleted), 0);
+                dicwhere.Add(nameof(Sysmenu.IsDeleted), 0);
             }
-            return EmployeeRepository.Instance.GetCount<Employee>(dicwhere);
+            return SysmenuRepository.Instance.GetCount<Sysmenu>(dicwhere);
         }
 
         /// <summary>
@@ -256,9 +157,9 @@ namespace CJJ.Blog.Service.Logic
         /// </summary>
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
-        public static Employee GetModelByKID(int kID)
+        public static Sysmenu GetModelByKID(int kID)
         {
-            var model = EmployeeRepository.Instance.GetEntityByKey<Employee>(kID);
+            var model = SysmenuRepository.Instance.GetEntityByKey<Sysmenu>(kID);
             if (model != null && model.IsDeleted == 0)
             {
                 return model;
@@ -274,17 +175,17 @@ namespace CJJ.Blog.Service.Logic
         /// </summary>
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
-        public static Employee GetModelByWhere(Dictionary<string, object> dicwhere)
+        public static Sysmenu GetModelByWhere(Dictionary<string, object> dicwhere)
         {
-            if (dicwhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Sysmenu.IsDeleted)))
             {
-                dicwhere[nameof(Employee.IsDeleted)] = 0;
+                dicwhere[nameof(Sysmenu.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Employee.IsDeleted), 0);
+                dicwhere.Add(nameof(Sysmenu.IsDeleted), 0);
             }
-            return EmployeeRepository.Instance.GetEntity<Employee>(dicwhere);
+            return SysmenuRepository.Instance.GetEntity<Sysmenu>(dicwhere);
         }
 
         /// <summary>
@@ -299,26 +200,26 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="page">当前页数</param>
         /// <param name="limit">当前页显示的数据条数</param>
         /// <returns></returns>
-        public static List<Employee> GetListByInSelect(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
+        public static List<Sysmenu> GetListByInSelect(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
         {
-            if (mainDicWhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (mainDicWhere.Keys.Contains(nameof(Sysmenu.IsDeleted)))
             {
-                mainDicWhere[nameof(Employee.IsDeleted)] = 0;
+                mainDicWhere[nameof(Sysmenu.IsDeleted)] = 0;
             }
             else
             {
-                mainDicWhere.Add(nameof(Employee.IsDeleted), 0);
+                mainDicWhere.Add(nameof(Sysmenu.IsDeleted), 0);
             }
 
-            if (subDicWhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (subDicWhere.Keys.Contains(nameof(Sysmenu.IsDeleted)))
             {
-                subDicWhere[nameof(Employee.IsDeleted)] = 0;
+                subDicWhere[nameof(Sysmenu.IsDeleted)] = 0;
             }
             else
             {
-                subDicWhere.Add(nameof(Employee.IsDeleted), 0);
+                subDicWhere.Add(nameof(Sysmenu.IsDeleted), 0);
             }
-            return EmployeeRepository.Instance.GetListByInSelect<Employee>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit).ToList();
+            return SysmenuRepository.Instance.GetListByInSelect<Sysmenu>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit).ToList();
         }
 
 
@@ -333,24 +234,24 @@ namespace CJJ.Blog.Service.Logic
         /// <returns></returns>
         public static int GetCountByInSelect(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere)
         {
-            if (mainDicWhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (mainDicWhere.Keys.Contains(nameof(Sysmenu.IsDeleted)))
             {
-                mainDicWhere[nameof(Employee.IsDeleted)] = 0;
+                mainDicWhere[nameof(Sysmenu.IsDeleted)] = 0;
             }
             else
             {
-                mainDicWhere.Add(nameof(Employee.IsDeleted), 0);
+                mainDicWhere.Add(nameof(Sysmenu.IsDeleted), 0);
             }
 
-            if (subDicWhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (subDicWhere.Keys.Contains(nameof(Sysmenu.IsDeleted)))
             {
-                subDicWhere[nameof(Employee.IsDeleted)] = 0;
+                subDicWhere[nameof(Sysmenu.IsDeleted)] = 0;
             }
             else
             {
-                subDicWhere.Add(nameof(Employee.IsDeleted), 0);
+                subDicWhere.Add(nameof(Sysmenu.IsDeleted), 0);
             }
-            return EmployeeRepository.Instance.GetCountByInSelect<Employee>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
+            return SysmenuRepository.Instance.GetCountByInSelect<Sysmenu>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
         }
 
         /// <summary>
@@ -363,15 +264,15 @@ namespace CJJ.Blog.Service.Logic
         /// <returns></returns>
         public static DataTable GetDataByGroup(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10)
         {
-            if (dicWhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (dicWhere.Keys.Contains(nameof(Sysmenu.IsDeleted)))
             {
-                dicWhere[nameof(Employee.IsDeleted)] = 0;
+                dicWhere[nameof(Sysmenu.IsDeleted)] = 0;
             }
             else
             {
-                dicWhere.Add(nameof(Employee.IsDeleted), 0);
+                dicWhere.Add(nameof(Sysmenu.IsDeleted), 0);
             }
-            return EmployeeRepository.Instance.GetDataByGroup<Employee>(groupByFields, dicWhere, page, limit);
+            return SysmenuRepository.Instance.GetDataByGroup<Sysmenu>(groupByFields, dicWhere, page, limit);
         }
 
         #endregion
@@ -386,9 +287,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result Add(Dictionary<string, object> dicwhere, OpertionUser opertionUser)
         {
-            var ret = EmployeeRepository.Instance.Add<Employee>(dicwhere);
+            var ret = SysmenuRepository.Instance.Add<Sysmenu>(dicwhere);
 
-            DbLog.WriteDbLog(nameof(Employee), "添加记录", ret, dicwhere.ToJsonString(), opertionUser, OperLogType.添加);
+            DbLog.WriteDbLog(nameof(Sysmenu), "添加记录", ret, dicwhere.ToJsonString(), opertionUser, OperLogType.添加);
 
             return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
         }
@@ -399,19 +300,19 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="entity">The entity.</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public static Result Add(Employee entity, OpertionUser opertionUser)
+        public static Result Add(Sysmenu entity, OpertionUser opertionUser)
         {
             try
             {
-                var ret = EmployeeRepository.Instance.Add<Employee>(entity);
+                var ret = SysmenuRepository.Instance.Add<Sysmenu>(entity);
 
-                DbLog.WriteDbLog(nameof(Employee), "添加记录", ret, entity.ToJsonString(), opertionUser, OperLogType.添加);
+                DbLog.WriteDbLog(nameof(Sysmenu), "添加记录", ret, entity.ToJsonString(), opertionUser, OperLogType.添加);
 
                 return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
             }
             catch (Exception ex)
             {
-                FastDev.Log.LogHelper.WriteLog(ex, "EmployeeLogic.Add Entity异常");
+                FastDev.Log.LogHelper.WriteLog(ex, "SysmenuLogic.Add Entity异常");
 
                 return new Result() { IsSucceed = false, Message = ex.Message };
             }
@@ -423,19 +324,19 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="entity">The entity.</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public static Result Adds(List<Employee> entity, OpertionUser opertionUser)
+        public static Result Adds(List<Sysmenu> entity, OpertionUser opertionUser)
         {
             try
             {
-                var ret = EmployeeRepository.Instance.Adds<Employee>(entity);
+                var ret = SysmenuRepository.Instance.Adds<Sysmenu>(entity);
 
-                DbLog.WriteDbLog<List<Employee>>(nameof(Employee), "添加记录", ret, entity, opertionUser, OperLogType.添加);
+                DbLog.WriteDbLog<List<Sysmenu>>(nameof(Sysmenu), "添加记录", ret, entity, opertionUser, OperLogType.添加);
 
                 return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
             }
             catch (Exception ex)
             {
-                FastDev.Log.LogHelper.WriteLog(ex, "EmployeeLogic.Add Entity异常");
+                FastDev.Log.LogHelper.WriteLog(ex, "SysmenuLogic.Add Entity异常");
 
                 return new Result() { IsSucceed = false, Message = ex.Message };
             }
@@ -452,15 +353,15 @@ namespace CJJ.Blog.Service.Logic
         {
             try
             {
-                var ret = EmployeeRepository.Instance.Adds<Employee>(diclst);
+                var ret = SysmenuRepository.Instance.Adds<Sysmenu>(diclst);
 
-                DbLog.WriteDbLog<List<Dictionary<string, object>>>(nameof(Employee), "添加记录", ret, diclst, opertionUser, OperLogType.添加);
+                DbLog.WriteDbLog<List<Dictionary<string, object>>>(nameof(Sysmenu), "添加记录", ret, diclst, opertionUser, OperLogType.添加);
 
                 return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
             }
             catch (Exception ex)
             {
-                FastDev.Log.LogHelper.WriteLog(ex, "EmployeeLogic.Adds diclst异常");
+                FastDev.Log.LogHelper.WriteLog(ex, "SysmenuLogic.Adds diclst异常");
 
                 return new Result() { IsSucceed = false, Message = ex.Message };
             }
@@ -478,9 +379,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result Update(Dictionary<string, object> dicwhere, int kID, OpertionUser opertionUser)
         {
-            var ret = EmployeeRepository.Instance.UpdateByKey<Employee>(dicwhere, kID);
+            var ret = SysmenuRepository.Instance.UpdateByKey<Sysmenu>(dicwhere, kID);
 
-            DbLog.WriteDbLog(nameof(Employee), "修改记录", kID, dicwhere, OperLogType.编辑, opertionUser);
+            DbLog.WriteDbLog(nameof(Sysmenu), "修改记录", kID, dicwhere, OperLogType.编辑, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }
@@ -494,9 +395,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result UpdateByWhere(Dictionary<string, object> valuedata, Dictionary<string, object> dicwhere, OpertionUser opertionUser)
         {
-            var ret = EmployeeRepository.Instance.Update<Employee>(valuedata, dicwhere);
+            var ret = SysmenuRepository.Instance.Update<Sysmenu>(valuedata, dicwhere);
 
-            DbLog.WriteDbLog(nameof(Employee), "批量修改记录", valuedata.ToJsonString(), valuedata, OperLogType.编辑, opertionUser);
+            DbLog.WriteDbLog(nameof(Sysmenu), "批量修改记录", valuedata.ToJsonString(), valuedata, OperLogType.编辑, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }
@@ -511,9 +412,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns></returns>
         public static Result UpdateNums(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
         {
-            var ret = EmployeeRepository.Instance.UpdateNums<Employee>(fields, addNums, whereKey);
+            var ret = SysmenuRepository.Instance.UpdateNums<Sysmenu>(fields, addNums, whereKey);
 
-            DbLog.WriteDbLog(nameof(Employee), "修改记录", whereKey.ToJsonString(), whereKey, OperLogType.编辑, opertionUser);
+            DbLog.WriteDbLog(nameof(Sysmenu), "修改记录", whereKey.ToJsonString(), whereKey, OperLogType.编辑, opertionUser);
 
             return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
         }
@@ -530,20 +431,20 @@ namespace CJJ.Blog.Service.Logic
         public static Result Delete(string kid, OpertionUser opertionUser)
         {
             var deldic = new Dictionary<string, object>();
-            deldic.Add(nameof(Employee.IsDeleted), 1);
+            deldic.Add(nameof(Sysmenu.IsDeleted), 1);
 
             var keydic = new Dictionary<string, object>();
             if (kid.IndexOf(",") > -1)
             {
-                keydic.Add(nameof(Employee.KID) + "|i", kid);
+                keydic.Add(nameof(Sysmenu.KID) + "|i", kid);
             }
             else
             {
-                keydic.Add(nameof(Employee.KID), kid);
+                keydic.Add(nameof(Sysmenu.KID), kid);
             }
-            var ret = EmployeeRepository.Instance.Update<Employee>(deldic, keydic);
+            var ret = SysmenuRepository.Instance.Update<Sysmenu>(deldic, keydic);
 
-            DbLog.WriteDbLog(nameof(Employee), "删除记录", kid, null, OperLogType.删除, opertionUser);
+            DbLog.WriteDbLog(nameof(Sysmenu), "删除记录", kid, null, OperLogType.删除, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }
@@ -557,11 +458,11 @@ namespace CJJ.Blog.Service.Logic
         public static Result DeleteByWhere(Dictionary<string, object> dicwhere, OpertionUser opertionUser)
         {
             var deldic = new Dictionary<string, object>();
-            deldic.Add(nameof(Employee.IsDeleted), 1);
+            deldic.Add(nameof(Sysmenu.IsDeleted), 1);
 
-            var ret = EmployeeRepository.Instance.Update<Employee>(deldic, dicwhere);
+            var ret = SysmenuRepository.Instance.Update<Sysmenu>(deldic, dicwhere);
 
-            DbLog.WriteDbLog(nameof(Employee), "批量删除记录", dicwhere.ToJsonString(), dicwhere, OperLogType.删除, opertionUser);
+            DbLog.WriteDbLog(nameof(Sysmenu), "批量删除记录", dicwhere.ToJsonString(), dicwhere, OperLogType.删除, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }

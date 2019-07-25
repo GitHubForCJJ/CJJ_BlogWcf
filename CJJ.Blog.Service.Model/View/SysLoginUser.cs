@@ -22,7 +22,15 @@ namespace CJJ.Blog.Service.Model.View
         /// </summary>
         [DataMember]
         public string TokenExpiration { get; set; }
+        /// <summary>
+        /// 员工对象
+        /// </summary>
         [DataMember]
         public Employee Model { get; set; }
+        /// <summary>
+        /// 用户权限列表
+        /// </summary>
+        [DataMember]
+        public UserAuthorMenu UserAuthorMenu { get; set; }
     }
 }

@@ -2672,6 +2672,791 @@ namespace CJJ.Blog.Service.Service
 
         #endregion
 
+        #region Sysmenu操作
+
+        #region 查询
+
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="page">页数</param>
+        /// <param name="limit">当前页条数</param>
+        /// <returns>System.Collections.Generic.List&lt;FastDev.Service.Models.Data.Sys_menu&gt;.</returns>
+        public List<Sysmenu> GetListPage_Sysmenu(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
+        {
+            return SysmenuLogic.GetListPage(page, limit, dicwhere).ToList();
+        }
+
+        /// <summary>
+        /// 获取Json格式的数据
+        /// </summary>
+        /// <param name="page">当前页码</param>
+        /// <param name="limit">当前也显示条数</param>
+        /// <param name="orderby">排序字段</param>
+        /// <param name="dicwhere">查询条件</param>
+        /// <returns></returns>
+        public FastJsonResult<List<Sysmenu>> GetJsonListPage_Sysmenu(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
+        {
+            return SysmenuLogic.GetJsonListPage(page, limit, orderby, dicwhere);
+        }
+
+        /// <summary>
+        /// 不分页获取所有数据
+        /// </summary>
+        /// <returns>List&lt;Sys_role&gt;.</returns>
+        public List<Sysmenu> GetAllList_Sysmenu()
+        {
+            return SysmenuLogic.GetAllList();
+        }
+
+        /// <summary>
+        /// 按条件获取数据列表
+        /// </summary>
+        /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
+        /// <returns>List&lt;Sys_role&gt;.</returns>
+        public List<Sysmenu> GetList_Sysmenu(Dictionary<string, object> dicwhere)
+        {
+            return SysmenuLogic.GetList(dicwhere);
+        }
+
+        /// <summary>
+        /// 获取数据总条数
+        /// </summary>
+        /// <returns>System.Int32.</returns>
+        public int GetCount_Sysmenu(Dictionary<string, object> dicwhere = null)
+        {
+            return SysmenuLogic.GetCount(dicwhere);
+        }
+
+        /// <summary>
+        /// 获取Model
+        /// </summary>
+        /// <param name="kID">The k identifier.</param>
+        /// <returns>System.Int32.</returns>
+        public Sysmenu GetModelByKID_Sysmenu(int kID)
+        {
+            return SysmenuLogic.GetModelByKID(kID);
+        }
+
+        /// <summary>
+        /// 获取Model
+        /// </summary>
+        /// <param name="kID">The k identifier.</param>
+        /// <returns>System.Int32.</returns>
+        public Sysmenu GetModelByWhere_Sysmenu(Dictionary<string, object> dicwhere)
+        {
+            return SysmenuLogic.GetModelByWhere(dicwhere);
+        }
+
+
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="dicwhere">条件查询</param>
+        /// <returns></returns>
+        public DataTable GetDataTable_Sysmenu(Dictionary<string, object> dicwhere, int page = 1, int limit = 10)
+        {
+            return SysmenuLogic.GetDataTable(dicwhere, page, limit);
+        }
+
+        /// <summary>
+        /// 根据In子查询查询数据
+        /// </summary>
+        /// <param name="subTableName">子表表名</param>
+        /// <param name="mainTableFields">主表 in 的字段名</param>
+        /// <param name="subTableFields">子表查询字段</param>
+        /// <param name="mainDicWhere">主表的Where条件</param>
+        /// <param name="subDicWhere">子表的Where条件</param>
+        /// <param name="page">当前页数</param>
+        /// <param name="limit">当前页显示的数据条数</param>
+        /// <returns></returns>
+        public List<Sysmenu> GetListByInSelect_Sysmenu(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
+        {
+            return SysmenuLogic.GetListByInSelect(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit);
+        }
+
+        /// <summary>
+        /// 根据In子查询查询数据
+        /// </summary>
+        /// <param name="subTableName">子表表名</param>
+        /// <param name="mainTableFields">主表 in 的字段名</param>
+        /// <param name="subTableFields">子表查询字段</param>
+        /// <param name="mainDicWhere">主表的Where条件</param>
+        /// <param name="subDicWhere">子表的Where条件</param>
+        /// <returns></returns>
+        public int GetCountByInSelect_Sysmenu(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere)
+        {
+            return SysmenuLogic.GetCountByInSelect(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
+        }
+
+        /// <summary>
+        /// 根据Where条件Group查询数据,返回的列只比对Groupby的字段多一列,coun(1) As GroupCnt 目前只支持MySql
+        /// </summary>
+        /// <param name="groupByFields">分组字段</param>
+        /// <param name="dicWhere">查询条件</param>
+        /// <param name="page">当前页码</param>
+        /// <param name="limit">当前条数</param>
+        /// <returns></returns>
+        public DataTable GetDataByGroup_Sysmenu(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10)
+        {
+            return SysmenuLogic.GetDataByGroup(groupByFields, dicWhere, page, limit);
+        }
+
+        #endregion
+
+        #region 添加
+
+        /// <summary>
+        /// 添加多条数据 根据字典添加
+        /// </summary>
+        /// <param name="dicdata">添加的字典实体</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result Add_Sysmenu(Dictionary<string, object> dicdata, OpertionUser opertionUser)
+        {
+            return SysmenuLogic.Add(dicdata, opertionUser);
+        }
+
+        /// <summary>
+        /// 添加多条数据 根据字典添加
+        /// </summary>
+        /// <param name="dicdata">添加的字典实体</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns></returns>
+        public Result Adds_Sysmenu(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser)
+        {
+            return SysmenuLogic.Adds(dicdata, opertionUser);
+        }
+
+        /// <summary>
+        /// 添加实体
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+		/// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result AddByEntity_Sysmenu(Sysmenu entity, OpertionUser opertionUser)
+        {
+            return SysmenuLogic.Add(entity, opertionUser);
+        }
+
+        /// <summary>
+        /// 批量添加实体
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+		/// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result AddByEntitys_Sysmenu(List<Sysmenu> entitys, OpertionUser opertionUser)
+        {
+            return SysmenuLogic.Adds(entitys, opertionUser);
+        }
+        #endregion
+
+        #region 修改
+
+        /// <summary>
+        /// Edits the specified dicdata.
+        /// </summary>
+        /// <param name="dicdata">修改条件</param>
+        /// <param name="kID">当前数据主键KID</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result Update_Sysmenu(Dictionary<string, object> dicdata, int kID, OpertionUser opertionUser)
+        {
+            return SysmenuLogic.Update(dicdata, kID, opertionUser);
+        }
+
+        /// <summary>
+        /// Edits the specified dicdata.
+        /// </summary>
+        /// <param name="valuedata">修改值</param>
+        /// <param name="keydata">编辑的Where条件</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result UpdateByWhere_Sysmenu(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser)
+        {
+            return SysmenuLogic.UpdateByWhere(valuedata, keydata, opertionUser);
+        }
+
+        /// <summary>
+        /// 修改次数
+        /// </summary>
+        /// <param name="fields">需要修改的字段</param>
+        /// <param name="addNums">次数 负数表示减少 正数表示增加</param>
+        /// <param name="whereKey">字典条件</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns></returns>
+        public Result UpdateNums_Sysmenu(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
+        {
+            return SysmenuLogic.UpdateNums(fields, addNums, whereKey, opertionUser);
+        }
+
+        #endregion
+
+        #region 删除
+        /// <summary>
+        /// 删除数据,逗号连接多条
+        /// </summary>
+        /// <param name="kid">主键ID,多个逗号连接</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result Delete_Sysmenu(string kid, OpertionUser opertionUser)
+        {
+            return SysmenuLogic.Delete(kid, opertionUser);
+        }
+
+        /// <summary>
+        /// Deletes the specified kid.
+        /// </summary>
+        /// <param name="keydata">Where条件</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result DeleteByWhere_Sysmenu(Dictionary<string, object> keydata, OpertionUser opertionUser)
+        {
+            return SysmenuLogic.DeleteByWhere(keydata, opertionUser);
+        }
+        #endregion
+
+        #region 数据导出
+
+        /// <summary>
+        /// Exports the excel file_ product.
+        /// </summary>
+        /// <param name="keydata">查询条件</param>
+        /// <param name="fileFullName">文件名全路径</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>FastDev.Common.Code.Result.</returns>
+        public Result ExportExcelFile_Sysmenu(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser)
+        {
+            return SysmenuLogic.ExportExcelFile(keydata, fileFullName, opertionUser);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Sysrole操作
+
+        #region 查询
+
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="page">页数</param>
+        /// <param name="limit">当前页条数</param>
+        /// <returns>System.Collections.Generic.List&lt;FastDev.Service.Models.Data.Sys_menu&gt;.</returns>
+        public List<Sysrole> GetListPage_Sysrole(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
+        {
+            return SysroleLogic.GetListPage(page, limit, dicwhere).ToList();
+        }
+
+        /// <summary>
+        /// 获取Json格式的数据
+        /// </summary>
+        /// <param name="page">当前页码</param>
+        /// <param name="limit">当前也显示条数</param>
+        /// <param name="orderby">排序字段</param>
+        /// <param name="dicwhere">查询条件</param>
+        /// <returns></returns>
+        public FastJsonResult<List<Sysrole>> GetJsonListPage_Sysrole(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
+        {
+            return SysroleLogic.GetJsonListPage(page, limit, orderby, dicwhere);
+        }
+
+        /// <summary>
+        /// 不分页获取所有数据
+        /// </summary>
+        /// <returns>List&lt;Sys_role&gt;.</returns>
+        public List<Sysrole> GetAllList_Sysrole()
+        {
+            return SysroleLogic.GetAllList();
+        }
+
+        /// <summary>
+        /// 按条件获取数据列表
+        /// </summary>
+        /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
+        /// <returns>List&lt;Sys_role&gt;.</returns>
+        public List<Sysrole> GetList_Sysrole(Dictionary<string, object> dicwhere)
+        {
+            return SysroleLogic.GetList(dicwhere);
+        }
+
+        /// <summary>
+        /// 获取数据总条数
+        /// </summary>
+        /// <returns>System.Int32.</returns>
+        public int GetCount_Sysrole(Dictionary<string, object> dicwhere = null)
+        {
+            return SysroleLogic.GetCount(dicwhere);
+        }
+
+        /// <summary>
+        /// 获取Model
+        /// </summary>
+        /// <param name="kID">The k identifier.</param>
+        /// <returns>System.Int32.</returns>
+        public Sysrole GetModelByKID_Sysrole(int kID)
+        {
+            return SysroleLogic.GetModelByKID(kID);
+        }
+
+        /// <summary>
+        /// 获取Model
+        /// </summary>
+        /// <param name="kID">The k identifier.</param>
+        /// <returns>System.Int32.</returns>
+        public Sysrole GetModelByWhere_Sysrole(Dictionary<string, object> dicwhere)
+        {
+            return SysroleLogic.GetModelByWhere(dicwhere);
+        }
+
+
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="dicwhere">条件查询</param>
+        /// <returns></returns>
+        public DataTable GetDataTable_Sysrole(Dictionary<string, object> dicwhere, int page = 1, int limit = 10)
+        {
+            return SysroleLogic.GetDataTable(dicwhere, page, limit);
+        }
+
+        /// <summary>
+        /// 根据In子查询查询数据
+        /// </summary>
+        /// <param name="subTableName">子表表名</param>
+        /// <param name="mainTableFields">主表 in 的字段名</param>
+        /// <param name="subTableFields">子表查询字段</param>
+        /// <param name="mainDicWhere">主表的Where条件</param>
+        /// <param name="subDicWhere">子表的Where条件</param>
+        /// <param name="page">当前页数</param>
+        /// <param name="limit">当前页显示的数据条数</param>
+        /// <returns></returns>
+        public List<Sysrole> GetListByInSelect_Sysrole(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
+        {
+            return SysroleLogic.GetListByInSelect(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit);
+        }
+
+        /// <summary>
+        /// 根据In子查询查询数据
+        /// </summary>
+        /// <param name="subTableName">子表表名</param>
+        /// <param name="mainTableFields">主表 in 的字段名</param>
+        /// <param name="subTableFields">子表查询字段</param>
+        /// <param name="mainDicWhere">主表的Where条件</param>
+        /// <param name="subDicWhere">子表的Where条件</param>
+        /// <returns></returns>
+        public int GetCountByInSelect_Sysrole(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere)
+        {
+            return SysroleLogic.GetCountByInSelect(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
+        }
+
+        /// <summary>
+        /// 根据Where条件Group查询数据,返回的列只比对Groupby的字段多一列,coun(1) As GroupCnt 目前只支持MySql
+        /// </summary>
+        /// <param name="groupByFields">分组字段</param>
+        /// <param name="dicWhere">查询条件</param>
+        /// <param name="page">当前页码</param>
+        /// <param name="limit">当前条数</param>
+        /// <returns></returns>
+        public DataTable GetDataByGroup_Sysrole(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10)
+        {
+            return SysroleLogic.GetDataByGroup(groupByFields, dicWhere, page, limit);
+        }
+
+        #endregion
+
+        #region 添加
+
+        /// <summary>
+        /// 添加多条数据 根据字典添加
+        /// </summary>
+        /// <param name="dicdata">添加的字典实体</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result Add_Sysrole(Dictionary<string, object> dicdata, OpertionUser opertionUser)
+        {
+            return SysroleLogic.Add(dicdata, opertionUser);
+        }
+
+        /// <summary>
+        /// 添加多条数据 根据字典添加
+        /// </summary>
+        /// <param name="dicdata">添加的字典实体</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns></returns>
+        public Result Adds_Sysrole(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser)
+        {
+            return SysroleLogic.Adds(dicdata, opertionUser);
+        }
+
+        /// <summary>
+        /// 添加实体
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+		/// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result AddByEntity_Sysrole(Sysrole entity, OpertionUser opertionUser)
+        {
+            return SysroleLogic.Add(entity, opertionUser);
+        }
+
+        /// <summary>
+        /// 批量添加实体
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+		/// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result AddByEntitys_Sysrole(List<Sysrole> entitys, OpertionUser opertionUser)
+        {
+            return SysroleLogic.Adds(entitys, opertionUser);
+        }
+        #endregion
+
+        #region 修改
+
+        /// <summary>
+        /// Edits the specified dicdata.
+        /// </summary>
+        /// <param name="dicdata">修改条件</param>
+        /// <param name="kID">当前数据主键KID</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result Update_Sysrole(Dictionary<string, object> dicdata, int kID, OpertionUser opertionUser)
+        {
+            return SysroleLogic.Update(dicdata, kID, opertionUser);
+        }
+
+        /// <summary>
+        /// Edits the specified dicdata.
+        /// </summary>
+        /// <param name="valuedata">修改值</param>
+        /// <param name="keydata">编辑的Where条件</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result UpdateByWhere_Sysrole(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser)
+        {
+            return SysroleLogic.UpdateByWhere(valuedata, keydata, opertionUser);
+        }
+
+        /// <summary>
+        /// 修改次数
+        /// </summary>
+        /// <param name="fields">需要修改的字段</param>
+        /// <param name="addNums">次数 负数表示减少 正数表示增加</param>
+        /// <param name="whereKey">字典条件</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns></returns>
+        public Result UpdateNums_Sysrole(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
+        {
+            return SysroleLogic.UpdateNums(fields, addNums, whereKey, opertionUser);
+        }
+
+        #endregion
+
+        #region 删除
+        /// <summary>
+        /// 删除数据,逗号连接多条
+        /// </summary>
+        /// <param name="kid">主键ID,多个逗号连接</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result Delete_Sysrole(string kid, OpertionUser opertionUser)
+        {
+            return SysroleLogic.Delete(kid, opertionUser);
+        }
+
+        /// <summary>
+        /// Deletes the specified kid.
+        /// </summary>
+        /// <param name="keydata">Where条件</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result DeleteByWhere_Sysrole(Dictionary<string, object> keydata, OpertionUser opertionUser)
+        {
+            return SysroleLogic.DeleteByWhere(keydata, opertionUser);
+        }
+        #endregion
+
+        #region 数据导出
+
+        /// <summary>
+        /// Exports the excel file_ product.
+        /// </summary>
+        /// <param name="keydata">查询条件</param>
+        /// <param name="fileFullName">文件名全路径</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>FastDev.Common.Code.Result.</returns>
+        public Result ExportExcelFile_Sysrole(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser)
+        {
+            return SysroleLogic.ExportExcelFile(keydata, fileFullName, opertionUser);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Sysuserrole操作
+
+        #region 查询
+
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="page">页数</param>
+        /// <param name="limit">当前页条数</param>
+        /// <returns>System.Collections.Generic.List&lt;FastDev.Service.Models.Data.Sys_menu&gt;.</returns>
+        public List<Sysuserrole> GetListPage_Sysuserrole(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
+        {
+            return SysuserroleLogic.GetListPage(page, limit, dicwhere).ToList();
+        }
+
+        /// <summary>
+        /// 获取Json格式的数据
+        /// </summary>
+        /// <param name="page">当前页码</param>
+        /// <param name="limit">当前也显示条数</param>
+        /// <param name="orderby">排序字段</param>
+        /// <param name="dicwhere">查询条件</param>
+        /// <returns></returns>
+        public FastJsonResult<List<Sysuserrole>> GetJsonListPage_Sysuserrole(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
+        {
+            return SysuserroleLogic.GetJsonListPage(page, limit, orderby, dicwhere);
+        }
+
+        /// <summary>
+        /// 不分页获取所有数据
+        /// </summary>
+        /// <returns>List&lt;Sys_role&gt;.</returns>
+        public List<Sysuserrole> GetAllList_Sysuserrole()
+        {
+            return SysuserroleLogic.GetAllList();
+        }
+
+        /// <summary>
+        /// 按条件获取数据列表
+        /// </summary>
+        /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
+        /// <returns>List&lt;Sys_role&gt;.</returns>
+        public List<Sysuserrole> GetList_Sysuserrole(Dictionary<string, object> dicwhere)
+        {
+            return SysuserroleLogic.GetList(dicwhere);
+        }
+
+        /// <summary>
+        /// 获取数据总条数
+        /// </summary>
+        /// <returns>System.Int32.</returns>
+        public int GetCount_Sysuserrole(Dictionary<string, object> dicwhere = null)
+        {
+            return SysuserroleLogic.GetCount(dicwhere);
+        }
+
+        /// <summary>
+        /// 获取Model
+        /// </summary>
+        /// <param name="kID">The k identifier.</param>
+        /// <returns>System.Int32.</returns>
+        public Sysuserrole GetModelByKID_Sysuserrole(int kID)
+        {
+            return SysuserroleLogic.GetModelByKID(kID);
+        }
+
+        /// <summary>
+        /// 获取Model
+        /// </summary>
+        /// <param name="kID">The k identifier.</param>
+        /// <returns>System.Int32.</returns>
+        public Sysuserrole GetModelByWhere_Sysuserrole(Dictionary<string, object> dicwhere)
+        {
+            return SysuserroleLogic.GetModelByWhere(dicwhere);
+        }
+
+
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="dicwhere">条件查询</param>
+        /// <returns></returns>
+        public DataTable GetDataTable_Sysuserrole(Dictionary<string, object> dicwhere, int page = 1, int limit = 10)
+        {
+            return SysuserroleLogic.GetDataTable(dicwhere, page, limit);
+        }
+
+        /// <summary>
+        /// 根据In子查询查询数据
+        /// </summary>
+        /// <param name="subTableName">子表表名</param>
+        /// <param name="mainTableFields">主表 in 的字段名</param>
+        /// <param name="subTableFields">子表查询字段</param>
+        /// <param name="mainDicWhere">主表的Where条件</param>
+        /// <param name="subDicWhere">子表的Where条件</param>
+        /// <param name="page">当前页数</param>
+        /// <param name="limit">当前页显示的数据条数</param>
+        /// <returns></returns>
+        public List<Sysuserrole> GetListByInSelect_Sysuserrole(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
+        {
+            return SysuserroleLogic.GetListByInSelect(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit);
+        }
+
+        /// <summary>
+        /// 根据In子查询查询数据
+        /// </summary>
+        /// <param name="subTableName">子表表名</param>
+        /// <param name="mainTableFields">主表 in 的字段名</param>
+        /// <param name="subTableFields">子表查询字段</param>
+        /// <param name="mainDicWhere">主表的Where条件</param>
+        /// <param name="subDicWhere">子表的Where条件</param>
+        /// <returns></returns>
+        public int GetCountByInSelect_Sysuserrole(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere)
+        {
+            return SysuserroleLogic.GetCountByInSelect(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
+        }
+
+        /// <summary>
+        /// 根据Where条件Group查询数据,返回的列只比对Groupby的字段多一列,coun(1) As GroupCnt 目前只支持MySql
+        /// </summary>
+        /// <param name="groupByFields">分组字段</param>
+        /// <param name="dicWhere">查询条件</param>
+        /// <param name="page">当前页码</param>
+        /// <param name="limit">当前条数</param>
+        /// <returns></returns>
+        public DataTable GetDataByGroup_Sysuserrole(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10)
+        {
+            return SysuserroleLogic.GetDataByGroup(groupByFields, dicWhere, page, limit);
+        }
+
+        #endregion
+
+        #region 添加
+
+        /// <summary>
+        /// 添加多条数据 根据字典添加
+        /// </summary>
+        /// <param name="dicdata">添加的字典实体</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result Add_Sysuserrole(Dictionary<string, object> dicdata, OpertionUser opertionUser)
+        {
+            return SysuserroleLogic.Add(dicdata, opertionUser);
+        }
+
+        /// <summary>
+        /// 添加多条数据 根据字典添加
+        /// </summary>
+        /// <param name="dicdata">添加的字典实体</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns></returns>
+        public Result Adds_Sysuserrole(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser)
+        {
+            return SysuserroleLogic.Adds(dicdata, opertionUser);
+        }
+
+        /// <summary>
+        /// 添加实体
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+		/// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result AddByEntity_Sysuserrole(Sysuserrole entity, OpertionUser opertionUser)
+        {
+            return SysuserroleLogic.Add(entity, opertionUser);
+        }
+
+        /// <summary>
+        /// 批量添加实体
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+		/// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result AddByEntitys_Sysuserrole(List<Sysuserrole> entitys, OpertionUser opertionUser)
+        {
+            return SysuserroleLogic.Adds(entitys, opertionUser);
+        }
+        #endregion
+
+        #region 修改
+
+        /// <summary>
+        /// Edits the specified dicdata.
+        /// </summary>
+        /// <param name="dicdata">修改条件</param>
+        /// <param name="kID">当前数据主键KID</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result Update_Sysuserrole(Dictionary<string, object> dicdata, int kID, OpertionUser opertionUser)
+        {
+            return SysuserroleLogic.Update(dicdata, kID, opertionUser);
+        }
+
+        /// <summary>
+        /// Edits the specified dicdata.
+        /// </summary>
+        /// <param name="valuedata">修改值</param>
+        /// <param name="keydata">编辑的Where条件</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result UpdateByWhere_Sysuserrole(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser)
+        {
+            return SysuserroleLogic.UpdateByWhere(valuedata, keydata, opertionUser);
+        }
+
+        /// <summary>
+        /// 修改次数
+        /// </summary>
+        /// <param name="fields">需要修改的字段</param>
+        /// <param name="addNums">次数 负数表示减少 正数表示增加</param>
+        /// <param name="whereKey">字典条件</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns></returns>
+        public Result UpdateNums_Sysuserrole(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
+        {
+            return SysuserroleLogic.UpdateNums(fields, addNums, whereKey, opertionUser);
+        }
+
+        #endregion
+
+        #region 删除
+        /// <summary>
+        /// 删除数据,逗号连接多条
+        /// </summary>
+        /// <param name="kid">主键ID,多个逗号连接</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result Delete_Sysuserrole(string kid, OpertionUser opertionUser)
+        {
+            return SysuserroleLogic.Delete(kid, opertionUser);
+        }
+
+        /// <summary>
+        /// Deletes the specified kid.
+        /// </summary>
+        /// <param name="keydata">Where条件</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result DeleteByWhere_Sysuserrole(Dictionary<string, object> keydata, OpertionUser opertionUser)
+        {
+            return SysuserroleLogic.DeleteByWhere(keydata, opertionUser);
+        }
+        #endregion
+
+        #region 数据导出
+
+        /// <summary>
+        /// Exports the excel file_ product.
+        /// </summary>
+        /// <param name="keydata">查询条件</param>
+        /// <param name="fileFullName">文件名全路径</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>FastDev.Common.Code.Result.</returns>
+        public Result ExportExcelFile_Sysuserrole(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser)
+        {
+            return SysuserroleLogic.ExportExcelFile(keydata, fileFullName, opertionUser);
+        }
+
+        #endregion
+
+        #endregion
         /*BC47A26EB9A59406057DDDD62D0898F4*/
 
 

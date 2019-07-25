@@ -58,12 +58,18 @@
     <Compile Include="Data\HotNew.cs" />
     <Compile Include="Data\Logintoken.cs" />
     <Compile Include="Data\Media.cs" />
+    <Compile Include="Data\Sysmenu.cs" />
+    <Compile Include="Data\Sysrole.cs" />
+    <Compile Include="Data\Sysuserrole.cs" />
+    <Compile Include="Data\zTreeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\BloginfoView.cs" />
     <Compile Include="View\ConfigUnit.cs" />
     <Compile Include="View\OperLogType.cs" />
     <Compile Include="View\OpertionUser.cs" />
     <Compile Include="View\SysLoginUser.cs" />
+    <Compile Include="View\Sysmenuview.cs" />
+    <Compile Include="View\UserAuthorMenu.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
