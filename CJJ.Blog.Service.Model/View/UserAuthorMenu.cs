@@ -26,13 +26,29 @@ namespace CJJ.Blog.Service.Model.View
                 _listMenus = value;
                 if (value != null && value.Count > 0)
                 {
-                    for (var i = 0; i < value.Count; i++)
+                    var toplist = value.Where(x => x.pId == "0").ToList();
+                    for (var i = 0; i < toplist.Count; i++)
                     {
 
                     }
                 }
             }
         }
+        public static List<zTreeModel> GetBuildList(List<zTreeModel> list, string pid)
+        {
+            var rootlist = list.Where(x => x.pId == pid).ToList();
+            if (rootlist.Count > 0)
+            {
+                for (var i = 0; i < rootlist.Count(); i++)
+                {
+                    
+                    rootlist[i].subMenuLst = GetBuildList(list, rootlist[i].pId);
+                }
+            }
+            return rootlist;
+
+        }
+
         /// <summary>
         /// 递归方式的menulist,有层次关系的menu
         /// </summary>

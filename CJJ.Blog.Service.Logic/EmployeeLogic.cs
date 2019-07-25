@@ -22,6 +22,7 @@ using FastDev.Common.Extension;
 using CJJ.Blog.Service.Models.View;
 using CJJ.Blog.Service.Model.View;
 using FastDev.Log;
+using CJJ.Blog.Service.Model.Data;
 
 namespace CJJ.Blog.Service.Logic
 {
@@ -103,7 +104,7 @@ namespace CJJ.Blog.Service.Logic
         /// <returns></returns>
         private static UserAuthorMenu GetMenulistByUserid(int userid)
         {
-            var list = new UserAuthorMenu(UserMenuList=new List<);
+            var list = new UserAuthorMenu() { UserMenuList = new List<zTreeModel>() };
             if (userid <= 0)
             {
                 return list;
