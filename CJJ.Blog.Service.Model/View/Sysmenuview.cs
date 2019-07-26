@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace CJJ.Blog.Service.Model.View
 {
+    [DataContract]
     public class Sysmenuview
     {
 

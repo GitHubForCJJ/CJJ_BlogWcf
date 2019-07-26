@@ -69,7 +69,7 @@ namespace CJJ.Blog.Service.Host
             Console.Out.WriteLine("");
             Console.WriteLine("         若需退出请输入 exit 按回车退出...\r\n");
 
-           // Test();
+            //Test();
 
 
             string userCommand = string.Empty;
@@ -95,7 +95,7 @@ namespace CJJ.Blog.Service.Host
 
         public static void Test()
         {
-            var a = CategoryLogic.GetAllList();
+            var a = EmployeeLogic.GetMenulistByUserid(1);
         }
     }
 }

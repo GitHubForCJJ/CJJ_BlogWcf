@@ -22,7 +22,7 @@ using FastDev.Common.Extension;
 using CJJ.Blog.Service.Models.View;
 using CJJ.Blog.Service.Model.View;
 using FastDev.Log;
-using CJJ.Blog.Service.Model.Data;
+
 
 namespace CJJ.Blog.Service.Logic
 {
@@ -48,15 +48,22 @@ namespace CJJ.Blog.Service.Logic
             {
                 var psw = userpsw.ToUpper();
                 var emp = EmployeeLogic.GetModelByWhere(new Dictionary<string, object>()
-            {
-                {nameof(Employee.UserAcount),useraccount },
+                {
+                    {nameof(Employee.UserAcount),useraccount },
                    {nameof(Employee.IsDeleted),0 },
                       {nameof(Employee.States),0 }
-            });
+                });
                 if (emp.UserPassword.ToUpper() != psw)
                 {
                     return res;
                 }
+                #region 获取menu操作列表
+
+                res.UserAuthorMenu = GetMenulistByUserid(emp.KID);
+                // res.UserAuthorMenu = new UserAuthorMenu() { IsSucceed = true };
+
+                #endregion
+
                 var logintype = "1";
                 //总共64位，4+22+5+1+32
                 var token = $"{DateTime.Now.ToString("yyMM")}{Guid.NewGuid().ToString("N").Substring(0, 22)}{emp.KID.ToString().PadLeft(5, '0')}{logintype}{Guid.NewGuid().ToString("N")}";
@@ -75,17 +82,14 @@ namespace CJJ.Blog.Service.Logic
                     IsLogOut = 0
                 }, new OpertionUser() { UserId = emp?.KID.ToString() });
 
-                #region 获取menu列表
 
-                #endregion
-
-                res.IsSucceed = tokenres.IsSucceed;
-                res.Message = tokenres.IsSucceed ? "登录成功" : "登录失败";
-                if (tokenres.IsSucceed)
+                res.IsSucceed = res.UserAuthorMenu.IsSucceed;
+                res.Message = res.UserAuthorMenu.IsSucceed ? "登录成功菜单获取成功" : res.UserAuthorMenu.Message;
+                if (res.UserAuthorMenu.IsSucceed)
                 {
+                    res.Token = token;
                     res.Model = emp;
                     res.TokenExpiration = tokenexpir;
-                    res.Token = token;
                 }
 
             }
@@ -102,26 +106,115 @@ namespace CJJ.Blog.Service.Logic
         /// </summary>
         /// <param name="userid"></param>
         /// <returns></returns>
-        private static UserAuthorMenu GetMenulistByUserid(int userid)
+        public static UserAuthorMenu GetMenulistByUserid(int userid)
         {
-            var list = new UserAuthorMenu() { UserMenuList = new List<zTreeModel>() };
-            if (userid <= 0)
+            var UserAuthorMenu = new UserAuthorMenu() { UserMenuList = new List<zTreeModel>() };
+            var ztreelist = new List<zTreeModel>();
+            try
             {
-                return list;
-            }
-            //1是超管
-            if (userid == 1)
-            {
-                var menus = SysuserroleLogic.GetAllList();
-
-            }
-            else
-            {
-                var userrole = SysuserroleLogic.GetModelByWhere(new Dictionary<string, object>()
-                  {
+                //所有的menus
+                var allmenus = SysmenuLogic.GetAllList();
+                if (userid <= 0)
+                {
+                    UserAuthorMenu.IsSucceed = false;
+                    UserAuthorMenu.Message = "主键值不存在";
+                    return UserAuthorMenu;
+                }
+                //1是超管
+                if (userid == 1)
+                {
+                    foreach (var item in allmenus)
+                    {
+                        ztreelist.Add(new zTreeModel
+                        {
+                            id = item.KID.ToString(),
+                            pId = item.Fatherid.ToString(),
+                            name = item.Menuname,
+                            ico = item.Menuicon,
+                            url = item.MenuUrl,
+                            sort = item.Menusort,
+                            open = false,
+                            schecked = false,
+                            subMenuLst = new List<zTreeModel>()
+                        });
+                    }
+                }
+                else
+                {
+                    var userrole = SysuserroleLogic.GetList(new Dictionary<string, object>() {
                          { nameof(Sysuserrole.Userid),userid}
-                 });
+                    });
+                    if (userrole.Count <= 0)
+                    {
+                        return new UserAuthorMenu() { Message = "暂无可用角色", IsSucceed = false };
+                    }
+                    else
+                    {
+                        var roleids = string.Join(",", userrole.Select(x => x.Roleid));
+                        var roles = SysroleLogic.GetList(new Dictionary<string, object>()
+                        {
+                            {$"{nameof(Sysrole.KID)}|i",roleids }
+                        });
+                        var menulists = string.Join(",", roles.Select(x => x.MenuList));
+                        var menuids = menulists.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        foreach (var item in menuids)
+                        {
+                            var menu = allmenus.FirstOrDefault(x => x.KID == item.Toint());
+                            if (menu != null)
+                            {
+                                ztreelist.Add(new zTreeModel
+                                {
+                                    id = menu.KID.ToString(),
+                                    pId = menu.Fatherid.ToString(),
+                                    name = menu.Menuname,
+                                    ico = menu.Menuicon,
+                                    url = menu.MenuUrl,
+                                    sort = menu.Menusort,
+                                    open = false,
+                                    schecked = false,
+                                    subMenuLst = new List<zTreeModel>()
+                                });
+                            }
+                        }
+                    }
+                }
+                if (ztreelist.Count > 0)
+                {
+                    UserAuthorMenu.UserMenuList = ztreelist;
+                    UserAuthorMenu.UserLevelMenuList = new List<zTreeModel>()
+                    {
+                        {new zTreeModel()
+                        {
+                            id = "1",
+                            pId ="1",
+                            name = "a",
+                            ico = "",
+                            url = "/a/b",
+                            sort =2,
+                            open = false,
+                            schecked = false,
+                            subMenuLst=new List<zTreeModel>()
+                            
+                            
+                        } }
+                    };
+                    UserAuthorMenu.IsSucceed = true;
+                    UserAuthorMenu.Message = "获取菜单权限成功";
+                }
+                else
+                {
+                    UserAuthorMenu.IsSucceed = false;
+                    UserAuthorMenu.Message = "获取菜单权限失败";
+                }
             }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(ex, "");
+                UserAuthorMenu.IsSucceed = false;
+                UserAuthorMenu.Message = "获取菜单权限出错";
+            }
+
+            return UserAuthorMenu;
 
         }
 

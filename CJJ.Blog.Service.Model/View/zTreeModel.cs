@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CJJ.Blog.Service.Model.Data
+namespace CJJ.Blog.Service.Model.View
 {
     /// <summary>
     /// Class zTreeModel.
@@ -69,7 +69,7 @@ namespace CJJ.Blog.Service.Model.Data
         /// </summary>
         /// <value>The title.</value>
         [DataMember]
-        public bool @checked { get; set; }
+        public bool schecked { get; set; }
 
         /// <summary>
         /// 子菜单列表

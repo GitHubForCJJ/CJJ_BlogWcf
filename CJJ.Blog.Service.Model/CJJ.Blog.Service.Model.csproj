@@ -61,7 +61,7 @@
     <Compile Include="Data\Sysmenu.cs" />
     <Compile Include="Data\Sysrole.cs" />
     <Compile Include="Data\Sysuserrole.cs" />
-    <Compile Include="Data\zTreeModel.cs" />
+    <Compile Include="View\zTreeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\BloginfoView.cs" />
     <Compile Include="View\ConfigUnit.cs" />
