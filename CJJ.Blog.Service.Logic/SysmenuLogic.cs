@@ -29,7 +29,61 @@ namespace CJJ.Blog.Service.Logic
     public class SysmenuLogic
     {
         #region 查询
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        public static List<Sysmenu> GetListByuserid_Sysmenu(int userid)
+        {
+            var menulist = new List<Sysmenu>();
+            try
+            {
+                if (userid <= 0)
+                {
+                    return menulist;
+                }
 
+                //1是超管
+                if (userid == 1)
+                {
+                    return GetAllList();
+                }
+                else
+                {
+                    var userrole = SysroleLogic.GetListByInSelect(nameof(Sysuserrole), nameof(Sysrole.KID), nameof(Sysuserrole.Roleid), new Dictionary<string, object>()
+                    {
+                        { nameof(Sysmenu.IsDeleted),0},
+                        {nameof(Sysmenu.States),0 }
+
+                    },
+                        new Dictionary<string, object>(){
+                            {nameof(Sysuserrole.Userid),userid }
+                    });
+
+                    var roleids = string.Join(",", userrole.Select(x => x.KID));
+                    var roles = SysroleLogic.GetList(new Dictionary<string, object>()
+                        {
+                            {$"{nameof(Sysrole.KID)}|i",roleids }
+                        });
+                    var menulists = string.Join(",", roles.Select(x => x.MenuList));
+                    menulist = GetList(new Dictionary<string, object>() {
+                        {
+                            $"{nameof(Sysmenu.KID)}|i",menulists
+                        },
+                        {nameof(Sysmenu.IsDeleted),0 }
+                    });
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return menulist;
+
+        }
         /// <summary>
         /// Gets the Sysmenu {TableNameComment} list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>

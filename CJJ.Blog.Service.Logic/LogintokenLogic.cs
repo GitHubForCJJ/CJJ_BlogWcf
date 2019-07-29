@@ -21,6 +21,7 @@ using System.Data;
 using FastDev.Common.Extension;
 using CJJ.Blog.Service.Models.View;
 using CJJ.Blog.Service.Model.View;
+using CJJ.Blog.Service.Logic.Common;
 
 namespace CJJ.Blog.Service.Logic
 {
@@ -49,6 +50,7 @@ namespace CJJ.Blog.Service.Logic
             if (tokenmodel != null && !string.IsNullOrEmpty(tokenmodel.LoginUserId))
             {
                 var emp = EmployeeLogic.GetModelByKID(tokenmodel.LoginUserId.Toint());
+                ret.UserAuthorMenu = Comlogic.GetMenulistByUserid(emp.KID);
                 ret.Model = emp;
                 ret.IsSucceed = true;
                 ret.TokenExpiration = tokenmodel.TokenExpiration;

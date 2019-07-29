@@ -2254,6 +2254,14 @@ namespace CJJ.Blog.NetWork.IService
         #region Sysmenu 操作
 
         #region 查询
+        /// <summary>
+        /// 根据用户id获取可操作的menu
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="limit">The limit.</param>
+        /// <returns>System.Collections.Generic.List&lt;CJJ.Blog.Service.Models.Data.Sys_menu&gt;.</returns>
+        [OperationContract]
+        List<Sysmenu> GetListByuserid_Sysmenu(int userid);
 
         /// <summary>
         /// Gets the menu list.

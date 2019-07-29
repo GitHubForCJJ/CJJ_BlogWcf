@@ -95,7 +95,7 @@ namespace CJJ.Blog.Service.Host
 
         public static void Test()
         {
-            var a = EmployeeLogic.GetMenulistByUserid(1);
+            //var a = EmployeeLogic.GetMenulistByUserid(1);
         }
     }
 }

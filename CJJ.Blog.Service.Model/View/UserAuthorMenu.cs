@@ -1,4 +1,5 @@
 ﻿
+using CJJ.Blog.Service.Models.View;
 using FastDev.Common.Code;
 using System;
 using System.Collections.Generic;
@@ -25,29 +26,29 @@ namespace CJJ.Blog.Service.Model.View
             {
                 _levelMenus = new List<zTreeModel>();
                 _listMenus = value;
-                //if (value != null && value.Count > 0)
-                //{
-        
-                //    var toplist = value.Where(x => x.pId == "0").ToList();
-                //    for (var i = 0; i < toplist.Count; i++)
-                //    {
-                    
-                //        var ztreemode = new zTreeModel
-                //        {
-                //            id = toplist[i].id,
-                //            pId = toplist[i].pId,
-                //            name = toplist[i].name,
-                //            ico = toplist[i].ico,
-                //            url = toplist[i].url,
-                //            open = toplist[i].open,
-                //            schecked = toplist[i].schecked,
-                //            sort=toplist[i].sort
-                            
-                //        };
-                //        ztreemode.subMenuLst = GetSubList(value, toplist[i].id);
-                //        _levelMenus.Add(ztreemode); ;
-                //    }
-                //}
+                if (value != null && value.Count > 0)
+                {
+
+                    var toplist = value.Where(x => x.pId == "0").ToList();
+                    for (var i = 0; i < toplist.Count; i++)
+                    {
+
+                        var ztreemode = new zTreeModel
+                        {
+                            id = toplist[i].id,
+                            pId = toplist[i].pId,
+                            name = toplist[i].name,
+                            ico = toplist[i].ico,
+                            url = toplist[i].url,
+                            open = toplist[i].open,
+                            schecked = toplist[i].schecked,
+                            sort = toplist[i].sort
+
+                        };
+                        ztreemode.subMenuLst = GetSubList(value, toplist[i].id);
+                        _levelMenus.Add(ztreemode); ;
+                    }
+                }
             }
         }
         private static List<zTreeModel> GetSubList(List<zTreeModel> list, string pid)
@@ -55,8 +56,7 @@ namespace CJJ.Blog.Service.Model.View
             var sublist = list.Where(x => x.pId == pid).ToList();
             var res = new List<zTreeModel>();
             if (sublist.Count > 0)
-            {
-               
+            {            
                 for (var i = 0; i < sublist.Count(); i++)
                 {
                     var ztreemode = new zTreeModel
@@ -89,10 +89,6 @@ namespace CJJ.Blog.Service.Model.View
             get
             {
                 return _levelMenus;
-            }
-            set
-            {
-                _levelMenus = value;
             }
         }
     }

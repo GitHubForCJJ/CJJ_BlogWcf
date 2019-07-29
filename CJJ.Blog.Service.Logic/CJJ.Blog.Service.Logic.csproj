@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="BlogcontentLogic.cs" />
     <Compile Include="BloginfoLogic.cs" />
+    <Compile Include="Common\Comlogic.cs" />
     <Compile Include="HotNewLogic.cs" />
     <Compile Include="CategoryLogic.cs" />
     <Compile Include="CategorypicLogic.cs" />

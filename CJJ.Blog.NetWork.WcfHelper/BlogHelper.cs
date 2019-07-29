@@ -2668,7 +2668,15 @@ namespace CJJ.Blog.NetWork.WcfHelper
         #region Sysmenu 操作
 
         #region 查询
-
+        /// <summary>
+        /// 根据userid获取可操作的menu
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        public static List<Sysmenu> GetListByuserid_Sysmenu(int userid)
+        {
+            return Client.GetListByuserid_Sysmenu(userid);
+        }
         /// <summary>
         /// Gets the menu list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
