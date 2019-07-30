@@ -20,7 +20,6 @@ namespace CJJ.Blog.Service.Logic.Common
         public static UserAuthorMenu GetMenulistByUserid(int userid)
         {
             var UserAuthorMenu = new UserAuthorMenu() { UserMenuList = new List<zTreeModel>() };
-            var ztreelist = new List<zTreeModel>();
             try
             {
                 //所有的menus
@@ -36,7 +35,7 @@ namespace CJJ.Blog.Service.Logic.Common
                 {
                     foreach (var item in allmenus)
                     {
-                        ztreelist.Add(new zTreeModel
+                        UserAuthorMenu.UserMenuList.Add(new zTreeModel
                         {
                             id = item.KID.ToString(),
                             pId = item.Fatherid.ToString(),
@@ -44,7 +43,7 @@ namespace CJJ.Blog.Service.Logic.Common
                             ico = item.Menuicon,
                             url = item.MenuUrl,
                             sort = item.Menusort,
-                            open = false,
+                            open = true,
                             schecked = false,
                             subMenuLst = new List<zTreeModel>()
                         });
@@ -73,7 +72,7 @@ namespace CJJ.Blog.Service.Logic.Common
                             var menu = allmenus.FirstOrDefault(x => x.KID == item.Toint());
                             if (menu != null)
                             {
-                                ztreelist.Add(new zTreeModel
+                                UserAuthorMenu.UserMenuList.Add(new zTreeModel
                                 {
                                     id = menu.KID.ToString(),
                                     pId = menu.Fatherid.ToString(),
@@ -81,7 +80,7 @@ namespace CJJ.Blog.Service.Logic.Common
                                     ico = menu.Menuicon,
                                     url = menu.MenuUrl,
                                     sort = menu.Menusort,
-                                    open = false,
+                                    open = true,
                                     schecked = false,
                                     subMenuLst = new List<zTreeModel>()
                                 });
@@ -89,26 +88,9 @@ namespace CJJ.Blog.Service.Logic.Common
                         }
                     }
                 }
-                if (ztreelist.Count > 0)
+                if (UserAuthorMenu.UserMenuList.Count > 0)
                 {
-                    UserAuthorMenu.UserMenuList = ztreelist;
-                    //UserAuthorMenu.UserLevelMenuList = new List<zTreeModel>()
-                    //{
-                    //    {new zTreeModel()
-                    //    {
-                    //        id = "1",
-                    //        pId ="1",
-                    //        name = "a",
-                    //        ico = "",
-                    //        url = "/a/b",
-                    //        sort =2,
-                    //        open = false,
-                    //        schecked = false,
-                    //        subMenuLst=new List<zTreeModel>()
 
-
-                    //    } }
-                    //};
                     UserAuthorMenu.IsSucceed = true;
                     UserAuthorMenu.Message = "获取菜单权限成功";
                 }
