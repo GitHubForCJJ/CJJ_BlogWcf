@@ -1261,15 +1261,15 @@ namespace CJJ.Blog.NetWork.IService
         #endregion
 
         #region 添加
-
-       	/// <summary>
-        /// 添加数据 根据字典添加
+        /// <summary>
+        /// 给员工授予角色
         /// </summary>
         /// <param name="model">添加的字典实体</param>
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         [OperationContract]
-        Result Add_Employee(Dictionary<string, object> dicdata, OpertionUser opertionUser);
+        Result SetEmployeeRole(string empid,string roleids);
+
 		
 		/// <summary>
         /// 添加多条数据 根据字典添加
@@ -2589,7 +2589,14 @@ namespace CJJ.Blog.NetWork.IService
         #endregion
 
         #region 添加
-
+        /// <summary>
+        /// 给角色授予员工
+        /// </summary>
+        /// <param name="model">添加的字典实体</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        [OperationContract]
+        Result SetRoleEmployees(string roleid, string userids);
         /// <summary>
         /// 添加数据 根据字典添加
         /// </summary>
@@ -2700,6 +2707,13 @@ namespace CJJ.Blog.NetWork.IService
         #region Sysuserrole 操作
 
         #region 查询
+        /// <summary>
+        /// Gets the menu list.
+        /// </summary>根据角色id获取属于这个角色的所有员工
+        /// <returns>System.Collections.Generic.List&lt;CJJ.Blog.Service.Models.Data.Sys_menu&gt;.</returns>
+        //[OperationContract]
+        //List<Sysuserrole> GetListRoleEmployee(int roleid);
+
 
         /// <summary>
         /// Gets the menu list.

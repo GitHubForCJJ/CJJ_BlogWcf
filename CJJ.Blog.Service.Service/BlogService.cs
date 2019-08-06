@@ -1488,15 +1488,16 @@ namespace CJJ.Blog.Service.Service
 
         #region 添加
 
-         /// <summary>
+
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="dicdata">添加的字典实体</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public Result Add_Employee(Dictionary<string, object> dicdata, OpertionUser opertionUser)
+        public Result SetEmployeeRole(string empid, string roleids)
         {
-            return EmployeeLogic.Add(dicdata, opertionUser);
+            return EmployeeLogic.SetEmployeeRole(empid, roleids);
         }
 
 		/// <summary>
@@ -3077,7 +3078,10 @@ namespace CJJ.Blog.Service.Service
         #endregion
 
         #region 添加
-
+        public Result SetRoleEmployees(string roleid, string userids)
+        {
+            return SysroleLogic.SetRoleEmployees(roleid, userids);
+        }
         /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>

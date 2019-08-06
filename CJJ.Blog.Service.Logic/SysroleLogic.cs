@@ -371,6 +371,38 @@ namespace CJJ.Blog.Service.Logic
         #region 修改
 
         /// <summary>
+        /// 给角色赋值员工
+        /// </summary>
+        /// <param name="dicwhere">修改条件</param>
+        /// <param name="kID">当前数据主键KID</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public static Result SetRoleEmployees(string roleid, string userids)
+        {
+            var res = new Result();
+            var dickey = new Dictionary<string, object>();
+            dickey.Add(nameof(Sysuserrole.Roleid), roleid);
+            dickey.Add(nameof(Sysuserrole.IsDeleted), 0);
+            SysuserroleLogic.DeleteByWhere(dickey, new OpertionUser());
+            var list = new List<Sysuserrole>();
+            if (!string.IsNullOrEmpty(userids))
+            {
+                foreach (var item in userids.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    list.Add(new Sysuserrole
+                    {
+                        Userid = item,
+                        Roleid = roleid,
+                        UserType = 0
+                    });
+                }
+            }
+            res = SysuserroleLogic.Adds(list, new OpertionUser());
+
+            return res;
+        }
+
+        /// <summary>
         /// Edits the specified dicwhere.
         /// </summary>
         /// <param name="dicwhere">修改条件</param>

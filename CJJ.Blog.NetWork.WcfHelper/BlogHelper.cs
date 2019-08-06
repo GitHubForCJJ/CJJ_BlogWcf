@@ -1494,17 +1494,17 @@ namespace CJJ.Blog.NetWork.WcfHelper
         #endregion
 
         #region 添加
-
         /// <summary>
-        /// 添加数据 根据字典添加
+        /// 给员工授予角色
         /// </summary>
         /// <param name="model">添加的字典实体</param>
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public static Result Add_Employee(Dictionary<string, object> dicdata, OpertionUser opertionUser)
+        public static Result SetEmployeeRole(string empid, string roleids)
         {
-            return Client.Add_Employee(dicdata, opertionUser);
+            return Client.SetEmployeeRole(empid, roleids);
         }
+
 
 		/// <summary>
         /// 添加多条数据 根据字典添加
@@ -1541,7 +1541,6 @@ namespace CJJ.Blog.NetWork.WcfHelper
         #endregion
 
         #region 修改
-
         /// <summary>
         /// Edits the specified dicdata.
         /// </summary>
@@ -3064,7 +3063,16 @@ namespace CJJ.Blog.NetWork.WcfHelper
         #endregion
 
         #region 添加
-
+        /// <summary>
+        /// 给角色赋员工
+        /// </summary>
+        /// <param name="model">添加的字典实体</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public static Result SetRoleEmployees(string roleid, string userids)
+        {
+            return Client.SetRoleEmployees(roleid, userids);
+        }
         /// <summary>
         /// 添加数据 根据字典添加
         /// </summary>
