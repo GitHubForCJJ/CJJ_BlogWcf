@@ -2590,6 +2590,15 @@ namespace CJJ.Blog.NetWork.IService
 
         #region 添加
         /// <summary>
+        /// 给角色授予操作权限
+        /// </summary>
+        /// <param name="model">添加的字典实体</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        [OperationContract]
+        Result SetRoleMenus(string roleid, string menuids);
+
+        /// <summary>
         /// 给角色授予员工
         /// </summary>
         /// <param name="model">添加的字典实体</param>

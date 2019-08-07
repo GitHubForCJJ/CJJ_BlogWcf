@@ -464,10 +464,15 @@ namespace CJJ.Blog.Service.Logic
             var list = new List<Sysuserrole>();
             if (!string.IsNullOrEmpty(roleids))
             {
+                var time = DateTime.Now;
                 foreach(var item in roleids.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     list.Add(new Sysuserrole
                     {
+                        CreateTime= time,
+                        UpdateTime = time,
+                        CreateUserId ="1",
+                        CreateUserName="system",
                         Userid = empid,
                         Roleid = item,
                         UserType = 0

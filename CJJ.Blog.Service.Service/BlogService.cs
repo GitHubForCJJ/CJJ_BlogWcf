@@ -3078,6 +3078,10 @@ namespace CJJ.Blog.Service.Service
         #endregion
 
         #region 添加
+        public Result SetRoleMenus(string roleid, string menuids)
+        {
+            return SysroleLogic.SetRoleMenus(roleid, menuids);
+        }
         public Result SetRoleEmployees(string roleid, string userids)
         {
             return SysroleLogic.SetRoleEmployees(roleid, userids);
