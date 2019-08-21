@@ -87,7 +87,7 @@ namespace FastDev.Log
             WriteLog(ex, remark, "", logLevel);
         }
         /// <summary>
-        /// filepath为Logs下的指定文件夹（默认是logs下的文件夹只需文件夹名称）
+        /// filepath为Logs下的指定文件夹（默认是logs下的文件夹只需文件夹名称）,若是exception日志折写到ExceptionLog下面
         /// </summary>
         /// <param name="ex"></param>
         /// <param name="remark"></param>
@@ -102,11 +102,16 @@ namespace FastDev.Log
                     return;
                 }
                 string content = remark;
+                string path = string.Empty;
+                
+                path = Path.Combine(WriteLogPath, filepath);
+                
                 if (ex != null)
                 {
+                    path = $"{path}{Path.DirectorySeparatorChar}ExceptionLog";
                     content = GetLogContent(ex, remark);
                 }
-                var path = Path.Combine(WriteLogPath, filepath);
+                path += Path.DirectorySeparatorChar.ToString();
                 TextWriter textWriter = new TextWriter(path);
                 textWriter.WriteLog("=====================" + Environment.NewLine +
                             DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "  " + logLevel.ToString() + Environment.NewLine + content
