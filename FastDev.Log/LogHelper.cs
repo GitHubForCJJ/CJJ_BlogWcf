@@ -17,6 +17,8 @@ namespace FastDev.Log
     /// 
     /// loghelper类主要是实现对打印日志的文本处理、控制是否打印、控制打印日志的文件夹
     /// textwrite类主要是写入日志文件、文件创建、是一个实例化的类
+    /// WriteLogLevel 配置打印日志的级别int类型
+    /// WriteLogPath  配置日志打印的文件夹名称默认logs
     /// </summary>
     public class LogHelper
     {
