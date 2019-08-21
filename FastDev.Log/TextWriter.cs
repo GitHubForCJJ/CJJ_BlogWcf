@@ -19,17 +19,17 @@ namespace FastDev.Log
         /// <summary>
         /// 默认写入到Logs文件夹下
         /// </summary>
-        public TextWriter() : this($"{AppDomain.CurrentDomain.BaseDirectory}{Path.DirectorySeparatorChar}Logs{Path.DirectorySeparatorChar}")
+        public TextWriter()
         {
-
+            FileName = $"{AppDomain.CurrentDomain.BaseDirectory}{Path.DirectorySeparatorChar}Logs{Path.DirectorySeparatorChar}";
         }
         /// <summary>
-        /// 日志写入到指定的文件
+        /// 日志写入到指定的文件,地址由上层控制
         /// </summary>
         /// <param name="filename"></param>
         public TextWriter(string filename)
         {
-            FileName = $"{AppDomain.CurrentDomain.BaseDirectory}{Path.DirectorySeparatorChar}Logs{Path.DirectorySeparatorChar}{filename}";
+            FileName = filename;
         }
         /// <summary>
         /// 获取写日志的文件夹全部地址(例如指到/20190802文件夹)
@@ -48,7 +48,6 @@ namespace FastDev.Log
         {
             FileInfo res = null;
             DirectoryInfo directoryInfo = new DirectoryInfo(filepath);
-            // string fileallpath = Path.Combine(filepath, $"{time.Hour.ToString()}.log");
             if (directoryInfo.Exists)
             {
                 FileInfo[] infos = directoryInfo.GetFiles();
@@ -76,15 +75,24 @@ namespace FastDev.Log
         /// <returns></returns>
         private static FileStream GetWriteFileStream(FileInfo fileInfo,string filepath, DateTime time)
         {
-            if (fileInfo != null)
+            FileStream fileStream = null;
+            try
             {
-                return fileInfo.OpenWrite();
+                if (fileInfo != null)
+                {
+                    fileStream = fileInfo.OpenWrite();
+                }
+                else
+                {
+                    string filename = Path.Combine($"{filepath}{Path.DirectorySeparatorChar}{time.Hour.ToString()}.log");
+                    fileStream = File.Create(filename);
+                }
             }
-            else
+            catch
             {
-                string filename = Path.Combine($"{filepath}{Path.DirectorySeparatorChar}{time.ToString("yyyyMMdd")}{Path.DirectorySeparatorChar}{time.Hour.ToString()}.log");
-                return File.Create(filename);
+                
             }
+            return fileStream;
         }
 
         /// <summary>

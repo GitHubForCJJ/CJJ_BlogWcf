@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using CJJ.Blog.Service.Logic;
 using CJJ.Blog.Service.Service;
 using FastDev.Console;
+using FastDev.Log;
 
 namespace CJJ.Blog.Service.Host
 {
@@ -69,7 +70,7 @@ namespace CJJ.Blog.Service.Host
             Console.Out.WriteLine("");
             Console.WriteLine("         若需退出请输入 exit 按回车退出...\r\n");
 
-            //Test();
+            Test();
 
 
             string userCommand = string.Empty;
@@ -93,9 +94,20 @@ namespace CJJ.Blog.Service.Host
             }
         }
 
-        public static void Test()
+        public static int Test()
         {
-            //var a = EmployeeLogic.GetMenulistByUserid(1);
+            int a = 100;
+            int b = 0;
+            int c = 0;
+            try
+            {
+               c=a/b;
+            }
+            catch(Exception ex)
+            {
+                LogHelper.WriteLog(ex, "除法错误ssss",LogLevel.G有用信息);
+            }
+            return c;
         }
     }
 }

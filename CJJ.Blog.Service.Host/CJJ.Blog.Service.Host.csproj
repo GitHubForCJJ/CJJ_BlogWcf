@@ -69,6 +69,10 @@
       <Project>{B2C176F9-0886-4AAC-B820-F70C4208830B}</Project>
       <Name>CJJ.Blog.Service.Service</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FastDev.Log\FastDev.Log.csproj">
+      <Project>{5072d21a-645e-4ad7-b211-229a34aad7ad}</Project>
+      <Name>FastDev.Log</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

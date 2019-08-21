@@ -5,13 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
 using FastDev.Config;
+using System.IO;
 
 namespace FastDev.Log
 {
     /// <summary>
+    /// 依赖 fasedev.config
     /// 提供写日志的入口，多个重载
     /// 处理日志内容，拼接为有效的字符串形式
     /// 日志文件默认存储在Logs下面，若要修改日志默认存储地址需要修改Textwriter和loghelper
+    /// 
+    /// loghelper类主要是实现对打印日志的文本处理、控制是否打印、控制打印日志的文件夹
+    /// textwrite类主要是写入日志文件、文件创建、是一个实例化的类
     /// </summary>
     public class LogHelper
     {
@@ -23,6 +28,10 @@ namespace FastDev.Log
         /// 用于控制是否执行写日志
         /// </summary>
         private static int _writeLogLevel = ConfigHelper.GetConfigToInt("WriteLogLevel");
+        /// <summary>
+        /// 用于控制打印日志的文件夹名称
+        /// </summary>
+        private static string _writeLogPath = ConfigHelper.GetConfigToString("WriteLogPath");
 
         /// <summary>
         /// 返回配置文件中设置写日志的级别，未设置折设置为最低 ，值越小级别越高
@@ -39,6 +48,24 @@ namespace FastDev.Log
                 return (LogLevel)_writeLogLevel;
             }
         }
+        /// <summary>
+        /// 打印日志文件夹
+        /// </summary>
+        private static string WriteLogPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_writeLogPath))
+                {
+                    return $"{AppDomain.CurrentDomain.BaseDirectory}{Path.DirectorySeparatorChar}Logs{Path.DirectorySeparatorChar}";
+                }
+                else
+                {
+                    return $"{AppDomain.CurrentDomain.BaseDirectory}{Path.DirectorySeparatorChar}{_writeLogPath}{Path.DirectorySeparatorChar}";
+                }
+            }
+        }
+
 
         /// <summary>
         /// 
@@ -46,10 +73,6 @@ namespace FastDev.Log
         /// <param name="remark">备注信息</param>
         public static void WriteLog(string remark, LogLevel logLevel = LogLevel.H调试信息)
         {
-            if(logLevel> WriteLogLevel)
-            {
-                return;
-            }
             WriteLog(null, remark, "", logLevel);
         }
         /// <summary>
@@ -59,10 +82,6 @@ namespace FastDev.Log
         /// <param name="remark"></param>
         public static void WriteLog(Exception ex, string remark, LogLevel logLevel = LogLevel.H调试信息)
         {
-            if (logLevel > WriteLogLevel)
-            {
-                return;
-            }
             WriteLog(ex, remark, "", logLevel);
         }
         /// <summary>
@@ -85,20 +104,12 @@ namespace FastDev.Log
                 {
                     content = GetLogContent(ex, remark);
                 }
-                if (!string.IsNullOrEmpty(filepath))
-                {
-                    TextWriter textWriter = new TextWriter(filepath);
-                    textWriter.WriteLog("=====================" + Environment.NewLine +
-                                DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "  " + logLevel.ToString() + Environment.NewLine + content
-                                + Environment.NewLine);
-                }
-                else
-                {
-                    TextWriter textWriter = new TextWriter();
-                    textWriter.WriteLog("=====================" + Environment.NewLine +
-                                DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "  " + logLevel.ToString() + Environment.NewLine + content
-                                + Environment.NewLine);
-                }
+                var path = Path.Combine(WriteLogPath, filepath);
+                TextWriter textWriter = new TextWriter(path);
+                textWriter.WriteLog("=====================" + Environment.NewLine +
+                            DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "  " + logLevel.ToString() + Environment.NewLine + content
+                            + Environment.NewLine);
+
             }
         }
         /// <summary>

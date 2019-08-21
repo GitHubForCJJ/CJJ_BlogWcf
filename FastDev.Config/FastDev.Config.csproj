@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5072D21A-645E-4AD7-B211-229A34AAD7AD}</ProjectGuid>
+    <ProjectGuid>{54F5CBC8-9612-41B3-8648-784FF319F897}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FastDev.Log</RootNamespace>
-    <AssemblyName>FastDev.Log</AssemblyName>
+    <RootNamespace>FastDev.Config</RootNamespace>
+    <AssemblyName>FastDev.Config</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -42,16 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LogHelper.cs" />
-    <Compile Include="LogLevel.cs" />
+    <Compile Include="ConfigHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TextWriter.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FastDev.Config\FastDev.Config.csproj">
-      <Project>{54f5cbc8-9612-41b3-8648-784ff319f897}</Project>
-      <Name>FastDev.Config</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
