@@ -59,6 +59,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SysmenuRepository.cs" />
     <Compile Include="SysroleRepository.cs" />
+    <Compile Include="WxUserRepository.cs" />
     <Compile Include="SysuserroleRepository.cs" />
   </ItemGroup>
   <ItemGroup>

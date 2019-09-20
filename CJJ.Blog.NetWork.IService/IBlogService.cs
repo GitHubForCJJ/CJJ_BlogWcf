@@ -2939,6 +2939,229 @@ namespace CJJ.Blog.NetWork.IService
 
         #endregion
 
+        #region wxuser
+        #region 查询
+        /// <summary>
+        /// Gets the menu list.
+        /// </summary>根据角色id获取属于这个角色的所有员工
+        /// <returns>System.Collections.Generic.List&lt;CJJ.Blog.Service.Models.Data.Sys_menu&gt;.</returns>
+        //[OperationContract]
+        //List<WxUser> GetListRoleEmployee(int roleid);
+
+
+        /// <summary>
+        /// Gets the menu list.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="limit">The limit.</param>
+        /// <returns>System.Collections.Generic.List&lt;CJJ.Blog.Service.Models.Data.Sys_menu&gt;.</returns>
+        [OperationContract]
+        List<WxUser> GetListPage_WxUser(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null);
+
+        /// <summary>
+        /// 获取Json格式的数据
+        /// </summary>
+        /// <param name="page">当前页码</param>
+        /// <param name="limit">当前也显示条数</param>
+        /// <param name="orderby">排序字段</param>
+        /// <param name="dicwhere">查询条件</param>
+        /// <returns></returns>
+        [OperationContract]
+        FastJsonResult<List<WxUser>> GetJsonListPage_WxUser(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null);
+
+
+        /// <summary>
+        /// 不分页获取所有数据
+        /// </summary>
+        /// <returns>List&lt;WxUser&gt;.</returns>
+        [OperationContract]
+        List<WxUser> GetAllList_WxUser();
+
+        /// <summary>
+        /// 按条件获取数据列表
+        /// </summary>
+        /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
+        /// <returns>List&lt;WxUser&gt;.</returns>
+        [OperationContract]
+        List<WxUser> GetList_WxUser(Dictionary<string, object> dicwhere);
+
+        /// <summary>
+        /// 获取数据总条数
+        /// </summary>
+        /// <returns>System.Int32.</returns>
+        [OperationContract]
+        int GetCount_WxUser(Dictionary<string, object> dicwhere = null);
+
+        /// <summary>
+        /// 获取Model
+        /// </summary>
+        /// <param name="kID">The k identifier.</param>
+        /// <returns>System.Int32.</returns>
+        [OperationContract]
+        WxUser GetModelByKID_WxUser(int kID);
+
+        /// <summary>
+        /// 获取Model
+        /// </summary>
+        /// <param name="kID">The k identifier.</param>
+        /// <returns>System.Int32.</returns>
+        [OperationContract]
+        WxUser GetModelByWhere_WxUser(Dictionary<string, object> dicwhere);
+
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="dicwhere">条件查询</param>
+        /// <returns></returns>
+        [OperationContract]
+        DataTable GetDataTable_WxUser(Dictionary<string, object> dicwhere, int page = 1, int limit = 10);
+
+        /// <summary>
+        /// 根据In子查询查询数据
+        /// </summary>
+        /// <param name="subTableName">子表表名</param>
+        /// <param name="mainTableFields">主表 in 的字段名</param>
+        /// <param name="subTableFields">子表查询字段</param>
+        /// <param name="mainDicWhere">主表的Where条件</param>
+        /// <param name="subDicWhere">子表的Where条件</param>
+        /// <param name="page">当前页数</param>
+        /// <param name="limit">当前页显示的数据条数</param>
+        /// <returns></returns>
+        [OperationContract]
+        List<WxUser> GetListByInSelect_WxUser(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10);
+
+        /// <summary>
+        /// 根据In子查询查询数据
+        /// </summary>
+        /// <param name="subTableName">子表表名</param>
+        /// <param name="mainTableFields">主表 in 的字段名</param>
+        /// <param name="subTableFields">子表查询字段</param>
+        /// <param name="mainDicWhere">主表的Where条件</param>
+        /// <param name="subDicWhere">子表的Where条件</param>
+        /// <returns></returns>
+        [OperationContract]
+        int GetCountByInSelect_WxUser(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere);
+
+        /// <summary>
+        /// 根据Where条件Group查询数据,返回的列只比对Groupby的字段多一列,coun(1) As GroupCnt 目前只支持MySql
+        /// </summary>
+        /// <param name="groupByFields">分组字段</param>
+        /// <param name="dicWhere">查询条件</param>
+        /// <param name="page">当前页码</param>
+        /// <param name="limit">当前条数</param>
+        /// <returns></returns>
+        [OperationContract]
+        DataTable GetDataByGroup_WxUser(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10);
+
+        #endregion
+
+        #region 添加
+
+        /// <summary>
+        /// 添加数据 根据字典添加
+        /// </summary>
+        /// <param name="model">添加的字典实体</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        [OperationContract]
+        Result Add_WxUser(Dictionary<string, object> dicdata, OpertionUser opertionUser);
+
+        /// <summary>
+        /// 添加多条数据 根据字典添加
+        /// </summary>
+        /// <param name="model">添加的字典实体</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns></returns>
+        [OperationContract]
+        Result Adds_WxUser(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser);
+
+        /// <summary>
+        /// 添加实体
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        [OperationContract]
+        Result AddByEntity_WxUser(WxUser entity, OpertionUser opertionUser);
+
+        /// <summary>
+        /// 批量添加实体
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        [OperationContract]
+        Result AddByEntitys_WxUser(List<WxUser> entitys, OpertionUser opertionUser);
+        #endregion
+
+        #region 修改
+
+        /// <summary>
+        /// 根据主键修改对应字段值
+        /// </summary>
+        /// <param name="dicdata">The dicdata.</param>
+        /// <param name="kID">The k identifier.</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        [OperationContract]
+        Result Update_WxUser(Dictionary<string, object> dicdata, int kID, OpertionUser opertionUser);
+
+        /// <summary>
+        /// 根据条件批量修改字段值
+        /// </summary>
+        /// <param name="valuedata">The valuedata.</param>
+        /// <param name="keydata">The keydata.</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        [OperationContract]
+        Result UpdateByWhere_WxUser(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser);
+
+        /// <summary>
+        /// 修改次数
+        /// </summary>
+        /// <param name="fields">需要修改的字段</param>
+        /// <param name="addNums">次数 负数表示减少 正数表示增加</param>
+        /// <param name="whereKey">字典条件</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns></returns>
+        [OperationContract]
+        Result UpdateNums_WxUser(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser);
+
+        #endregion
+
+        #region 删除
+        /// <summary>
+        /// 删除数据,逗号连接多条
+        /// </summary>
+        /// <param name="kid">The kid.</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        [OperationContract]
+        Result Delete_WxUser(string kid, OpertionUser opertionUser);
+
+        /// <summary>
+        /// 批量删除数据
+        /// </summary>
+        /// <param name="keydata">The keydata.</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        [OperationContract]
+        Result DeleteByWhere_WxUser(Dictionary<string, object> keydata, OpertionUser opertionUser);
+        #endregion
+
+        #region 数据导出
+        /// <summary>
+        /// 数据导出
+        /// </summary>
+        /// <param name="keydata">The keydata.</param>
+        /// <param name="fileFullName">Full name of the file.</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        [OperationContract]
+        Result ExportExcelFile_WxUser(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser);
+
+        #endregion
+        #endregion
 
         /*BC47A26EB9A59406057DDDD62D0898F4*/
 
