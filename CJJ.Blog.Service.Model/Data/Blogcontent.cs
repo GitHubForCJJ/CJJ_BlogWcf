@@ -117,7 +117,7 @@ namespace CJJ.Blog.Service.Models.Data
 		public string BloginfoId { get; set;}
 
 		/// <summary>
-		/// 博客内容
+		/// 博客内容  url编码处理
 		/// </summary>
 		[DataMember]
 		public string Content { get; set;}

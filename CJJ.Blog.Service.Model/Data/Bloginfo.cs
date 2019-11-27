@@ -111,15 +111,10 @@ namespace CJJ.Blog.Service.Models.Data
 		public string Extend6 { get; set;}
 
 		/// <summary>
-		/// 短标题
+		/// 标题
 		/// </summary>
 		[DataMember]
 		public string Title { get; set;}
-        /// <summary>
-        /// 长标题
-        /// </summary>
-        [DataMember]
-        public string DetailTitle { get; set; }
 
         /// <summary>
         /// 类型
@@ -139,17 +134,18 @@ namespace CJJ.Blog.Service.Models.Data
 		[DataMember]
 		public int IsPrivate { get; set;}
 
-		/// <summary>
-		/// 版本号，乐观锁
-		/// </summary>
-		[DataMember]
+        /// <summary>
+        /// 是否原创
+        /// </summary>
+        [DataMember]
+        public int IsOriginal { get; set; }
+
+        /// <summary>
+        /// 版本号，乐观锁
+        /// </summary>
+        [DataMember]
 		public string Vesion { get; set;}
 
-		/// <summary>
-		/// 是否原创
-		/// </summary>
-		[DataMember]
-		public int IsOriginal { get; set;}
         /// <summary>
         /// blog图片
         /// </summary>
@@ -160,6 +156,24 @@ namespace CJJ.Blog.Service.Models.Data
         /// </summary>
         [DataMember]
         public string Sorc { get; set; }
+
+        /// <summary>
+        /// 点赞数
+        /// </summary>
+        [DataMember]
+        public int Start { get; set; }
+
+        /// <summary>
+        /// 浏览次数
+        /// </summary>
+        [DataMember]
+        public int Views { get; set; }
+
+        /// <summary>
+        /// 评论数
+        /// </summary>
+        [DataMember]
+        public int Comments { get; set; }
 
 
         /*BC47A26EB9A59406057DDDD62D0898F4*/
