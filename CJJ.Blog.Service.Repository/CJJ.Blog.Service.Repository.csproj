@@ -34,6 +34,10 @@
     <Reference Include="FastDev.Common">
       <HintPath>..\Utils\FastDev.Common.dll</HintPath>
     </Reference>
+    <Reference Include="FastDev.SqlHelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Utils\FastDev.SqlHelper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -66,6 +70,10 @@
     <ProjectReference Include="..\CJJ.Blog.Service.Model\CJJ.Blog.Service.Model.csproj">
       <Project>{732CF467-0B88-459E-8A1D-01FCF574A77C}</Project>
       <Name>CJJ.Blog.Service.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FastDev.Log\FastDev.Log.csproj">
+      <Project>{5072D21A-645E-4AD7-B211-229A34AAD7AD}</Project>
+      <Name>FastDev.Log</Name>
     </ProjectReference>
     <ProjectReference Include="..\Utils\FastDev.BaseQuery\FastDev.DbBase.csproj">
       <Project>{d78d2db0-6855-4b0f-9229-c00164b35b0c}</Project>

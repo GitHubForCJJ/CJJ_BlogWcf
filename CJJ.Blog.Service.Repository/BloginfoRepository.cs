@@ -16,6 +16,8 @@ using FastDev.DBFactory;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using CJJ.Blog.Service.Model.View;
+using FastDev.Log;
+using FastDev;
 
 namespace CJJ.Blog.Service.Repository
 {
@@ -41,7 +43,7 @@ namespace CJJ.Blog.Service.Repository
             this.KeyField = "KID";
         }
 
-		/// <summary>
+        /// <summary>
         /// 带事务执行的构造函数
         /// </summary>
         /// <param name="dbconn">The dbconn.</param>
@@ -62,8 +64,8 @@ namespace CJJ.Blog.Service.Repository
                 using (var db = new DBHelper())
                 {
 
-                    var sql = $"select a.*,b.Content from bloginfo a join blogcontent b  on  a.kid=b.BloginfoId where a.kid={kid} and a.IsDeleted=0 ";
-                  
+                    var sql = $"select a.*,b.Content from bloginfo a join blogcontent b  on  a.BlogNum=b.BloginfoNum where a.kid={kid} and a.IsDeleted=0 ";
+
                     var data = db.ExecuteDataTable(sql);
                     bloginfoView = ToEntity<BloginfoView>(data);
                 }
@@ -76,48 +78,41 @@ namespace CJJ.Blog.Service.Repository
             return bloginfoView;
         }
 
-        public List<BloginfoView> GetListBlog(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null,string orderby="")
-        {
-            var list = new List<BloginfoView>();
-            try
-            {
-                var where = Getwherebydic(dicwhere);
-                using (var db = new DBHelper())
-                {
-                 
-                    var sql = $"select a.*,b.Content from bloginfo a,blogcontent b where {where} and a.kid=b.BloginfoId limit ? offset ? ";
-                    var par = new object[] { limit, (page - 1) * limit };
-                    var data = db.ExecuteDataTable(sql, par);
-                    list = ToEntityList<BloginfoView>(data)?.ToList();
-                }
-            }
-            catch(Exception ex)
-            {
+        //public List<BloginfoView> GetListBlog(int page = 1, int limit = 10, bool iscontent = true, string orderby = "", Dictionary<string, object> dicwhere = null)
+        //{
+        //    try
+        //    {
+        //        var values = new List<object>();
+        //        var sqlwhere = "";
+        //        if (dicwhere != null)
+        //        {
+        //            sqlwhere = SqlHelper.GetSqlByDic(dicwhere, out values);
+        //        }
+        //        if (iscontent)
+        //        {
 
-            }
+        //        }
 
-            return list;
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        LogHelper.WriteLog(ex, "BloginfoRepository/GetListBlog");
+        //    }
+        //}
 
-        private string Getwherebydic(Dictionary<string, object> dic)
-        {
-            if (dic == null)
-            {
-                return "";
-            }
-            StringBuilder sub = new StringBuilder();
-            foreach(KeyValuePair<string,object> item in dic)
-            {
-                sub.AppendFormat($" '{item.Key}'='{item.Value}' and");
-            }
-            string res = "";
-            if (sub.Length > 0)
-            {
-                res = sub.ToString().Substring(0, sub.Length - 3);
-            }
-            return res;
-        }
+        //private string Getwherebydic(Dictionary<string, object> dic, out List<object> values)
+        //{
+        //    var sqlwhere = string.Empty;
 
-		/*BC47A26EB9A59406057DDDD62D0898F4*/
+        //    StringBuilder sub = new StringBuilder();
+        //    foreach (KeyValuePair<string, object> item in dic)
+        //    {
+        //        sub.AppendFormat($" '{item.Key}'= ? and ");
+        //        values.Add(item.Value);
+        //    }
+
+        //}
+
+        /*BC47A26EB9A59406057DDDD62D0898F4*/
     }
 }

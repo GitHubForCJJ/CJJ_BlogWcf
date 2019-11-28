@@ -119,6 +119,11 @@ namespace CJJ.Blog.Service.Model.Data
         [DataMember]
         public string BlogNum { get; set; }
         /// <summary>
+        /// 会话id
+        /// </summary>
+        [DataMember]
+        public string Commentid { get; set; }
+        /// <summary>
         /// 评论谁的id  为空指的是自己写的新评论  不为空则是 评论别人的评论
         /// </summary>
         [DataMember]
@@ -128,5 +133,10 @@ namespace CJJ.Blog.Service.Model.Data
         /// </summary>
         [DataMember]
         public string Content { get; set; }
+        /// <summary>
+        /// 头像
+        /// </summary>
+        [DataMember]
+        public string Avatar { get; set; }
     }
 }

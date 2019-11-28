@@ -32,6 +32,31 @@ namespace CJJ.Blog.Service.Logic
         #region 查询
 
         /// <summary>
+        /// 查询博客 分页查询
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="limit">The limit.</param>
+        /// <param name="iscontent">是否查询content</param>
+        /// <returns>System.Collections.Generic.List&lt;Jbst.Service.Models.Data.Sys_menu&gt;.</returns>
+        //public static List<BloginfoView> GetListPage(int page = 1, int limit = 10,bool iscontent=true,string orderby="", Dictionary<string, object> dicwhere = null)
+        //{
+        //    if (dicwhere == null)
+        //    {
+        //        dicwhere = new Dictionary<string, object>();
+        //    }
+        //    if (dicwhere.Keys.Contains(nameof(Bloginfo.IsDeleted)))
+        //    {
+        //        dicwhere[nameof(Bloginfo.IsDeleted)] = 0;
+        //    }
+        //    else
+        //    {
+        //        dicwhere.Add(nameof(Bloginfo.IsDeleted), 0);
+        //    }
+        //    return BloginfoRepository.Instance.GetListBlog(page, limit, dicwhere, orderby).ToList();
+        //}
+
+
+        /// <summary>
         /// Gets the Bloginfo {TableNameComment} list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="page">The page.</param>
@@ -39,25 +64,7 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>System.Collections.Generic.List&lt;Jbst.Service.Models.Data.Sys_menu&gt;.</returns>
         public static List<BloginfoView> GetListPage(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
         {
-            string orderby = "";
-            if (dicwhere != null && dicwhere.ContainsKey(nameof(orderby)))
-            {
-                orderby = dicwhere[nameof(orderby)].ToString();
-                dicwhere.Remove(nameof(orderby));
-            }
-            if (dicwhere == null)
-            {
-                dicwhere = new Dictionary<string, object>();
-            }
-            if (dicwhere.Keys.Contains(nameof(Bloginfo.IsDeleted)))
-            {
-                dicwhere[nameof(Bloginfo.IsDeleted)] = 0;
-            }
-            else
-            {
-                dicwhere.Add(nameof(Bloginfo.IsDeleted), 0);
-            }
-            return BloginfoRepository.Instance.GetListBlog(page, limit, dicwhere, orderby).ToList();
+            return new List<BloginfoView>();
         }
 
         /// <summary>
@@ -82,7 +89,7 @@ namespace CJJ.Blog.Service.Logic
             {
                 dicwhere.Add(nameof(Bloginfo.IsDeleted), 0);
             }
-            var a= BloginfoRepository.Instance.GetJsonListPage<Bloginfo>(limit, page, dicwhere, orderby);
+            var a = BloginfoRepository.Instance.GetJsonListPage<Bloginfo>(limit, page, dicwhere, orderby);
             return a;
         }
 
@@ -289,7 +296,7 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result Add(Dictionary<string, object> dicwhere, OpertionUser opertionUser)
         {
-            var res = new Result() { IsSucceed=false};
+            var res = new Result() { IsSucceed = false };
 
             if (!dicwhere.ContainsKey(nameof(Blogcontent.Content)))
             {
@@ -409,7 +416,7 @@ namespace CJJ.Blog.Service.Logic
                     cont = dicwhere[nameof(Blogcontent.Content)].ToString();
                 }
                 var t = BlogcontentRepository.Instance.UpdateByKey<Blogcontent>(dicwhere, kID);
-                res.IsSucceed = t > 0;          
+                res.IsSucceed = t > 0;
             }
 
             DbLog.WriteDbLog(nameof(Bloginfo), "修改记录", kID, dicwhere, OperLogType.编辑, opertionUser);
