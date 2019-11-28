@@ -23,6 +23,7 @@ using FastDev.Http;
 using System.Data;
 using CJJ.Blog.Service.Models.View;
 using CJJ.Blog.Service.Model.View;
+using CJJ.Blog.Service.Model.Data;
 
 namespace CJJ.Blog.NetWork.IService
 {
@@ -691,7 +692,7 @@ namespace CJJ.Blog.NetWork.IService
 
         #endregion
 
-		#region Checknum 操作
+		#region Member 操作
 
         #region 查询
 
@@ -702,7 +703,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="limit">The limit.</param>
         /// <returns>System.Collections.Generic.List&lt;CJJ.Blog.Service.Models.Data.Sys_menu&gt;.</returns>
         [OperationContract]
-        List<Checknum> GetListPage_Checknum(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null);
+        List<Member> GetListPage_Member(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null);
 
 		/// <summary>
         /// 获取Json格式的数据
@@ -713,30 +714,30 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="dicwhere">查询条件</param>
         /// <returns></returns>
         [OperationContract]
-        FastJsonResult<List<Checknum>> GetJsonListPage_Checknum(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null);
+        FastJsonResult<List<Member>> GetJsonListPage_Member(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null);
 
 
         /// <summary>
         /// 不分页获取所有数据
         /// </summary>
-        /// <returns>List&lt;Checknum&gt;.</returns>
+        /// <returns>List&lt;Member&gt;.</returns>
         [OperationContract]
-        List<Checknum> GetAllList_Checknum();
+        List<Member> GetAllList_Member();
 
         /// <summary>
         /// 按条件获取数据列表
         /// </summary>
         /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
-        /// <returns>List&lt;Checknum&gt;.</returns>
+        /// <returns>List&lt;Member&gt;.</returns>
         [OperationContract]
-        List<Checknum> GetList_Checknum(Dictionary<string, object> dicwhere);
+        List<Member> GetList_Member(Dictionary<string, object> dicwhere);
 
         /// <summary>
         /// 获取数据总条数
         /// </summary>
         /// <returns>System.Int32.</returns>
         [OperationContract]
-        int GetCount_Checknum(Dictionary<string, object> dicwhere = null);
+        int GetCount_Member(Dictionary<string, object> dicwhere = null);
 
         /// <summary>
         /// 获取Model
@@ -744,7 +745,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
         [OperationContract]
-        Checknum GetModelByKID_Checknum(int kID);
+        Member GetModelByKID_Member(int kID);
 
         /// <summary>
         /// 获取Model
@@ -752,7 +753,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
         [OperationContract]
-        Checknum GetModelByWhere_Checknum(Dictionary<string, object> dicwhere);
+        Member GetModelByWhere_Member(Dictionary<string, object> dicwhere);
 
 		 /// <summary>
         /// 查询数据
@@ -760,7 +761,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="dicwhere">条件查询</param>
         /// <returns></returns>
         [OperationContract]
-        DataTable GetDataTable_Checknum(Dictionary<string, object> dicwhere, int page = 1, int limit = 10);
+        DataTable GetDataTable_Member(Dictionary<string, object> dicwhere, int page = 1, int limit = 10);
 
         /// <summary>
         /// 根据In子查询查询数据
@@ -774,7 +775,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="limit">当前页显示的数据条数</param>
         /// <returns></returns>
         [OperationContract]
-        List<Checknum> GetListByInSelect_Checknum(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10);
+        List<Member> GetListByInSelect_Member(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10);
 
         /// <summary>
         /// 根据In子查询查询数据
@@ -786,7 +787,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="subDicWhere">子表的Where条件</param>
         /// <returns></returns>
         [OperationContract]
-        int GetCountByInSelect_Checknum(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere);
+        int GetCountByInSelect_Member(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere);
 
         /// <summary>
         /// 根据Where条件Group查询数据,返回的列只比对Groupby的字段多一列,coun(1) As GroupCnt 目前只支持MySql
@@ -797,7 +798,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="limit">当前条数</param>
         /// <returns></returns>
         [OperationContract]
-        DataTable GetDataByGroup_Checknum(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10);
+        DataTable GetDataByGroup_Member(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10);
 
         #endregion
 
@@ -810,7 +811,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         [OperationContract]
-        Result Add_Checknum(Dictionary<string, object> dicdata, OpertionUser opertionUser);
+        Result Add_Member(Dictionary<string, object> dicdata, OpertionUser opertionUser);
 		
 		/// <summary>
         /// 添加多条数据 根据字典添加
@@ -819,7 +820,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
         [OperationContract]
-        Result Adds_Checknum(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser);
+        Result Adds_Member(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser);
 
         /// <summary>
         /// 添加实体
@@ -828,7 +829,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         [OperationContract]
-        Result AddByEntity_Checknum(Checknum entity, OpertionUser opertionUser);
+        Result AddByEntity_Member(Member entity, OpertionUser opertionUser);
 
         /// <summary>
         /// 批量添加实体
@@ -837,7 +838,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         [OperationContract]
-        Result AddByEntitys_Checknum(List<Checknum> entitys, OpertionUser opertionUser);
+        Result AddByEntitys_Member(List<Member> entitys, OpertionUser opertionUser);
         #endregion
 
         #region 修改
@@ -850,7 +851,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         [OperationContract]
-        Result Update_Checknum(Dictionary<string, object> dicdata, int kID, OpertionUser opertionUser);
+        Result Update_Member(Dictionary<string, object> dicdata, int kID, OpertionUser opertionUser);
 
         /// <summary>
         /// 根据条件批量修改字段值
@@ -860,7 +861,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         [OperationContract]
-        Result UpdateByWhere_Checknum(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser);
+        Result UpdateByWhere_Member(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser);
 
 		/// <summary>
         /// 修改次数
@@ -871,7 +872,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
         [OperationContract]
-        Result UpdateNums_Checknum(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser);
+        Result UpdateNums_Member(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser);
 
         #endregion
 
@@ -883,7 +884,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         [OperationContract]
-        Result Delete_Checknum(string kid, OpertionUser opertionUser);
+        Result Delete_Member(string kid, OpertionUser opertionUser);
 
         /// <summary>
         /// 批量删除数据
@@ -892,7 +893,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         [OperationContract]
-        Result DeleteByWhere_Checknum(Dictionary<string, object> keydata, OpertionUser opertionUser);
+        Result DeleteByWhere_Member(Dictionary<string, object> keydata, OpertionUser opertionUser);
         #endregion
 
 		#region 数据导出
@@ -904,13 +905,13 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         [OperationContract]
-        Result ExportExcelFile_Checknum(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser);
+        Result ExportExcelFile_Member(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser);
 
         #endregion
 
         #endregion
 
-		#region Comments 操作
+		#region Comment 操作
 
         #region 查询
 
@@ -921,7 +922,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="limit">The limit.</param>
         /// <returns>System.Collections.Generic.List&lt;CJJ.Blog.Service.Models.Data.Sys_menu&gt;.</returns>
         [OperationContract]
-        List<Comments> GetListPage_Comments(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null);
+        List<Comment> GetListPage_Comment(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null);
 
 		/// <summary>
         /// 获取Json格式的数据
@@ -932,30 +933,30 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="dicwhere">查询条件</param>
         /// <returns></returns>
         [OperationContract]
-        FastJsonResult<List<Comments>> GetJsonListPage_Comments(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null);
+        FastJsonResult<List<Comment>> GetJsonListPage_Comment(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null);
 
 
         /// <summary>
         /// 不分页获取所有数据
         /// </summary>
-        /// <returns>List&lt;Comments&gt;.</returns>
+        /// <returns>List&lt;Comment&gt;.</returns>
         [OperationContract]
-        List<Comments> GetAllList_Comments();
+        List<Comment> GetAllList_Comment();
 
         /// <summary>
         /// 按条件获取数据列表
         /// </summary>
         /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
-        /// <returns>List&lt;Comments&gt;.</returns>
+        /// <returns>List&lt;Comment&gt;.</returns>
         [OperationContract]
-        List<Comments> GetList_Comments(Dictionary<string, object> dicwhere);
+        List<Comment> GetList_Comment(Dictionary<string, object> dicwhere);
 
         /// <summary>
         /// 获取数据总条数
         /// </summary>
         /// <returns>System.Int32.</returns>
         [OperationContract]
-        int GetCount_Comments(Dictionary<string, object> dicwhere = null);
+        int GetCount_Comment(Dictionary<string, object> dicwhere = null);
 
         /// <summary>
         /// 获取Model
@@ -963,7 +964,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
         [OperationContract]
-        Comments GetModelByKID_Comments(int kID);
+        Comment GetModelByKID_Comment(int kID);
 
         /// <summary>
         /// 获取Model
@@ -971,7 +972,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
         [OperationContract]
-        Comments GetModelByWhere_Comments(Dictionary<string, object> dicwhere);
+        Comment GetModelByWhere_Comment(Dictionary<string, object> dicwhere);
 
 		 /// <summary>
         /// 查询数据
@@ -979,7 +980,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="dicwhere">条件查询</param>
         /// <returns></returns>
         [OperationContract]
-        DataTable GetDataTable_Comments(Dictionary<string, object> dicwhere, int page = 1, int limit = 10);
+        DataTable GetDataTable_Comment(Dictionary<string, object> dicwhere, int page = 1, int limit = 10);
 
         /// <summary>
         /// 根据In子查询查询数据
@@ -993,7 +994,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="limit">当前页显示的数据条数</param>
         /// <returns></returns>
         [OperationContract]
-        List<Comments> GetListByInSelect_Comments(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10);
+        List<Comment> GetListByInSelect_Comment(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10);
 
         /// <summary>
         /// 根据In子查询查询数据
@@ -1005,7 +1006,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="subDicWhere">子表的Where条件</param>
         /// <returns></returns>
         [OperationContract]
-        int GetCountByInSelect_Comments(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere);
+        int GetCountByInSelect_Comment(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere);
 
         /// <summary>
         /// 根据Where条件Group查询数据,返回的列只比对Groupby的字段多一列,coun(1) As GroupCnt 目前只支持MySql
@@ -1016,7 +1017,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="limit">当前条数</param>
         /// <returns></returns>
         [OperationContract]
-        DataTable GetDataByGroup_Comments(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10);
+        DataTable GetDataByGroup_Comment(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10);
 
         #endregion
 
@@ -1029,7 +1030,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         [OperationContract]
-        Result Add_Comments(Dictionary<string, object> dicdata, OpertionUser opertionUser);
+        Result Add_Comment(Dictionary<string, object> dicdata, OpertionUser opertionUser);
 		
 		/// <summary>
         /// 添加多条数据 根据字典添加
@@ -1038,7 +1039,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
         [OperationContract]
-        Result Adds_Comments(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser);
+        Result Adds_Comment(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser);
 
         /// <summary>
         /// 添加实体
@@ -1047,7 +1048,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         [OperationContract]
-        Result AddByEntity_Comments(Comments entity, OpertionUser opertionUser);
+        Result AddByEntity_Comment(Comment entity, OpertionUser opertionUser);
 
         /// <summary>
         /// 批量添加实体
@@ -1056,7 +1057,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         [OperationContract]
-        Result AddByEntitys_Comments(List<Comments> entitys, OpertionUser opertionUser);
+        Result AddByEntitys_Comment(List<Comment> entitys, OpertionUser opertionUser);
         #endregion
 
         #region 修改
@@ -1069,7 +1070,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         [OperationContract]
-        Result Update_Comments(Dictionary<string, object> dicdata, int kID, OpertionUser opertionUser);
+        Result Update_Comment(Dictionary<string, object> dicdata, int kID, OpertionUser opertionUser);
 
         /// <summary>
         /// 根据条件批量修改字段值
@@ -1079,7 +1080,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         [OperationContract]
-        Result UpdateByWhere_Comments(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser);
+        Result UpdateByWhere_Comment(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser);
 
 		/// <summary>
         /// 修改次数
@@ -1090,7 +1091,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
         [OperationContract]
-        Result UpdateNums_Comments(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser);
+        Result UpdateNums_Comment(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser);
 
         #endregion
 
@@ -1102,7 +1103,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         [OperationContract]
-        Result Delete_Comments(string kid, OpertionUser opertionUser);
+        Result Delete_Comment(string kid, OpertionUser opertionUser);
 
         /// <summary>
         /// 批量删除数据
@@ -1111,7 +1112,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         [OperationContract]
-        Result DeleteByWhere_Comments(Dictionary<string, object> keydata, OpertionUser opertionUser);
+        Result DeleteByWhere_Comment(Dictionary<string, object> keydata, OpertionUser opertionUser);
         #endregion
 
 		#region 数据导出
@@ -1123,7 +1124,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         [OperationContract]
-        Result ExportExcelFile_Comments(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser);
+        Result ExportExcelFile_Comment(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser);
 
         #endregion
 

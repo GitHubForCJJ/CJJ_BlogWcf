@@ -58,12 +58,12 @@
   <ItemGroup>
     <Compile Include="BlogcontentLogic.cs" />
     <Compile Include="BloginfoLogic.cs" />
+    <Compile Include="MemberLogic.cs" />
     <Compile Include="Common\Comlogic.cs" />
     <Compile Include="HotNewLogic.cs" />
     <Compile Include="CategoryLogic.cs" />
     <Compile Include="CategorypicLogic.cs" />
-    <Compile Include="ChecknumLogic.cs" />
-    <Compile Include="CommentsLogic.cs" />
+    <Compile Include="CommentLogic.cs" />
     <Compile Include="EmployeeLogic.cs" />
     <Compile Include="Fd_sys_operationlogLogic.cs" />
     <Compile Include="LogintokenLogic.cs" />

@@ -17,7 +17,7 @@ namespace FastDev.Log
         //文件夹名称
         private readonly string FileName;
         /// <summary>
-        /// 默认写入到Logs文件夹下
+        /// 默认写入到Logs文件夹下 
         /// </summary>
         public TextWriter()
         {

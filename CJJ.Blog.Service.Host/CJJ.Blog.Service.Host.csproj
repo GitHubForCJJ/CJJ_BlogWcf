@@ -57,10 +57,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CJJ.Blog.Service.Logic\CJJ.Blog.Service.Logic.csproj">
-      <Project>{fb80c0bb-5ebc-43cd-86c5-d9346f206b49}</Project>
-      <Name>CJJ.Blog.Service.Logic</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CJJ.Blog.Service.Model\CJJ.Blog.Service.Model.csproj">
       <Project>{732cf467-0b88-459e-8a1d-01fcf574a77c}</Project>
       <Name>CJJ.Blog.Service.Model</Name>

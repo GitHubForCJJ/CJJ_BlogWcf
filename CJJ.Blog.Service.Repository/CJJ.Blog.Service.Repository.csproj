@@ -49,8 +49,8 @@
     <Compile Include="BloginfoRepository.cs" />
     <Compile Include="CategorypicRepository.cs" />
     <Compile Include="CategoryRepository.cs" />
-    <Compile Include="ChecknumRepository.cs" />
-    <Compile Include="CommentsRepository.cs" />
+    <Compile Include="MemberRepository.cs" />
+    <Compile Include="CommentRepository.cs" />
     <Compile Include="Common\CommonRepository.cs" />
     <Compile Include="EmployeeRepository.cs" />
     <Compile Include="Fd_sys_operationlogRepository.cs" />

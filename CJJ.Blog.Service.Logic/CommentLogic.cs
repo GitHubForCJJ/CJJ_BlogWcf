@@ -1,9 +1,9 @@
 ﻿//-----------------------------------------------------------------------------------
-// <copyright file="Checknum.cs" company="Go Enterprises">
+// <copyright file="Comments.cs" company="Go Enterprises">
 // * copyright: (C) 2018 东走西走科技有限公司 版权所有。
 // * version  : 1.0.0.0
 // * author   : chenjianjun
-// * fileName : Checknum.cs
+// * fileName : Comments.cs
 // * history  : created by chenjianjun 2019-06-14 15:52:46
 // </copyright>
 //-----------------------------------------------------------------------------------
@@ -20,23 +20,24 @@ using DbLog = CJJ.Blog.Service.Logic.Fd_sys_operationlogLogic;
 using System.Data;
 using FastDev.Common.Extension;
 using CJJ.Blog.Service.Models.View;
+using CJJ.Blog.Service.Model.Data;
 
 namespace CJJ.Blog.Service.Logic
 {
     /// <summary>
-    /// Class Checknum Logic.
+    /// Class Comments Logic.
     /// </summary>
-    public class ChecknumLogic
+    public class CommentLogic
     {
         #region 查询
 
         /// <summary>
-        /// Gets the Checknum {TableNameComment} list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
+        /// Gets the Comment {TableNameComment} list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="page">The page.</param>
         /// <param name="limit">The limit.</param>
         /// <returns>System.Collections.Generic.List&lt;Jbst.Service.Models.Data.Sys_menu&gt;.</returns>
-        public static List<Checknum> GetListPage(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
+        public static List<Comment> GetListPage(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
         {
             string orderby = "";
             if (dicwhere != null && dicwhere.ContainsKey(nameof(orderby)))
@@ -48,15 +49,15 @@ namespace CJJ.Blog.Service.Logic
             {
                 dicwhere = new Dictionary<string, object>();
             }
-            if (dicwhere.Keys.Contains(nameof(Checknum.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Comment.IsDeleted)))
             {
-                dicwhere[nameof(Checknum.IsDeleted)] = 0;
+                dicwhere[nameof(Comment.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Checknum.IsDeleted), 0);
+                dicwhere.Add(nameof(Comment.IsDeleted), 0);
             }
-            return ChecknumRepository.Instance.GetListPage<Checknum>(limit, page, dicwhere, orderby).ToList();
+            return CommentRepository.Instance.GetListPage<Comment>(limit, page, dicwhere, orderby).ToList();
         }
 
         /// <summary>
@@ -67,68 +68,68 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="orderby">排序字段</param>
         /// <param name="dicwhere">查询条件</param>
         /// <returns>FastJsonResult&lt;List&lt;Product&gt;&gt;.</returns>
-        public static FastJsonResult<List<Checknum>> GetJsonListPage(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
+        public static FastJsonResult<List<Comment>> GetJsonListPage(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
         {
             if (dicwhere == null)
             {
                 dicwhere = new Dictionary<string, object>();
             }
-            if (dicwhere.Keys.Contains(nameof(Checknum.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Comment.IsDeleted)))
             {
-                dicwhere[nameof(Checknum.IsDeleted)] = 0;
+                dicwhere[nameof(Comment.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Checknum.IsDeleted), 0);
+                dicwhere.Add(nameof(Comment.IsDeleted), 0);
             }
-            return ChecknumRepository.Instance.GetJsonListPage<Checknum>(limit, page, dicwhere, orderby);
+            return CommentRepository.Instance.GetJsonListPage<Comment>(limit, page, dicwhere, orderby);
         }
 
         /// <summary>
         /// 不分页获取所有数据
         /// </summary>
-        /// <returns>List&lt;Checknum&gt;.</returns>
-        public static List<Checknum> GetAllList()
+        /// <returns>List&lt;Comment&gt;.</returns>
+        public static List<Comment> GetAllList()
         {
             var dic = new Dictionary<string, object>();
-            dic.Add(nameof(Checknum.IsDeleted), 0);
-            return ChecknumRepository.Instance.GetList<Checknum>(dic).ToList();
+            dic.Add(nameof(Comment.IsDeleted), 0);
+            return CommentRepository.Instance.GetList<Comment>(dic).ToList();
         }
 
         /// <summary>
         /// 按条件获取数据列表 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
-        /// <returns>List&lt;Checknum&gt;.</returns>
+        /// <returns>List&lt;Comment&gt;.</returns>
         public static DataTable GetDataTable(Dictionary<string, object> dicwhere, int page = 1, int limit = 10)
         {
-            if (dicwhere.Keys.Contains(nameof(Checknum.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Comment.IsDeleted)))
             {
-                dicwhere[nameof(Checknum.IsDeleted)] = 0;
+                dicwhere[nameof(Comment.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Checknum.IsDeleted), 0);
+                dicwhere.Add(nameof(Comment.IsDeleted), 0);
             }
-            return ChecknumRepository.Instance.GetDataTablePage<Checknum>(limit, page, dicwhere);
+            return CommentRepository.Instance.GetDataTablePage<Comment>(limit, page, dicwhere);
         }
 
         /// <summary> 
         /// 按条件获取数据列表 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
-        /// <returns>List&lt;Checknum&gt;.</returns>
-        public static List<Checknum> GetList(Dictionary<string, object> dicwhere)
+        /// <returns>List&lt;Comment&gt;.</returns>
+        public static List<Comment> GetList(Dictionary<string, object> dicwhere)
         {
-            if (dicwhere.Keys.Contains(nameof(Checknum.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Comment.IsDeleted)))
             {
-                dicwhere[nameof(Checknum.IsDeleted)] = 0;
+                dicwhere[nameof(Comment.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Checknum.IsDeleted), 0);
+                dicwhere.Add(nameof(Comment.IsDeleted), 0);
             }
-            return ChecknumRepository.Instance.GetList<Checknum>(dicwhere).ToList();
+            return CommentRepository.Instance.GetList<Comment>(dicwhere).ToList();
         }
 
         /// <summary>
@@ -141,15 +142,15 @@ namespace CJJ.Blog.Service.Logic
             {
                 dicwhere = new Dictionary<string, object>();
             }
-            if (dicwhere.Keys.Contains(nameof(Checknum.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Comment.IsDeleted)))
             {
-                dicwhere[nameof(Checknum.IsDeleted)] = 0;
+                dicwhere[nameof(Comment.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Checknum.IsDeleted), 0);
+                dicwhere.Add(nameof(Comment.IsDeleted), 0);
             }
-            return ChecknumRepository.Instance.GetCount<Checknum>(dicwhere);
+            return CommentRepository.Instance.GetCount<Comment>(dicwhere);
         }
 
         /// <summary>
@@ -157,9 +158,9 @@ namespace CJJ.Blog.Service.Logic
         /// </summary>
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
-        public static Checknum GetModelByKID(int kID)
+        public static Comment GetModelByKID(int kID)
         {
-            var model = ChecknumRepository.Instance.GetEntityByKey<Checknum>(kID);
+            var model = CommentRepository.Instance.GetEntityByKey<Comment>(kID);
             if (model != null && model.IsDeleted == 0)
             {
                 return model;
@@ -175,17 +176,17 @@ namespace CJJ.Blog.Service.Logic
         /// </summary>
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
-        public static Checknum GetModelByWhere(Dictionary<string, object> dicwhere)
+        public static Comment GetModelByWhere(Dictionary<string, object> dicwhere)
         {
-            if (dicwhere.Keys.Contains(nameof(Checknum.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Comment.IsDeleted)))
             {
-                dicwhere[nameof(Checknum.IsDeleted)] = 0;
+                dicwhere[nameof(Comment.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Checknum.IsDeleted), 0);
+                dicwhere.Add(nameof(Comment.IsDeleted), 0);
             }
-            return ChecknumRepository.Instance.GetEntity<Checknum>(dicwhere);
+            return CommentRepository.Instance.GetEntity<Comment>(dicwhere);
         }
 
         /// <summary>
@@ -200,26 +201,26 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="page">当前页数</param>
         /// <param name="limit">当前页显示的数据条数</param>
         /// <returns></returns>
-        public static List<Checknum> GetListByInSelect(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
+        public static List<Comment> GetListByInSelect(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
         {
-            if (mainDicWhere.Keys.Contains(nameof(Checknum.IsDeleted)))
+            if (mainDicWhere.Keys.Contains(nameof(Comment.IsDeleted)))
             {
-                mainDicWhere[nameof(Checknum.IsDeleted)] = 0;
+                mainDicWhere[nameof(Comment.IsDeleted)] = 0;
             }
             else
             {
-                mainDicWhere.Add(nameof(Checknum.IsDeleted), 0);
+                mainDicWhere.Add(nameof(Comment.IsDeleted), 0);
             }
 
-            if (subDicWhere.Keys.Contains(nameof(Checknum.IsDeleted)))
+            if (subDicWhere.Keys.Contains(nameof(Comment.IsDeleted)))
             {
-                subDicWhere[nameof(Checknum.IsDeleted)] = 0;
+                subDicWhere[nameof(Comment.IsDeleted)] = 0;
             }
             else
             {
-                subDicWhere.Add(nameof(Checknum.IsDeleted), 0);
+                subDicWhere.Add(nameof(Comment.IsDeleted), 0);
             }
-            return ChecknumRepository.Instance.GetListByInSelect<Checknum>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit).ToList();
+            return CommentRepository.Instance.GetListByInSelect<Comment>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit).ToList();
         }
 
 
@@ -234,24 +235,24 @@ namespace CJJ.Blog.Service.Logic
         /// <returns></returns>
         public static int GetCountByInSelect(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere)
         {
-            if (mainDicWhere.Keys.Contains(nameof(Checknum.IsDeleted)))
+            if (mainDicWhere.Keys.Contains(nameof(Comment.IsDeleted)))
             {
-                mainDicWhere[nameof(Checknum.IsDeleted)] = 0;
+                mainDicWhere[nameof(Comment.IsDeleted)] = 0;
             }
             else
             {
-                mainDicWhere.Add(nameof(Checknum.IsDeleted), 0);
+                mainDicWhere.Add(nameof(Comment.IsDeleted), 0);
             }
 
-            if (subDicWhere.Keys.Contains(nameof(Checknum.IsDeleted)))
+            if (subDicWhere.Keys.Contains(nameof(Comment.IsDeleted)))
             {
-                subDicWhere[nameof(Checknum.IsDeleted)] = 0;
+                subDicWhere[nameof(Comment.IsDeleted)] = 0;
             }
             else
             {
-                subDicWhere.Add(nameof(Checknum.IsDeleted), 0);
+                subDicWhere.Add(nameof(Comment.IsDeleted), 0);
             }
-            return ChecknumRepository.Instance.GetCountByInSelect<Checknum>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
+            return CommentRepository.Instance.GetCountByInSelect<Comment>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
         }
 
         /// <summary>
@@ -264,15 +265,15 @@ namespace CJJ.Blog.Service.Logic
         /// <returns></returns>
         public static DataTable GetDataByGroup(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10)
         {
-            if (dicWhere.Keys.Contains(nameof(Checknum.IsDeleted)))
+            if (dicWhere.Keys.Contains(nameof(Comment.IsDeleted)))
             {
-                dicWhere[nameof(Checknum.IsDeleted)] = 0;
+                dicWhere[nameof(Comment.IsDeleted)] = 0;
             }
             else
             {
-                dicWhere.Add(nameof(Checknum.IsDeleted), 0);
+                dicWhere.Add(nameof(Comment.IsDeleted), 0);
             }
-            return ChecknumRepository.Instance.GetDataByGroup<Checknum>(groupByFields, dicWhere, page, limit);
+            return CommentRepository.Instance.GetDataByGroup<Comment>(groupByFields, dicWhere, page, limit);
         }
 
         #endregion
@@ -287,9 +288,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result Add(Dictionary<string, object> dicwhere, OpertionUser opertionUser)
         {
-            var ret = ChecknumRepository.Instance.Add<Checknum>(dicwhere);
+            var ret = CommentRepository.Instance.Add<Comment>(dicwhere);
 
-            DbLog.WriteDbLog(nameof(Checknum), "添加记录", ret, dicwhere.ToJsonString(), opertionUser, OperLogType.添加);
+            DbLog.WriteDbLog(nameof(Comment), "添加记录", ret, dicwhere.ToJsonString(), opertionUser, OperLogType.添加);
 
             return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
         }
@@ -300,19 +301,19 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="entity">The entity.</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public static Result Add(Checknum entity, OpertionUser opertionUser)
+        public static Result Add(Comment entity, OpertionUser opertionUser)
         {
             try
             {
-                var ret = ChecknumRepository.Instance.Add<Checknum>(entity);
+                var ret = CommentRepository.Instance.Add<Comment>(entity);
 
-                DbLog.WriteDbLog(nameof(Checknum), "添加记录", ret, entity.ToJsonString(), opertionUser, OperLogType.添加);
+                DbLog.WriteDbLog(nameof(Comment), "添加记录", ret, entity.ToJsonString(), opertionUser, OperLogType.添加);
 
                 return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
             }
             catch (Exception ex)
             {
-                FastDev.Log.LogHelper.WriteLog(ex, "ChecknumLogic.Add Entity异常");
+                FastDev.Log.LogHelper.WriteLog(ex, "CommentLogic.Add Entity异常");
 
                 return new Result() { IsSucceed = false, Message = ex.Message };
             }
@@ -324,19 +325,19 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="entity">The entity.</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public static Result Adds(List<Checknum> entity, OpertionUser opertionUser)
+        public static Result Adds(List<Comment> entity, OpertionUser opertionUser)
         {
             try
             {
-                var ret = ChecknumRepository.Instance.Adds<Checknum>(entity);
+                var ret = CommentRepository.Instance.Adds<Comment>(entity);
 
-                DbLog.WriteDbLog<List<Checknum>>(nameof(Checknum), "添加记录", ret, entity, opertionUser, OperLogType.添加);
+                DbLog.WriteDbLog<List<Comment>>(nameof(Comment), "添加记录", ret, entity, opertionUser, OperLogType.添加);
 
                 return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
             }
             catch (Exception ex)
             {
-                FastDev.Log.LogHelper.WriteLog(ex, "ChecknumLogic.Add Entity异常");
+                FastDev.Log.LogHelper.WriteLog(ex, "CommentLogic.Add Entity异常");
 
                 return new Result() { IsSucceed = false, Message = ex.Message };
             }
@@ -353,15 +354,15 @@ namespace CJJ.Blog.Service.Logic
         {
             try
             {
-                var ret = ChecknumRepository.Instance.Adds<Checknum>(diclst);
+                var ret = CommentRepository.Instance.Adds<Comment>(diclst);
 
-                DbLog.WriteDbLog<List<Dictionary<string, object>>>(nameof(Checknum), "添加记录", ret, diclst, opertionUser, OperLogType.添加);
+                DbLog.WriteDbLog<List<Dictionary<string, object>>>(nameof(Comment), "添加记录", ret, diclst, opertionUser, OperLogType.添加);
 
                 return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
             }
             catch (Exception ex)
             {
-                FastDev.Log.LogHelper.WriteLog(ex, "ChecknumLogic.Adds diclst异常");
+                FastDev.Log.LogHelper.WriteLog(ex, "CommentLogic.Adds diclst异常");
 
                 return new Result() { IsSucceed = false, Message = ex.Message };
             }
@@ -379,9 +380,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result Update(Dictionary<string, object> dicwhere, int kID, OpertionUser opertionUser)
         {
-            var ret = ChecknumRepository.Instance.UpdateByKey<Checknum>(dicwhere, kID);
+            var ret = CommentRepository.Instance.UpdateByKey<Comment>(dicwhere, kID);
 
-            DbLog.WriteDbLog(nameof(Checknum), "修改记录", kID, dicwhere, OperLogType.编辑, opertionUser);
+            DbLog.WriteDbLog(nameof(Comment), "修改记录", kID, dicwhere, OperLogType.编辑, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }
@@ -395,9 +396,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result UpdateByWhere(Dictionary<string, object> valuedata, Dictionary<string, object> dicwhere, OpertionUser opertionUser)
         {
-            var ret = ChecknumRepository.Instance.Update<Checknum>(valuedata, dicwhere);
+            var ret = CommentRepository.Instance.Update<Comment>(valuedata, dicwhere);
 
-            DbLog.WriteDbLog(nameof(Checknum), "批量修改记录", valuedata.ToJsonString(), valuedata, OperLogType.编辑, opertionUser);
+            DbLog.WriteDbLog(nameof(Comment), "批量修改记录", valuedata.ToJsonString(), valuedata, OperLogType.编辑, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }
@@ -412,9 +413,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns></returns>
         public static Result UpdateNums(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
         {
-            var ret = ChecknumRepository.Instance.UpdateNums<Checknum>(fields, addNums, whereKey);
+            var ret = CommentRepository.Instance.UpdateNums<Comment>(fields, addNums, whereKey);
 
-            DbLog.WriteDbLog(nameof(Checknum), "修改记录", whereKey.ToJsonString(), whereKey, OperLogType.编辑, opertionUser);
+            DbLog.WriteDbLog(nameof(Comment), "修改记录", whereKey.ToJsonString(), whereKey, OperLogType.编辑, opertionUser);
 
             return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
         }
@@ -431,20 +432,20 @@ namespace CJJ.Blog.Service.Logic
         public static Result Delete(string kid, OpertionUser opertionUser)
         {
             var deldic = new Dictionary<string, object>();
-            deldic.Add(nameof(Checknum.IsDeleted), 1);
+            deldic.Add(nameof(Comment.IsDeleted), 1);
 
             var keydic = new Dictionary<string, object>();
             if (kid.IndexOf(",") > -1)
             {
-                keydic.Add(nameof(Checknum.KID) + "|i", kid);
+                keydic.Add(nameof(Comment.KID) + "|i", kid);
             }
             else
             {
-                keydic.Add(nameof(Checknum.KID), kid);
+                keydic.Add(nameof(Comment.KID), kid);
             }
-            var ret = ChecknumRepository.Instance.Update<Checknum>(deldic, keydic);
+            var ret = CommentRepository.Instance.Update<Comment>(deldic, keydic);
 
-            DbLog.WriteDbLog(nameof(Checknum), "删除记录", kid, null, OperLogType.删除, opertionUser);
+            DbLog.WriteDbLog(nameof(Comment), "删除记录", kid, null, OperLogType.删除, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }
@@ -458,11 +459,11 @@ namespace CJJ.Blog.Service.Logic
         public static Result DeleteByWhere(Dictionary<string, object> dicwhere, OpertionUser opertionUser)
         {
             var deldic = new Dictionary<string, object>();
-            deldic.Add(nameof(Checknum.IsDeleted), 1);
+            deldic.Add(nameof(Comment.IsDeleted), 1);
 
-            var ret = ChecknumRepository.Instance.Update<Checknum>(deldic, dicwhere);
+            var ret = CommentRepository.Instance.Update<Comment>(deldic, dicwhere);
 
-            DbLog.WriteDbLog(nameof(Checknum), "批量删除记录", dicwhere.ToJsonString(), dicwhere, OperLogType.删除, opertionUser);
+            DbLog.WriteDbLog(nameof(Comment), "批量删除记录", dicwhere.ToJsonString(), dicwhere, OperLogType.删除, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }

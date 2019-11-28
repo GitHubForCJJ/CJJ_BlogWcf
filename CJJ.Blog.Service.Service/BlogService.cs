@@ -24,6 +24,7 @@ using CJJ.Blog.Service.Models.View;
 using FastDev.Http;
 using System.Data;
 using CJJ.Blog.Service.Model.View;
+using CJJ.Blog.Service.Model.Data;
 
 namespace CJJ.Blog.Service.Service
 {
@@ -820,7 +821,7 @@ namespace CJJ.Blog.Service.Service
 
         #endregion
 
-		#region Checknum操作
+		#region Member操作
 
         #region 查询
 
@@ -830,9 +831,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="page">页数</param>
         /// <param name="limit">当前页条数</param>
         /// <returns>System.Collections.Generic.List&lt;FastDev.Service.Models.Data.Sys_menu&gt;.</returns>
-        public List<Checknum> GetListPage_Checknum(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
+        public List<Member> GetListPage_Member(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
         {
-            return ChecknumLogic.GetListPage(page, limit, dicwhere).ToList();
+            return MemberLogic.GetListPage(page, limit, dicwhere).ToList();
         }
 
 		/// <summary>
@@ -843,18 +844,18 @@ namespace CJJ.Blog.Service.Service
         /// <param name="orderby">排序字段</param>
         /// <param name="dicwhere">查询条件</param>
         /// <returns></returns>
-        public FastJsonResult<List<Checknum>> GetJsonListPage_Checknum(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
+        public FastJsonResult<List<Member>> GetJsonListPage_Member(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
         {
-            return ChecknumLogic.GetJsonListPage(page, limit, orderby, dicwhere);
+            return MemberLogic.GetJsonListPage(page, limit, orderby, dicwhere);
         }
 
         /// <summary>
         /// 不分页获取所有数据
         /// </summary>
         /// <returns>List&lt;Sys_role&gt;.</returns>
-        public List<Checknum> GetAllList_Checknum()
+        public List<Member> GetAllList_Member()
         {
-            return ChecknumLogic.GetAllList();
+            return MemberLogic.GetAllList();
         }
 
         /// <summary>
@@ -862,18 +863,18 @@ namespace CJJ.Blog.Service.Service
         /// </summary>
         /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
         /// <returns>List&lt;Sys_role&gt;.</returns>
-        public List<Checknum> GetList_Checknum(Dictionary<string, object> dicwhere)
+        public List<Member> GetList_Member(Dictionary<string, object> dicwhere)
         {
-            return ChecknumLogic.GetList(dicwhere);
+            return MemberLogic.GetList(dicwhere);
         }
 
         /// <summary>
         /// 获取数据总条数
         /// </summary>
         /// <returns>System.Int32.</returns>
-        public int GetCount_Checknum(Dictionary<string, object> dicwhere = null)
+        public int GetCount_Member(Dictionary<string, object> dicwhere = null)
         {
-            return ChecknumLogic.GetCount(dicwhere);
+            return MemberLogic.GetCount(dicwhere);
         }
 
         /// <summary>
@@ -881,9 +882,9 @@ namespace CJJ.Blog.Service.Service
         /// </summary>
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
-        public Checknum GetModelByKID_Checknum(int kID)
+        public Member GetModelByKID_Member(int kID)
         {
-            return ChecknumLogic.GetModelByKID(kID);
+            return MemberLogic.GetModelByKID(kID);
         }
 
         /// <summary>
@@ -891,9 +892,9 @@ namespace CJJ.Blog.Service.Service
         /// </summary>
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
-        public Checknum GetModelByWhere_Checknum(Dictionary<string, object> dicwhere)
+        public Member GetModelByWhere_Member(Dictionary<string, object> dicwhere)
         {
-            return ChecknumLogic.GetModelByWhere(dicwhere);
+            return MemberLogic.GetModelByWhere(dicwhere);
         }
 
 
@@ -902,9 +903,9 @@ namespace CJJ.Blog.Service.Service
         /// </summary>
         /// <param name="dicwhere">条件查询</param>
         /// <returns></returns>
-        public DataTable GetDataTable_Checknum(Dictionary<string, object> dicwhere, int page = 1, int limit = 10)
+        public DataTable GetDataTable_Member(Dictionary<string, object> dicwhere, int page = 1, int limit = 10)
         {
-            return ChecknumLogic.GetDataTable(dicwhere, page, limit);
+            return MemberLogic.GetDataTable(dicwhere, page, limit);
         }
 
         /// <summary>
@@ -918,9 +919,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="page">当前页数</param>
         /// <param name="limit">当前页显示的数据条数</param>
         /// <returns></returns>
-        public List<Checknum> GetListByInSelect_Checknum(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
+        public List<Member> GetListByInSelect_Member(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
         {
-            return ChecknumLogic.GetListByInSelect(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit);
+            return MemberLogic.GetListByInSelect(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit);
         }
 
         /// <summary>
@@ -932,9 +933,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="mainDicWhere">主表的Where条件</param>
         /// <param name="subDicWhere">子表的Where条件</param>
         /// <returns></returns>
-        public int GetCountByInSelect_Checknum(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere)
+        public int GetCountByInSelect_Member(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere)
         {
-            return ChecknumLogic.GetCountByInSelect(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
+            return MemberLogic.GetCountByInSelect(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
         }
 
         /// <summary>
@@ -945,9 +946,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="page">当前页码</param>
         /// <param name="limit">当前条数</param>
         /// <returns></returns>
-        public DataTable GetDataByGroup_Checknum(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10)
+        public DataTable GetDataByGroup_Member(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10)
         {
-            return ChecknumLogic.GetDataByGroup(groupByFields, dicWhere, page, limit);
+            return MemberLogic.GetDataByGroup(groupByFields, dicWhere, page, limit);
         }
 
         #endregion
@@ -960,9 +961,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="dicdata">添加的字典实体</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public Result Add_Checknum(Dictionary<string, object> dicdata, OpertionUser opertionUser)
+        public Result Add_Member(Dictionary<string, object> dicdata, OpertionUser opertionUser)
         {
-            return ChecknumLogic.Add(dicdata, opertionUser);
+            return MemberLogic.Add(dicdata, opertionUser);
         }
 
 		/// <summary>
@@ -971,9 +972,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="dicdata">添加的字典实体</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
-        public Result Adds_Checknum(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser)
+        public Result Adds_Member(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser)
         {
-            return ChecknumLogic.Adds(dicdata, opertionUser);
+            return MemberLogic.Adds(dicdata, opertionUser);
         }
 
         /// <summary>
@@ -982,9 +983,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="entity">The entity.</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public Result AddByEntity_Checknum(Checknum entity, OpertionUser opertionUser)
+        public Result AddByEntity_Member(Member entity, OpertionUser opertionUser)
         {
-            return ChecknumLogic.Add(entity, opertionUser);
+            return MemberLogic.Add(entity, opertionUser);
         }
 
         /// <summary>
@@ -993,9 +994,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="entity">The entity.</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public Result AddByEntitys_Checknum(List<Checknum> entitys, OpertionUser opertionUser)
+        public Result AddByEntitys_Member(List<Member> entitys, OpertionUser opertionUser)
         {
-            return ChecknumLogic.Adds(entitys, opertionUser);
+            return MemberLogic.Adds(entitys, opertionUser);
         }
         #endregion
 
@@ -1008,9 +1009,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="kID">当前数据主键KID</param>
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public Result Update_Checknum(Dictionary<string, object> dicdata, int kID, OpertionUser opertionUser)
+        public Result Update_Member(Dictionary<string, object> dicdata, int kID, OpertionUser opertionUser)
         {
-            return ChecknumLogic.Update(dicdata, kID, opertionUser);
+            return MemberLogic.Update(dicdata, kID, opertionUser);
         }
 
         /// <summary>
@@ -1020,9 +1021,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="keydata">编辑的Where条件</param>
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public Result UpdateByWhere_Checknum(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser)
+        public Result UpdateByWhere_Member(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser)
         {
-            return ChecknumLogic.UpdateByWhere(valuedata, keydata, opertionUser);
+            return MemberLogic.UpdateByWhere(valuedata, keydata, opertionUser);
         }
 
 		/// <summary>
@@ -1033,9 +1034,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="whereKey">字典条件</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
-        public Result UpdateNums_Checknum(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
+        public Result UpdateNums_Member(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
         {
-            return ChecknumLogic.UpdateNums(fields, addNums, whereKey, opertionUser);
+            return MemberLogic.UpdateNums(fields, addNums, whereKey, opertionUser);
         }
 
         #endregion
@@ -1047,9 +1048,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="kid">主键ID,多个逗号连接</param>
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public Result Delete_Checknum(string kid, OpertionUser opertionUser)
+        public Result Delete_Member(string kid, OpertionUser opertionUser)
         {
-            return ChecknumLogic.Delete(kid, opertionUser);
+            return MemberLogic.Delete(kid, opertionUser);
         }
 
         /// <summary>
@@ -1058,9 +1059,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="keydata">Where条件</param>
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public Result DeleteByWhere_Checknum(Dictionary<string, object> keydata, OpertionUser opertionUser)
+        public Result DeleteByWhere_Member(Dictionary<string, object> keydata, OpertionUser opertionUser)
         {
-            return ChecknumLogic.DeleteByWhere(keydata, opertionUser);
+            return MemberLogic.DeleteByWhere(keydata, opertionUser);
         }
         #endregion
 
@@ -1073,16 +1074,16 @@ namespace CJJ.Blog.Service.Service
         /// <param name="fileFullName">文件名全路径</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns>FastDev.Common.Code.Result.</returns>
-        public Result ExportExcelFile_Checknum(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser)
+        public Result ExportExcelFile_Member(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser)
         {
-            return ChecknumLogic.ExportExcelFile(keydata, fileFullName, opertionUser);
+            return MemberLogic.ExportExcelFile(keydata, fileFullName, opertionUser);
         }
 
         #endregion
 
         #endregion
 
-		#region Comments操作
+		#region Comment操作
 
         #region 查询
 
@@ -1092,9 +1093,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="page">页数</param>
         /// <param name="limit">当前页条数</param>
         /// <returns>System.Collections.Generic.List&lt;FastDev.Service.Models.Data.Sys_menu&gt;.</returns>
-        public List<Comments> GetListPage_Comments(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
+        public List<Comment> GetListPage_Comment(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
         {
-            return CommentsLogic.GetListPage(page, limit, dicwhere).ToList();
+            return CommentLogic.GetListPage(page, limit, dicwhere).ToList();
         }
 
 		/// <summary>
@@ -1105,18 +1106,18 @@ namespace CJJ.Blog.Service.Service
         /// <param name="orderby">排序字段</param>
         /// <param name="dicwhere">查询条件</param>
         /// <returns></returns>
-        public FastJsonResult<List<Comments>> GetJsonListPage_Comments(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
+        public FastJsonResult<List<Comment>> GetJsonListPage_Comment(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
         {
-            return CommentsLogic.GetJsonListPage(page, limit, orderby, dicwhere);
+            return CommentLogic.GetJsonListPage(page, limit, orderby, dicwhere);
         }
 
         /// <summary>
         /// 不分页获取所有数据
         /// </summary>
         /// <returns>List&lt;Sys_role&gt;.</returns>
-        public List<Comments> GetAllList_Comments()
+        public List<Comment> GetAllList_Comment()
         {
-            return CommentsLogic.GetAllList();
+            return CommentLogic.GetAllList();
         }
 
         /// <summary>
@@ -1124,18 +1125,18 @@ namespace CJJ.Blog.Service.Service
         /// </summary>
         /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
         /// <returns>List&lt;Sys_role&gt;.</returns>
-        public List<Comments> GetList_Comments(Dictionary<string, object> dicwhere)
+        public List<Comment> GetList_Comment(Dictionary<string, object> dicwhere)
         {
-            return CommentsLogic.GetList(dicwhere);
+            return CommentLogic.GetList(dicwhere);
         }
 
         /// <summary>
         /// 获取数据总条数
         /// </summary>
         /// <returns>System.Int32.</returns>
-        public int GetCount_Comments(Dictionary<string, object> dicwhere = null)
+        public int GetCount_Comment(Dictionary<string, object> dicwhere = null)
         {
-            return CommentsLogic.GetCount(dicwhere);
+            return CommentLogic.GetCount(dicwhere);
         }
 
         /// <summary>
@@ -1143,9 +1144,9 @@ namespace CJJ.Blog.Service.Service
         /// </summary>
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
-        public Comments GetModelByKID_Comments(int kID)
+        public Comment GetModelByKID_Comment(int kID)
         {
-            return CommentsLogic.GetModelByKID(kID);
+            return CommentLogic.GetModelByKID(kID);
         }
 
         /// <summary>
@@ -1153,9 +1154,9 @@ namespace CJJ.Blog.Service.Service
         /// </summary>
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
-        public Comments GetModelByWhere_Comments(Dictionary<string, object> dicwhere)
+        public Comment GetModelByWhere_Comment(Dictionary<string, object> dicwhere)
         {
-            return CommentsLogic.GetModelByWhere(dicwhere);
+            return CommentLogic.GetModelByWhere(dicwhere);
         }
 
 
@@ -1164,9 +1165,9 @@ namespace CJJ.Blog.Service.Service
         /// </summary>
         /// <param name="dicwhere">条件查询</param>
         /// <returns></returns>
-        public DataTable GetDataTable_Comments(Dictionary<string, object> dicwhere, int page = 1, int limit = 10)
+        public DataTable GetDataTable_Comment(Dictionary<string, object> dicwhere, int page = 1, int limit = 10)
         {
-            return CommentsLogic.GetDataTable(dicwhere, page, limit);
+            return CommentLogic.GetDataTable(dicwhere, page, limit);
         }
 
         /// <summary>
@@ -1180,9 +1181,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="page">当前页数</param>
         /// <param name="limit">当前页显示的数据条数</param>
         /// <returns></returns>
-        public List<Comments> GetListByInSelect_Comments(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
+        public List<Comment> GetListByInSelect_Comment(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
         {
-            return CommentsLogic.GetListByInSelect(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit);
+            return CommentLogic.GetListByInSelect(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit);
         }
 
         /// <summary>
@@ -1194,9 +1195,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="mainDicWhere">主表的Where条件</param>
         /// <param name="subDicWhere">子表的Where条件</param>
         /// <returns></returns>
-        public int GetCountByInSelect_Comments(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere)
+        public int GetCountByInSelect_Comment(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere)
         {
-            return CommentsLogic.GetCountByInSelect(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
+            return CommentLogic.GetCountByInSelect(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
         }
 
         /// <summary>
@@ -1207,9 +1208,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="page">当前页码</param>
         /// <param name="limit">当前条数</param>
         /// <returns></returns>
-        public DataTable GetDataByGroup_Comments(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10)
+        public DataTable GetDataByGroup_Comment(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10)
         {
-            return CommentsLogic.GetDataByGroup(groupByFields, dicWhere, page, limit);
+            return CommentLogic.GetDataByGroup(groupByFields, dicWhere, page, limit);
         }
 
         #endregion
@@ -1222,9 +1223,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="dicdata">添加的字典实体</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public Result Add_Comments(Dictionary<string, object> dicdata, OpertionUser opertionUser)
+        public Result Add_Comment(Dictionary<string, object> dicdata, OpertionUser opertionUser)
         {
-            return CommentsLogic.Add(dicdata, opertionUser);
+            return CommentLogic.Add(dicdata, opertionUser);
         }
 
 		/// <summary>
@@ -1233,9 +1234,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="dicdata">添加的字典实体</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
-        public Result Adds_Comments(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser)
+        public Result Adds_Comment(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser)
         {
-            return CommentsLogic.Adds(dicdata, opertionUser);
+            return CommentLogic.Adds(dicdata, opertionUser);
         }
 
         /// <summary>
@@ -1244,9 +1245,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="entity">The entity.</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public Result AddByEntity_Comments(Comments entity, OpertionUser opertionUser)
+        public Result AddByEntity_Comment(Comment entity, OpertionUser opertionUser)
         {
-            return CommentsLogic.Add(entity, opertionUser);
+            return CommentLogic.Add(entity, opertionUser);
         }
 
         /// <summary>
@@ -1255,9 +1256,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="entity">The entity.</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public Result AddByEntitys_Comments(List<Comments> entitys, OpertionUser opertionUser)
+        public Result AddByEntitys_Comment(List<Comment> entitys, OpertionUser opertionUser)
         {
-            return CommentsLogic.Adds(entitys, opertionUser);
+            return CommentLogic.Adds(entitys, opertionUser);
         }
         #endregion
 
@@ -1270,9 +1271,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="kID">当前数据主键KID</param>
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public Result Update_Comments(Dictionary<string, object> dicdata, int kID, OpertionUser opertionUser)
+        public Result Update_Comment(Dictionary<string, object> dicdata, int kID, OpertionUser opertionUser)
         {
-            return CommentsLogic.Update(dicdata, kID, opertionUser);
+            return CommentLogic.Update(dicdata, kID, opertionUser);
         }
 
         /// <summary>
@@ -1282,9 +1283,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="keydata">编辑的Where条件</param>
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public Result UpdateByWhere_Comments(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser)
+        public Result UpdateByWhere_Comment(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser)
         {
-            return CommentsLogic.UpdateByWhere(valuedata, keydata, opertionUser);
+            return CommentLogic.UpdateByWhere(valuedata, keydata, opertionUser);
         }
 
 		/// <summary>
@@ -1295,9 +1296,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="whereKey">字典条件</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
-        public Result UpdateNums_Comments(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
+        public Result UpdateNums_Comment(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
         {
-            return CommentsLogic.UpdateNums(fields, addNums, whereKey, opertionUser);
+            return CommentLogic.UpdateNums(fields, addNums, whereKey, opertionUser);
         }
 
         #endregion
@@ -1309,9 +1310,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="kid">主键ID,多个逗号连接</param>
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public Result Delete_Comments(string kid, OpertionUser opertionUser)
+        public Result Delete_Comment(string kid, OpertionUser opertionUser)
         {
-            return CommentsLogic.Delete(kid, opertionUser);
+            return CommentLogic.Delete(kid, opertionUser);
         }
 
         /// <summary>
@@ -1320,9 +1321,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="keydata">Where条件</param>
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public Result DeleteByWhere_Comments(Dictionary<string, object> keydata, OpertionUser opertionUser)
+        public Result DeleteByWhere_Comment(Dictionary<string, object> keydata, OpertionUser opertionUser)
         {
-            return CommentsLogic.DeleteByWhere(keydata, opertionUser);
+            return CommentLogic.DeleteByWhere(keydata, opertionUser);
         }
         #endregion
 
@@ -1335,9 +1336,9 @@ namespace CJJ.Blog.Service.Service
         /// <param name="fileFullName">文件名全路径</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns>FastDev.Common.Code.Result.</returns>
-        public Result ExportExcelFile_Comments(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser)
+        public Result ExportExcelFile_Comment(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser)
         {
-            return CommentsLogic.ExportExcelFile(keydata, fileFullName, opertionUser);
+            return CommentLogic.ExportExcelFile(keydata, fileFullName, opertionUser);
         }
 
         #endregion

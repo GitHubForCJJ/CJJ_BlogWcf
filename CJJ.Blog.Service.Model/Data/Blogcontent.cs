@@ -111,10 +111,10 @@ namespace CJJ.Blog.Service.Models.Data
 		public string Extend6 { get; set;}
 
 		/// <summary>
-		/// 基本信息id
+		/// 基本信息编号
 		/// </summary>
 		[DataMember]
-		public string BloginfoId { get; set;}
+		public string BloginfoNum { get; set;}
 
 		/// <summary>
 		/// 博客内容  url编码处理

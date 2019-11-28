@@ -110,10 +110,17 @@ namespace CJJ.Blog.Service.Models.Data
 		[DataMember]
 		public string Extend6 { get; set;}
 
-		/// <summary>
-		/// 标题
-		/// </summary>
-		[DataMember]
+        /// <summary>
+        /// 博客编号
+        /// </summary>
+        [DataMember]
+        public string BlogNum { get; set; }
+
+
+        /// <summary>
+        /// 标题
+        /// </summary>
+        [DataMember]
 		public string Title { get; set;}
 
         /// <summary>

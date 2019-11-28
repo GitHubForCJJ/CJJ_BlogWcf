@@ -20,23 +20,24 @@ using DbLog = CJJ.Blog.Service.Logic.Fd_sys_operationlogLogic;
 using System.Data;
 using FastDev.Common.Extension;
 using CJJ.Blog.Service.Models.View;
+using CJJ.Blog.Service.Model.Data;
 
 namespace CJJ.Blog.Service.Logic
 {
     /// <summary>
     /// Class Comments Logic.
     /// </summary>
-    public class CommentsLogic
+    public class MemberLogic
     {
         #region 查询
 
         /// <summary>
-        /// Gets the Comments {TableNameComment} list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
+        /// Gets the Member {TableNameMember} list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="page">The page.</param>
         /// <param name="limit">The limit.</param>
         /// <returns>System.Collections.Generic.List&lt;Jbst.Service.Models.Data.Sys_menu&gt;.</returns>
-        public static List<Comments> GetListPage(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
+        public static List<Member> GetListPage(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
         {
             string orderby = "";
             if (dicwhere != null && dicwhere.ContainsKey(nameof(orderby)))
@@ -48,15 +49,15 @@ namespace CJJ.Blog.Service.Logic
             {
                 dicwhere = new Dictionary<string, object>();
             }
-            if (dicwhere.Keys.Contains(nameof(Comments.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Member.IsDeleted)))
             {
-                dicwhere[nameof(Comments.IsDeleted)] = 0;
+                dicwhere[nameof(Member.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Comments.IsDeleted), 0);
+                dicwhere.Add(nameof(Member.IsDeleted), 0);
             }
-            return CommentsRepository.Instance.GetListPage<Comments>(limit, page, dicwhere, orderby).ToList();
+            return MemberRepository.Instance.GetListPage<Member>(limit, page, dicwhere, orderby).ToList();
         }
 
         /// <summary>
@@ -67,68 +68,68 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="orderby">排序字段</param>
         /// <param name="dicwhere">查询条件</param>
         /// <returns>FastJsonResult&lt;List&lt;Product&gt;&gt;.</returns>
-        public static FastJsonResult<List<Comments>> GetJsonListPage(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
+        public static FastJsonResult<List<Member>> GetJsonListPage(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
         {
             if (dicwhere == null)
             {
                 dicwhere = new Dictionary<string, object>();
             }
-            if (dicwhere.Keys.Contains(nameof(Comments.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Member.IsDeleted)))
             {
-                dicwhere[nameof(Comments.IsDeleted)] = 0;
+                dicwhere[nameof(Member.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Comments.IsDeleted), 0);
+                dicwhere.Add(nameof(Member.IsDeleted), 0);
             }
-            return CommentsRepository.Instance.GetJsonListPage<Comments>(limit, page, dicwhere, orderby);
+            return MemberRepository.Instance.GetJsonListPage<Member>(limit, page, dicwhere, orderby);
         }
 
         /// <summary>
         /// 不分页获取所有数据
         /// </summary>
-        /// <returns>List&lt;Comments&gt;.</returns>
-        public static List<Comments> GetAllList()
+        /// <returns>List&lt;Member&gt;.</returns>
+        public static List<Member> GetAllList()
         {
             var dic = new Dictionary<string, object>();
-            dic.Add(nameof(Comments.IsDeleted), 0);
-            return CommentsRepository.Instance.GetList<Comments>(dic).ToList();
+            dic.Add(nameof(Member.IsDeleted), 0);
+            return MemberRepository.Instance.GetList<Member>(dic).ToList();
         }
 
         /// <summary>
         /// 按条件获取数据列表 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
-        /// <returns>List&lt;Comments&gt;.</returns>
+        /// <returns>List&lt;Member&gt;.</returns>
         public static DataTable GetDataTable(Dictionary<string, object> dicwhere, int page = 1, int limit = 10)
         {
-            if (dicwhere.Keys.Contains(nameof(Comments.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Member.IsDeleted)))
             {
-                dicwhere[nameof(Comments.IsDeleted)] = 0;
+                dicwhere[nameof(Member.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Comments.IsDeleted), 0);
+                dicwhere.Add(nameof(Member.IsDeleted), 0);
             }
-            return CommentsRepository.Instance.GetDataTablePage<Comments>(limit, page, dicwhere);
+            return MemberRepository.Instance.GetDataTablePage<Member>(limit, page, dicwhere);
         }
 
         /// <summary> 
         /// 按条件获取数据列表 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
-        /// <returns>List&lt;Comments&gt;.</returns>
-        public static List<Comments> GetList(Dictionary<string, object> dicwhere)
+        /// <returns>List&lt;Member&gt;.</returns>
+        public static List<Member> GetList(Dictionary<string, object> dicwhere)
         {
-            if (dicwhere.Keys.Contains(nameof(Comments.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Member.IsDeleted)))
             {
-                dicwhere[nameof(Comments.IsDeleted)] = 0;
+                dicwhere[nameof(Member.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Comments.IsDeleted), 0);
+                dicwhere.Add(nameof(Member.IsDeleted), 0);
             }
-            return CommentsRepository.Instance.GetList<Comments>(dicwhere).ToList();
+            return MemberRepository.Instance.GetList<Member>(dicwhere).ToList();
         }
 
         /// <summary>
@@ -141,15 +142,15 @@ namespace CJJ.Blog.Service.Logic
             {
                 dicwhere = new Dictionary<string, object>();
             }
-            if (dicwhere.Keys.Contains(nameof(Comments.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Member.IsDeleted)))
             {
-                dicwhere[nameof(Comments.IsDeleted)] = 0;
+                dicwhere[nameof(Member.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Comments.IsDeleted), 0);
+                dicwhere.Add(nameof(Member.IsDeleted), 0);
             }
-            return CommentsRepository.Instance.GetCount<Comments>(dicwhere);
+            return MemberRepository.Instance.GetCount<Member>(dicwhere);
         }
 
         /// <summary>
@@ -157,9 +158,9 @@ namespace CJJ.Blog.Service.Logic
         /// </summary>
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
-        public static Comments GetModelByKID(int kID)
+        public static Member GetModelByKID(int kID)
         {
-            var model = CommentsRepository.Instance.GetEntityByKey<Comments>(kID);
+            var model = MemberRepository.Instance.GetEntityByKey<Member>(kID);
             if (model != null && model.IsDeleted == 0)
             {
                 return model;
@@ -175,17 +176,17 @@ namespace CJJ.Blog.Service.Logic
         /// </summary>
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
-        public static Comments GetModelByWhere(Dictionary<string, object> dicwhere)
+        public static Member GetModelByWhere(Dictionary<string, object> dicwhere)
         {
-            if (dicwhere.Keys.Contains(nameof(Comments.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Member.IsDeleted)))
             {
-                dicwhere[nameof(Comments.IsDeleted)] = 0;
+                dicwhere[nameof(Member.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Comments.IsDeleted), 0);
+                dicwhere.Add(nameof(Member.IsDeleted), 0);
             }
-            return CommentsRepository.Instance.GetEntity<Comments>(dicwhere);
+            return MemberRepository.Instance.GetEntity<Member>(dicwhere);
         }
 
         /// <summary>
@@ -200,26 +201,26 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="page">当前页数</param>
         /// <param name="limit">当前页显示的数据条数</param>
         /// <returns></returns>
-        public static List<Comments> GetListByInSelect(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
+        public static List<Member> GetListByInSelect(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
         {
-            if (mainDicWhere.Keys.Contains(nameof(Comments.IsDeleted)))
+            if (mainDicWhere.Keys.Contains(nameof(Member.IsDeleted)))
             {
-                mainDicWhere[nameof(Comments.IsDeleted)] = 0;
+                mainDicWhere[nameof(Member.IsDeleted)] = 0;
             }
             else
             {
-                mainDicWhere.Add(nameof(Comments.IsDeleted), 0);
+                mainDicWhere.Add(nameof(Member.IsDeleted), 0);
             }
 
-            if (subDicWhere.Keys.Contains(nameof(Comments.IsDeleted)))
+            if (subDicWhere.Keys.Contains(nameof(Member.IsDeleted)))
             {
-                subDicWhere[nameof(Comments.IsDeleted)] = 0;
+                subDicWhere[nameof(Member.IsDeleted)] = 0;
             }
             else
             {
-                subDicWhere.Add(nameof(Comments.IsDeleted), 0);
+                subDicWhere.Add(nameof(Member.IsDeleted), 0);
             }
-            return CommentsRepository.Instance.GetListByInSelect<Comments>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit).ToList();
+            return MemberRepository.Instance.GetListByInSelect<Member>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit).ToList();
         }
 
 
@@ -234,24 +235,24 @@ namespace CJJ.Blog.Service.Logic
         /// <returns></returns>
         public static int GetCountByInSelect(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere)
         {
-            if (mainDicWhere.Keys.Contains(nameof(Comments.IsDeleted)))
+            if (mainDicWhere.Keys.Contains(nameof(Member.IsDeleted)))
             {
-                mainDicWhere[nameof(Comments.IsDeleted)] = 0;
+                mainDicWhere[nameof(Member.IsDeleted)] = 0;
             }
             else
             {
-                mainDicWhere.Add(nameof(Comments.IsDeleted), 0);
+                mainDicWhere.Add(nameof(Member.IsDeleted), 0);
             }
 
-            if (subDicWhere.Keys.Contains(nameof(Comments.IsDeleted)))
+            if (subDicWhere.Keys.Contains(nameof(Member.IsDeleted)))
             {
-                subDicWhere[nameof(Comments.IsDeleted)] = 0;
+                subDicWhere[nameof(Member.IsDeleted)] = 0;
             }
             else
             {
-                subDicWhere.Add(nameof(Comments.IsDeleted), 0);
+                subDicWhere.Add(nameof(Member.IsDeleted), 0);
             }
-            return CommentsRepository.Instance.GetCountByInSelect<Comments>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
+            return MemberRepository.Instance.GetCountByInSelect<Member>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
         }
 
         /// <summary>
@@ -264,15 +265,15 @@ namespace CJJ.Blog.Service.Logic
         /// <returns></returns>
         public static DataTable GetDataByGroup(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10)
         {
-            if (dicWhere.Keys.Contains(nameof(Comments.IsDeleted)))
+            if (dicWhere.Keys.Contains(nameof(Member.IsDeleted)))
             {
-                dicWhere[nameof(Comments.IsDeleted)] = 0;
+                dicWhere[nameof(Member.IsDeleted)] = 0;
             }
             else
             {
-                dicWhere.Add(nameof(Comments.IsDeleted), 0);
+                dicWhere.Add(nameof(Member.IsDeleted), 0);
             }
-            return CommentsRepository.Instance.GetDataByGroup<Comments>(groupByFields, dicWhere, page, limit);
+            return MemberRepository.Instance.GetDataByGroup<Member>(groupByFields, dicWhere, page, limit);
         }
 
         #endregion
@@ -287,9 +288,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result Add(Dictionary<string, object> dicwhere, OpertionUser opertionUser)
         {
-            var ret = CommentsRepository.Instance.Add<Comments>(dicwhere);
+            var ret = MemberRepository.Instance.Add<Member>(dicwhere);
 
-            DbLog.WriteDbLog(nameof(Comments), "添加记录", ret, dicwhere.ToJsonString(), opertionUser, OperLogType.添加);
+            DbLog.WriteDbLog(nameof(Member), "添加记录", ret, dicwhere.ToJsonString(), opertionUser, OperLogType.添加);
 
             return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
         }
@@ -300,19 +301,19 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="entity">The entity.</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public static Result Add(Comments entity, OpertionUser opertionUser)
+        public static Result Add(Member entity, OpertionUser opertionUser)
         {
             try
             {
-                var ret = CommentsRepository.Instance.Add<Comments>(entity);
+                var ret = MemberRepository.Instance.Add<Member>(entity);
 
-                DbLog.WriteDbLog(nameof(Comments), "添加记录", ret, entity.ToJsonString(), opertionUser, OperLogType.添加);
+                DbLog.WriteDbLog(nameof(Member), "添加记录", ret, entity.ToJsonString(), opertionUser, OperLogType.添加);
 
                 return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
             }
             catch (Exception ex)
             {
-                FastDev.Log.LogHelper.WriteLog(ex, "CommentsLogic.Add Entity异常");
+                FastDev.Log.LogHelper.WriteLog(ex, "MemberLogic.Add Entity异常");
 
                 return new Result() { IsSucceed = false, Message = ex.Message };
             }
@@ -324,19 +325,19 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="entity">The entity.</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public static Result Adds(List<Comments> entity, OpertionUser opertionUser)
+        public static Result Adds(List<Member> entity, OpertionUser opertionUser)
         {
             try
             {
-                var ret = CommentsRepository.Instance.Adds<Comments>(entity);
+                var ret = MemberRepository.Instance.Adds<Member>(entity);
 
-                DbLog.WriteDbLog<List<Comments>>(nameof(Comments), "添加记录", ret, entity, opertionUser, OperLogType.添加);
+                DbLog.WriteDbLog<List<Member>>(nameof(Member), "添加记录", ret, entity, opertionUser, OperLogType.添加);
 
                 return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
             }
             catch (Exception ex)
             {
-                FastDev.Log.LogHelper.WriteLog(ex, "CommentsLogic.Add Entity异常");
+                FastDev.Log.LogHelper.WriteLog(ex, "MemberLogic.Add Entity异常");
 
                 return new Result() { IsSucceed = false, Message = ex.Message };
             }
@@ -353,15 +354,15 @@ namespace CJJ.Blog.Service.Logic
         {
             try
             {
-                var ret = CommentsRepository.Instance.Adds<Comments>(diclst);
+                var ret = MemberRepository.Instance.Adds<Member>(diclst);
 
-                DbLog.WriteDbLog<List<Dictionary<string, object>>>(nameof(Comments), "添加记录", ret, diclst, opertionUser, OperLogType.添加);
+                DbLog.WriteDbLog<List<Dictionary<string, object>>>(nameof(Member), "添加记录", ret, diclst, opertionUser, OperLogType.添加);
 
                 return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
             }
             catch (Exception ex)
             {
-                FastDev.Log.LogHelper.WriteLog(ex, "CommentsLogic.Adds diclst异常");
+                FastDev.Log.LogHelper.WriteLog(ex, "MemberLogic.Adds diclst异常");
 
                 return new Result() { IsSucceed = false, Message = ex.Message };
             }
@@ -379,9 +380,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result Update(Dictionary<string, object> dicwhere, int kID, OpertionUser opertionUser)
         {
-            var ret = CommentsRepository.Instance.UpdateByKey<Comments>(dicwhere, kID);
+            var ret = MemberRepository.Instance.UpdateByKey<Member>(dicwhere, kID);
 
-            DbLog.WriteDbLog(nameof(Comments), "修改记录", kID, dicwhere, OperLogType.编辑, opertionUser);
+            DbLog.WriteDbLog(nameof(Member), "修改记录", kID, dicwhere, OperLogType.编辑, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }
@@ -395,9 +396,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result UpdateByWhere(Dictionary<string, object> valuedata, Dictionary<string, object> dicwhere, OpertionUser opertionUser)
         {
-            var ret = CommentsRepository.Instance.Update<Comments>(valuedata, dicwhere);
+            var ret = MemberRepository.Instance.Update<Member>(valuedata, dicwhere);
 
-            DbLog.WriteDbLog(nameof(Comments), "批量修改记录", valuedata.ToJsonString(), valuedata, OperLogType.编辑, opertionUser);
+            DbLog.WriteDbLog(nameof(Member), "批量修改记录", valuedata.ToJsonString(), valuedata, OperLogType.编辑, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }
@@ -412,9 +413,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns></returns>
         public static Result UpdateNums(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
         {
-            var ret = CommentsRepository.Instance.UpdateNums<Comments>(fields, addNums, whereKey);
+            var ret = MemberRepository.Instance.UpdateNums<Member>(fields, addNums, whereKey);
 
-            DbLog.WriteDbLog(nameof(Comments), "修改记录", whereKey.ToJsonString(), whereKey, OperLogType.编辑, opertionUser);
+            DbLog.WriteDbLog(nameof(Member), "修改记录", whereKey.ToJsonString(), whereKey, OperLogType.编辑, opertionUser);
 
             return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
         }
@@ -431,20 +432,20 @@ namespace CJJ.Blog.Service.Logic
         public static Result Delete(string kid, OpertionUser opertionUser)
         {
             var deldic = new Dictionary<string, object>();
-            deldic.Add(nameof(Comments.IsDeleted), 1);
+            deldic.Add(nameof(Member.IsDeleted), 1);
 
             var keydic = new Dictionary<string, object>();
             if (kid.IndexOf(",") > -1)
             {
-                keydic.Add(nameof(Comments.KID) + "|i", kid);
+                keydic.Add(nameof(Member.KID) + "|i", kid);
             }
             else
             {
-                keydic.Add(nameof(Comments.KID), kid);
+                keydic.Add(nameof(Member.KID), kid);
             }
-            var ret = CommentsRepository.Instance.Update<Comments>(deldic, keydic);
+            var ret = MemberRepository.Instance.Update<Member>(deldic, keydic);
 
-            DbLog.WriteDbLog(nameof(Comments), "删除记录", kid, null, OperLogType.删除, opertionUser);
+            DbLog.WriteDbLog(nameof(Member), "删除记录", kid, null, OperLogType.删除, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }
@@ -458,11 +459,11 @@ namespace CJJ.Blog.Service.Logic
         public static Result DeleteByWhere(Dictionary<string, object> dicwhere, OpertionUser opertionUser)
         {
             var deldic = new Dictionary<string, object>();
-            deldic.Add(nameof(Comments.IsDeleted), 1);
+            deldic.Add(nameof(Member.IsDeleted), 1);
 
-            var ret = CommentsRepository.Instance.Update<Comments>(deldic, dicwhere);
+            var ret = MemberRepository.Instance.Update<Member>(deldic, dicwhere);
 
-            DbLog.WriteDbLog(nameof(Comments), "批量删除记录", dicwhere.ToJsonString(), dicwhere, OperLogType.删除, opertionUser);
+            DbLog.WriteDbLog(nameof(Member), "批量删除记录", dicwhere.ToJsonString(), dicwhere, OperLogType.删除, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }

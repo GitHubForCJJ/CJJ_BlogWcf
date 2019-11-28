@@ -1,9 +1,9 @@
 ﻿//-----------------------------------------------------------------------------------
-// <copyright file="Comments.cs" company="Go Enterprises">
+// <copyright file="Checknum.cs" company="Go Enterprises">
 // * copyright: (C) 2018 东走西走科技有限公司 版权所有。
 // * version  : 1.0.0.0
 // * author   : chenjianjun
-// * fileName : Comments.cs
+// * fileName : Checknum.cs
 // * history  : created by chenjianjun 2019-06-14 15:52:46
 // </copyright>
 //-----------------------------------------------------------------------------------
@@ -19,23 +19,23 @@ using System.Collections.Generic;
 namespace CJJ.Blog.Service.Repository
 {
     /// <summary>
-    /// Comments 仓储操作类
+    /// Member 仓储操作类
     /// </summary>
     /// <seealso cref="FastDev.DbBase.BaseQuery" />
-	public class CommentsRepository : BaseQuery
+	public class MemberRepository : BaseQuery
     {
         /// <summary>
         /// 单利实体操作对象
         /// </summary>
-        public static CommentsRepository Instance = new CommentsRepository();
+        public static MemberRepository Instance = new MemberRepository();
 
         /// <summary>
         /// 构造函数
         /// </summary>
-        private CommentsRepository()
+        private MemberRepository()
         {
             this.IsAddIntoCache = true;
-            this.TableName = "Comments";
+            this.TableName = "Member";
             this.OrderbyFields = "KID DESC";
             this.KeyField = "KID";
         }
@@ -44,10 +44,10 @@ namespace CJJ.Blog.Service.Repository
         /// 带事务执行的构造函数
         /// </summary>
         /// <param name="dbconn">The dbconn.</param>
-        public CommentsRepository(DBOperator dbConn)
+        public MemberRepository(DBOperator dbConn)
         {
             this.IsAddIntoCache = false;
-            this.TableName = "Comments";
+            this.TableName = "Member";
             this.OrderbyFields = "KID DESC";
             this.KeyField = "KID";
             base.DbConn = dbConn;

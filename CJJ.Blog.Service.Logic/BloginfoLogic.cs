@@ -299,7 +299,7 @@ namespace CJJ.Blog.Service.Logic
             if (ret > 0)
             {
                 var content = BlogcontentRepository.Instance.Add<Blogcontent>(new Dictionary<string, object>() {
-                {nameof(Blogcontent.BloginfoId),ret },
+                {nameof(Blogcontent.BloginfoNum),ret },
                 {nameof(Blogcontent.Content),dicwhere[nameof(Blogcontent.Content)] },
                     {nameof(Blogcontent.CreateUserId),dicwhere[nameof(Blogcontent.CreateUserId)] },
                         {nameof(Blogcontent.CreateUserName),dicwhere[nameof(Blogcontent.CreateUserName)] }

@@ -51,9 +51,7 @@
     <Compile Include="Data\Bloginfo.cs" />
     <Compile Include="Data\Category.cs" />
     <Compile Include="Data\Categorypic.cs" />
-    <Compile Include="Data\Checknum.cs" />
     <Compile Include="Data\Comment.cs" />
-    <Compile Include="Data\Comments.cs" />
     <Compile Include="Data\Employee.cs" />
     <Compile Include="Data\Fd_sys_operationlog.cs" />
     <Compile Include="Data\HotNew.cs" />

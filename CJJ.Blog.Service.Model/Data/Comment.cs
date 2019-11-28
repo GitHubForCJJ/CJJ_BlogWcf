@@ -117,9 +117,9 @@ namespace CJJ.Blog.Service.Model.Data
         /// Blogid
         /// </summary>
         [DataMember]
-        public string Blogid { get; set; }
+        public string BlogNum { get; set; }
         /// <summary>
-        /// 评论谁的  为空指的是自己写的新评论  不为空则是 评论别人的评论
+        /// 评论谁的id  为空指的是自己写的新评论  不为空则是 评论别人的评论
         /// </summary>
         [DataMember]
         public string ToMemberid { get; set; }
