@@ -33,11 +33,18 @@ namespace CJJ.Blog.NetWork.IService
     /// <seealso cref="CJJ.Blog.NetWork.IService.ICJJ.BlogService" />
      [ServiceContract]
 	public interface IBlogService
-    {        
+    {
 
-		#region Bloginfo 操作
+        #region Bloginfo 操作
 
         #region 查询
+        /// <summary>
+        /// 查询单个博客包括详情
+        /// </summary>
+        /// <param name="blogNum"></param>
+        /// <returns></returns>
+        [OperationContract]
+        BloginfoView GetModelByNum(string blogNum);
 
         /// <summary>
         /// Gets the menu list.

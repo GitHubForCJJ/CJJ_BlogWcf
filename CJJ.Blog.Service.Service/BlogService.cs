@@ -34,10 +34,19 @@ namespace CJJ.Blog.Service.Service
     /// <seealso cref="CJJ.Blog.NetWork.IService.ICJJ.BlogService" />
     public class BlogService : IBlogService
     {
-		
-		#region Bloginfo操作
+
+        #region Bloginfo操作
 
         #region 查询
+        /// <summary>
+        /// 查询单个博客包括详情
+        /// </summary>
+        /// <param name="blogNum"></param>
+        /// <returns></returns>
+        public BloginfoView GetModelByNum(string blogNum)
+        {
+            return BloginfoLogic.GetModelByNum(blogNum);
+        }
 
         /// <summary>
         /// 查询数据

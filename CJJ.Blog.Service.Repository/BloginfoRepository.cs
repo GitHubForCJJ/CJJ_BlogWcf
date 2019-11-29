@@ -56,7 +56,7 @@ namespace CJJ.Blog.Service.Repository
             base.DbConn = dbConn;
         }
 
-        public BloginfoView GetBlog(int kid)
+        public BloginfoView GetBlog(string blogNum)
         {
             var bloginfoView = new BloginfoView();
             try
@@ -64,7 +64,7 @@ namespace CJJ.Blog.Service.Repository
                 using (var db = new DBHelper())
                 {
 
-                    var sql = $"select a.*,b.Content from bloginfo a join blogcontent b  on  a.BlogNum=b.BloginfoNum where a.kid={kid} and a.IsDeleted=0 ";
+                    var sql = $"select a.*,b.Content from bloginfo a join blogcontent b  on  a.BlogNum=b.BloginfoNum where a.BlogNum='{blogNum}' and a.IsDeleted=0 ";
 
                     var data = db.ExecuteDataTable(sql);
                     bloginfoView = ToEntity<BloginfoView>(data);

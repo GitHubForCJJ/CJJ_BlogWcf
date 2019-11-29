@@ -20,11 +20,6 @@ namespace CJJ.Blog.Service.Model.View
         /// </summary>
         [DataMember]
         public string Title { get; set; }
-        /// <summary>
-        /// 详细title
-        /// </summary>
-        [DataMember]
-        public string DetailTitle { get; set; }
 
         /// <summary>
         /// 类型
@@ -55,6 +50,21 @@ namespace CJJ.Blog.Service.Model.View
         /// </summary>
         [DataMember]
         public int IsOriginal { get; set; }
+        /// <summary>
+        /// 是否原创
+        /// </summary>
+        [DataMember]
+        public int Start { get; set; }
+        /// <summary>
+        /// 是否原创
+        /// </summary>
+        [DataMember]
+        public int Comments { get; set; }
+        /// <summary>
+        /// 是否原创
+        /// </summary>
+        [DataMember]
+        public int Views { get; set; }
         /// <summary>
         /// 内容
         /// </summary>

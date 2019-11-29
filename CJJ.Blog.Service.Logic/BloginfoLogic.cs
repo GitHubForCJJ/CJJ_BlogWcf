@@ -55,6 +55,15 @@ namespace CJJ.Blog.Service.Logic
         //    return BloginfoRepository.Instance.GetListBlog(page, limit, dicwhere, orderby).ToList();
         //}
 
+        /// <summary>
+        /// 查询单个博客包括详情
+        /// </summary>
+        /// <param name="blogNum"></param>
+        /// <returns></returns>
+        public static BloginfoView GetModelByNum(string blogNum)
+        {
+            return BloginfoRepository.Instance.GetBlog(blogNum);
+        }
 
         /// <summary>
         /// Gets the Bloginfo {TableNameComment} list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
@@ -168,15 +177,7 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>System.Int32.</returns>
         public static BloginfoView GetModelByKID(int kID)
         {
-            var model = BloginfoRepository.Instance.GetBlog(kID);
-            if (model != null)
-            {
-                return model;
-            }
-            else
-            {
-                return null;
-            }
+            return new BloginfoView();
         }
 
         /// <summary>

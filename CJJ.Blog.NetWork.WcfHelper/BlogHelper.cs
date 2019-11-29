@@ -50,11 +50,21 @@ namespace CJJ.Blog.NetWork.WcfHelper
             Client = ServiceProxyFactory.Create<IBlogService>(configPath, "BlogServiceEndpoint");
         }
         #endregion
-		
 
-		#region Bloginfo 操作
+
+        #region Bloginfo 操作
 
         #region 查询
+
+        /// <summary>
+        /// 查询单个博客包括详情
+        /// </summary>
+        /// <param name="blogNum"></param>
+        /// <returns></returns>
+        public static BloginfoView GetModelByNum(string blogNum)
+        {
+            return Client.GetModelByNum(blogNum);
+        }
 
         /// <summary>
         /// Gets the menu list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
