@@ -45,6 +45,14 @@ namespace CJJ.Blog.NetWork.IService
         /// <returns></returns>
         [OperationContract]
         BloginfoView GetModelByNum(string blogNum);
+        /// <summary>
+        /// 根据博客编号和类型获取上下篇
+        /// </summary>
+        /// <param name="blogNum"></param>
+        /// <param name="type">文章类型</param>
+        /// <returns></returns>
+        [OperationContract]
+        PrenextView GetPrenextBlog(string blogNum,int type);
 
         /// <summary>
         /// Gets the menu list.

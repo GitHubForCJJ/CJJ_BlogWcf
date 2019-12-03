@@ -67,6 +67,17 @@ namespace CJJ.Blog.NetWork.WcfHelper
         }
 
         /// <summary>
+        /// 根据博客编号和类型获取上下篇
+        /// </summary>
+        /// <param name="blogNum"></param>
+        /// <param name="type">文章类型</param>
+        /// <returns></returns>
+        public static PrenextView GetPrenextBlog(string blogNum, int type)
+        {
+            return Client.GetPrenextBlog(blogNum, type);
+        }
+
+        /// <summary>
         /// Gets the menu list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="page">The page.</param>

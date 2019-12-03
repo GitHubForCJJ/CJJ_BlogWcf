@@ -66,6 +66,21 @@ namespace CJJ.Blog.Service.Logic
         }
 
         /// <summary>
+        /// 根据博客编号和类型获取上下篇
+        /// </summary>
+        /// <param name="blogNum"></param>
+        /// <param name="type">文章类型</param>
+        /// <returns></returns>
+        public static PrenextView GetPrenextBlog(string blogNum, int type)
+        {
+            if (string.IsNullOrEmpty(blogNum))
+            {
+                return new PrenextView { IsSucceed = false, Message = "参数不存在编号为空" };
+            }
+            return BloginfoRepository.Instance.GetPrenextBlog(blogNum, type);
+        }
+
+        /// <summary>
         /// Gets the Bloginfo {TableNameComment} list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="page">The page.</param>

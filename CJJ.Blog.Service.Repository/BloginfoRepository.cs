@@ -77,6 +77,65 @@ namespace CJJ.Blog.Service.Repository
 
             return bloginfoView;
         }
+        /// <summary>
+        /// 获取上下篇
+        /// </summary>
+        /// <param name="blogNum"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public PrenextView GetPrenextBlog(string blogNum, int type)
+        {
+            PrenextView prenextView = new PrenextView() { IsSucceed = false };
+            var obj = new List<object>();
+            try
+            {
+                using (var db = new DBHelper())
+                {
+                    var str = new StringBuilder();
+                    str.Append(@"select kid from bloginfo where states=0 and IsDeleted=0 and BlogNum=? ");
+                    obj.Add(blogNum);
+                    if (type > 0)
+                    {
+                        str.Append(@" type=? ");
+                        obj.Add(type);
+                    }
+                    string strpre = $"select KID,BlogNum,Title from bloginfo where kid < ({str.ToString() } ) ";
+                    string strnext = $"select KID,BlogNum,Title from bloginfo where kid > ({str.ToString() } ) ";
+                    if (type > 0)
+                    {
+                        strpre += $" and blogtype=? ";
+                        strnext += $" and blogtype=? ";
+                        obj.Add(type);
+                    }
+                    strpre += $" limit 1 ;";
+                    strnext += $" limit 1 ;";
+
+                    var data = db.ExecuteDataTable(strpre, obj);
+                    if (data.Rows.Count > 0)
+                    {
+                        prenextView.PreBlog = ToEntity<PrenextViewItem>(data);
+                    }
+                    data = db.ExecuteDataTable(strnext, obj);
+                    if (data.Rows.Count > 0)
+                    {
+                        prenextView.NextBlog = ToEntity<PrenextViewItem>(data);
+                    }
+
+                    prenextView.IsSucceed = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(ex, "BloginfoRepository/GetPrenextBlog");
+                prenextView.IsSucceed = false;
+                prenextView.Message = ex.Message;
+            }
+            return prenextView;
+        }
+
+
+
+
 
         //public List<BloginfoView> GetListBlog(int page = 1, int limit = 10, bool iscontent = true, string orderby = "", Dictionary<string, object> dicwhere = null)
         //{

@@ -49,6 +49,17 @@ namespace CJJ.Blog.Service.Service
         }
 
         /// <summary>
+        /// 根据博客编号和类型获取上下篇
+        /// </summary>
+        /// <param name="blogNum"></param>
+        /// <param name="type">文章类型</param>
+        /// <returns></returns>
+        public PrenextView GetPrenextBlog(string blogNum, int type)
+        {
+            return BloginfoLogic.GetPrenextBlog(blogNum, type);
+        }
+
+        /// <summary>
         /// 查询数据
         /// </summary>
         /// <param name="page">页数</param>
@@ -59,7 +70,7 @@ namespace CJJ.Blog.Service.Service
             return BloginfoLogic.GetListPage(page, limit, dicwhere).ToList();
         }
 
-		/// <summary>
+        /// <summary>
         /// 获取Json格式的数据
         /// </summary>
         /// <param name="page">当前页码</param>
@@ -121,7 +132,7 @@ namespace CJJ.Blog.Service.Service
         }
 
 
-		/// <summary>
+        /// <summary>
         /// 查询数据
         /// </summary>
         /// <param name="dicwhere">条件查询</param>
@@ -178,22 +189,22 @@ namespace CJJ.Blog.Service.Service
 
         #region 添加
 
-         /// <summary>
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="dicdata">添加的字典实体</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         public Result Add_Bloginfo(Dictionary<string, object> dicdata, OpertionUser opertionUser)
         {
             return BloginfoLogic.Add(dicdata, opertionUser);
         }
 
-		/// <summary>
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="dicdata">添加的字典实体</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
         public Result Adds_Bloginfo(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser)
         {
@@ -249,13 +260,13 @@ namespace CJJ.Blog.Service.Service
             return BloginfoLogic.UpdateByWhere(valuedata, keydata, opertionUser);
         }
 
-		/// <summary>
+        /// <summary>
         /// 修改次数
         /// </summary>
         /// <param name="fields">需要修改的字段</param>
         /// <param name="addNums">次数 负数表示减少 正数表示增加</param>
         /// <param name="whereKey">字典条件</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
         public Result UpdateNums_Bloginfo(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
         {
@@ -288,25 +299,25 @@ namespace CJJ.Blog.Service.Service
         }
         #endregion
 
-		//#region 数据导出
+        //#region 数据导出
 
-  //      /// <summary>
-  //      /// Exports the excel file_ product.
-  //      /// </summary>
-  //      /// <param name="keydata">查询条件</param>
-  //      /// <param name="fileFullName">文件名全路径</param>
-		///// <param name="opertionUser">操作者信息</param>
-  //      /// <returns>FastDev.Common.Code.Result.</returns>
-  //      public Result ExportExcelFile_Bloginfo(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser)
-  //      {
-  //          return BloginfoLogic.ExportExcelFile(keydata, fileFullName, opertionUser);
-  //      }
+        //      /// <summary>
+        //      /// Exports the excel file_ product.
+        //      /// </summary>
+        //      /// <param name="keydata">查询条件</param>
+        //      /// <param name="fileFullName">文件名全路径</param>
+        ///// <param name="opertionUser">操作者信息</param>
+        //      /// <returns>FastDev.Common.Code.Result.</returns>
+        //      public Result ExportExcelFile_Bloginfo(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser)
+        //      {
+        //          return BloginfoLogic.ExportExcelFile(keydata, fileFullName, opertionUser);
+        //      }
 
-  //      #endregion
+        //      #endregion
 
         #endregion
 
-		#region Category操作
+        #region Category操作
 
         #region 查询
 
@@ -321,7 +332,7 @@ namespace CJJ.Blog.Service.Service
             return CategoryLogic.GetListPage(page, limit, dicwhere).ToList();
         }
 
-		/// <summary>
+        /// <summary>
         /// 获取Json格式的数据
         /// </summary>
         /// <param name="page">当前页码</param>
@@ -383,7 +394,7 @@ namespace CJJ.Blog.Service.Service
         }
 
 
-		/// <summary>
+        /// <summary>
         /// 查询数据
         /// </summary>
         /// <param name="dicwhere">条件查询</param>
@@ -440,22 +451,22 @@ namespace CJJ.Blog.Service.Service
 
         #region 添加
 
-         /// <summary>
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="dicdata">添加的字典实体</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         public Result Add_Category(Dictionary<string, object> dicdata, OpertionUser opertionUser)
         {
             return CategoryLogic.Add(dicdata, opertionUser);
         }
 
-		/// <summary>
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="dicdata">添加的字典实体</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
         public Result Adds_Category(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser)
         {
@@ -511,13 +522,13 @@ namespace CJJ.Blog.Service.Service
             return CategoryLogic.UpdateByWhere(valuedata, keydata, opertionUser);
         }
 
-		/// <summary>
+        /// <summary>
         /// 修改次数
         /// </summary>
         /// <param name="fields">需要修改的字段</param>
         /// <param name="addNums">次数 负数表示减少 正数表示增加</param>
         /// <param name="whereKey">字典条件</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
         public Result UpdateNums_Category(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
         {
@@ -550,14 +561,14 @@ namespace CJJ.Blog.Service.Service
         }
         #endregion
 
-		#region 数据导出
+        #region 数据导出
 
         /// <summary>
         /// Exports the excel file_ product.
         /// </summary>
         /// <param name="keydata">查询条件</param>
         /// <param name="fileFullName">文件名全路径</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns>FastDev.Common.Code.Result.</returns>
         public Result ExportExcelFile_Category(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser)
         {
@@ -568,7 +579,7 @@ namespace CJJ.Blog.Service.Service
 
         #endregion
 
-		#region Categorypic操作
+        #region Categorypic操作
 
         #region 查询
 
@@ -583,7 +594,7 @@ namespace CJJ.Blog.Service.Service
             return CategorypicLogic.GetListPage(page, limit, dicwhere).ToList();
         }
 
-		/// <summary>
+        /// <summary>
         /// 获取Json格式的数据
         /// </summary>
         /// <param name="page">当前页码</param>
@@ -645,7 +656,7 @@ namespace CJJ.Blog.Service.Service
         }
 
 
-		/// <summary>
+        /// <summary>
         /// 查询数据
         /// </summary>
         /// <param name="dicwhere">条件查询</param>
@@ -702,22 +713,22 @@ namespace CJJ.Blog.Service.Service
 
         #region 添加
 
-         /// <summary>
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="dicdata">添加的字典实体</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         public Result Add_Categorypic(Dictionary<string, object> dicdata, OpertionUser opertionUser)
         {
             return CategorypicLogic.Add(dicdata, opertionUser);
         }
 
-		/// <summary>
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="dicdata">添加的字典实体</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
         public Result Adds_Categorypic(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser)
         {
@@ -773,13 +784,13 @@ namespace CJJ.Blog.Service.Service
             return CategorypicLogic.UpdateByWhere(valuedata, keydata, opertionUser);
         }
 
-		/// <summary>
+        /// <summary>
         /// 修改次数
         /// </summary>
         /// <param name="fields">需要修改的字段</param>
         /// <param name="addNums">次数 负数表示减少 正数表示增加</param>
         /// <param name="whereKey">字典条件</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
         public Result UpdateNums_Categorypic(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
         {
@@ -812,14 +823,14 @@ namespace CJJ.Blog.Service.Service
         }
         #endregion
 
-		#region 数据导出
+        #region 数据导出
 
         /// <summary>
         /// Exports the excel file_ product.
         /// </summary>
         /// <param name="keydata">查询条件</param>
         /// <param name="fileFullName">文件名全路径</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns>FastDev.Common.Code.Result.</returns>
         public Result ExportExcelFile_Categorypic(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser)
         {
@@ -830,7 +841,7 @@ namespace CJJ.Blog.Service.Service
 
         #endregion
 
-		#region Member操作
+        #region Member操作
 
         #region 查询
 
@@ -845,7 +856,7 @@ namespace CJJ.Blog.Service.Service
             return MemberLogic.GetListPage(page, limit, dicwhere).ToList();
         }
 
-		/// <summary>
+        /// <summary>
         /// 获取Json格式的数据
         /// </summary>
         /// <param name="page">当前页码</param>
@@ -907,7 +918,7 @@ namespace CJJ.Blog.Service.Service
         }
 
 
-		/// <summary>
+        /// <summary>
         /// 查询数据
         /// </summary>
         /// <param name="dicwhere">条件查询</param>
@@ -964,22 +975,22 @@ namespace CJJ.Blog.Service.Service
 
         #region 添加
 
-         /// <summary>
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="dicdata">添加的字典实体</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         public Result Add_Member(Dictionary<string, object> dicdata, OpertionUser opertionUser)
         {
             return MemberLogic.Add(dicdata, opertionUser);
         }
 
-		/// <summary>
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="dicdata">添加的字典实体</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
         public Result Adds_Member(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser)
         {
@@ -1035,13 +1046,13 @@ namespace CJJ.Blog.Service.Service
             return MemberLogic.UpdateByWhere(valuedata, keydata, opertionUser);
         }
 
-		/// <summary>
+        /// <summary>
         /// 修改次数
         /// </summary>
         /// <param name="fields">需要修改的字段</param>
         /// <param name="addNums">次数 负数表示减少 正数表示增加</param>
         /// <param name="whereKey">字典条件</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
         public Result UpdateNums_Member(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
         {
@@ -1074,14 +1085,14 @@ namespace CJJ.Blog.Service.Service
         }
         #endregion
 
-		#region 数据导出
+        #region 数据导出
 
         /// <summary>
         /// Exports the excel file_ product.
         /// </summary>
         /// <param name="keydata">查询条件</param>
         /// <param name="fileFullName">文件名全路径</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns>FastDev.Common.Code.Result.</returns>
         public Result ExportExcelFile_Member(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser)
         {
@@ -1092,7 +1103,7 @@ namespace CJJ.Blog.Service.Service
 
         #endregion
 
-		#region Comment操作
+        #region Comment操作
 
         #region 查询
 
@@ -1107,7 +1118,7 @@ namespace CJJ.Blog.Service.Service
             return CommentLogic.GetListPage(page, limit, dicwhere).ToList();
         }
 
-		/// <summary>
+        /// <summary>
         /// 获取Json格式的数据
         /// </summary>
         /// <param name="page">当前页码</param>
@@ -1169,7 +1180,7 @@ namespace CJJ.Blog.Service.Service
         }
 
 
-		/// <summary>
+        /// <summary>
         /// 查询数据
         /// </summary>
         /// <param name="dicwhere">条件查询</param>
@@ -1226,22 +1237,22 @@ namespace CJJ.Blog.Service.Service
 
         #region 添加
 
-         /// <summary>
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="dicdata">添加的字典实体</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         public Result Add_Comment(Dictionary<string, object> dicdata, OpertionUser opertionUser)
         {
             return CommentLogic.Add(dicdata, opertionUser);
         }
 
-		/// <summary>
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="dicdata">添加的字典实体</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
         public Result Adds_Comment(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser)
         {
@@ -1297,13 +1308,13 @@ namespace CJJ.Blog.Service.Service
             return CommentLogic.UpdateByWhere(valuedata, keydata, opertionUser);
         }
 
-		/// <summary>
+        /// <summary>
         /// 修改次数
         /// </summary>
         /// <param name="fields">需要修改的字段</param>
         /// <param name="addNums">次数 负数表示减少 正数表示增加</param>
         /// <param name="whereKey">字典条件</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
         public Result UpdateNums_Comment(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
         {
@@ -1336,14 +1347,14 @@ namespace CJJ.Blog.Service.Service
         }
         #endregion
 
-		#region 数据导出
+        #region 数据导出
 
         /// <summary>
         /// Exports the excel file_ product.
         /// </summary>
         /// <param name="keydata">查询条件</param>
         /// <param name="fileFullName">文件名全路径</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns>FastDev.Common.Code.Result.</returns>
         public Result ExportExcelFile_Comment(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser)
         {
@@ -1360,7 +1371,7 @@ namespace CJJ.Blog.Service.Service
 
         public SysLoginUser EmployeePasswordLogin(string useraccount, string userpsw, string ipaddress, string agent, string dns)
         {
-            var a= EmployeeLogic.EmployeePasswordLogin(useraccount, userpsw, ipaddress, agent, dns);
+            var a = EmployeeLogic.EmployeePasswordLogin(useraccount, userpsw, ipaddress, agent, dns);
             return a;
         }
         public SysLoginUser EmployeeMobileLogin(string useraccount, string ipaddress, string agent, string dns)
@@ -1379,7 +1390,7 @@ namespace CJJ.Blog.Service.Service
             return EmployeeLogic.GetListPage(page, limit, dicwhere).ToList();
         }
 
-		/// <summary>
+        /// <summary>
         /// 获取Json格式的数据
         /// </summary>
         /// <param name="page">当前页码</param>
@@ -1441,7 +1452,7 @@ namespace CJJ.Blog.Service.Service
         }
 
 
-		/// <summary>
+        /// <summary>
         /// 查询数据
         /// </summary>
         /// <param name="dicwhere">条件查询</param>
@@ -1510,11 +1521,11 @@ namespace CJJ.Blog.Service.Service
             return EmployeeLogic.SetEmployeeRole(empid, roleids);
         }
 
-		/// <summary>
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="dicdata">添加的字典实体</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
         public Result Adds_Employee(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser)
         {
@@ -1570,13 +1581,13 @@ namespace CJJ.Blog.Service.Service
             return EmployeeLogic.UpdateByWhere(valuedata, keydata, opertionUser);
         }
 
-		/// <summary>
+        /// <summary>
         /// 修改次数
         /// </summary>
         /// <param name="fields">需要修改的字段</param>
         /// <param name="addNums">次数 负数表示减少 正数表示增加</param>
         /// <param name="whereKey">字典条件</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
         public Result UpdateNums_Employee(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
         {
@@ -1609,14 +1620,14 @@ namespace CJJ.Blog.Service.Service
         }
         #endregion
 
-		#region 数据导出
+        #region 数据导出
 
         /// <summary>
         /// Exports the excel file_ product.
         /// </summary>
         /// <param name="keydata">查询条件</param>
         /// <param name="fileFullName">文件名全路径</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns>FastDev.Common.Code.Result.</returns>
         public Result ExportExcelFile_Employee(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser)
         {
@@ -1627,7 +1638,7 @@ namespace CJJ.Blog.Service.Service
 
         #endregion
 
-		#region Media操作
+        #region Media操作
 
         #region 查询
 
@@ -1642,7 +1653,7 @@ namespace CJJ.Blog.Service.Service
             return MediaLogic.GetListPage(page, limit, dicwhere).ToList();
         }
 
-		/// <summary>
+        /// <summary>
         /// 获取Json格式的数据
         /// </summary>
         /// <param name="page">当前页码</param>
@@ -1704,7 +1715,7 @@ namespace CJJ.Blog.Service.Service
         }
 
 
-		/// <summary>
+        /// <summary>
         /// 查询数据
         /// </summary>
         /// <param name="dicwhere">条件查询</param>
@@ -1761,22 +1772,22 @@ namespace CJJ.Blog.Service.Service
 
         #region 添加
 
-         /// <summary>
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="dicdata">添加的字典实体</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         public Result Add_Media(Dictionary<string, object> dicdata, OpertionUser opertionUser)
         {
             return MediaLogic.Add(dicdata, opertionUser);
         }
 
-		/// <summary>
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="dicdata">添加的字典实体</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
         public Result Adds_Media(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser)
         {
@@ -1832,13 +1843,13 @@ namespace CJJ.Blog.Service.Service
             return MediaLogic.UpdateByWhere(valuedata, keydata, opertionUser);
         }
 
-		/// <summary>
+        /// <summary>
         /// 修改次数
         /// </summary>
         /// <param name="fields">需要修改的字段</param>
         /// <param name="addNums">次数 负数表示减少 正数表示增加</param>
         /// <param name="whereKey">字典条件</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns></returns>
         public Result UpdateNums_Media(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
         {
@@ -1871,14 +1882,14 @@ namespace CJJ.Blog.Service.Service
         }
         #endregion
 
-		#region 数据导出
+        #region 数据导出
 
         /// <summary>
         /// Exports the excel file_ product.
         /// </summary>
         /// <param name="keydata">查询条件</param>
         /// <param name="fileFullName">文件名全路径</param>
-		/// <param name="opertionUser">操作者信息</param>
+        /// <param name="opertionUser">操作者信息</param>
         /// <returns>FastDev.Common.Code.Result.</returns>
         public Result ExportExcelFile_Media(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser)
         {
