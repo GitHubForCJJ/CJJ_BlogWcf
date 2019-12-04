@@ -840,9 +840,20 @@ namespace CJJ.Blog.NetWork.WcfHelper
 
         #endregion
 
-		#region Member 操作
+        #region Member 操作
 
         #region 查询
+        /// <summary>
+        /// 会员登录
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="password"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static MemberAuthModel MemberLogin(string account, string password, string type, string ipaddress, string agent, string dns)
+        {
+            return Client.MemberLogin(account, password, type, ipaddress, agent, dns);
+        }
 
         /// <summary>
         /// Gets the menu list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理

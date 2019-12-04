@@ -38,6 +38,9 @@ namespace CJJ.Blog.Service.Service
         #region Bloginfo操作
 
         #region 查询
+
+
+
         /// <summary>
         /// 查询单个博客包括详情
         /// </summary>
@@ -844,6 +847,18 @@ namespace CJJ.Blog.Service.Service
         #region Member操作
 
         #region 查询
+
+        /// <summary>
+        /// 会员登录
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="password"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public MemberAuthModel MemberLogin(string account, string password, string type, string ipaddress, string agent, string dns)
+        {
+            return MemberLogic.MemberLogin(account, password, type, ipaddress, agent, dns);
+        }
 
         /// <summary>
         /// 查询数据

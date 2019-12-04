@@ -21,6 +21,8 @@ using System.Data;
 using FastDev.Common.Extension;
 using CJJ.Blog.Service.Models.View;
 using CJJ.Blog.Service.Model.Data;
+using CJJ.Blog.Service.Model.View;
+using FastDev.Log;
 
 namespace CJJ.Blog.Service.Logic
 {
@@ -30,6 +32,67 @@ namespace CJJ.Blog.Service.Logic
     public class MemberLogic
     {
         #region 查询
+
+        /// <summary>
+        /// 会员登录
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="password"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static MemberAuthModel MemberLogin(string account, string password, string type, string ipaddress, string agent, string dns)
+        {
+            var retmem = new MemberAuthModel { IsSucceed = false };
+            try
+            {
+                var member = MemberLogic.GetModelByWhere(new Dictionary<string, object>()
+                {
+                    {nameof(Member.IsDeleted),0 },
+                    {nameof(Member.UserAccount),account }
+             });
+                if (member == null)
+                {
+                    retmem.Message = "账户信息不存在";
+                    return retmem;
+                }
+                if (member.UserPassword != password)
+                {
+                    retmem.Message = "密码不正确";
+                    return retmem;
+                }
+                var tokenexpir = DateTime.Now.AddDays(ConfigUnit.ExpirationTimeOut).ToString();
+                var logintype = "2";
+                //总共64位，4+22+5+1+32
+                var token = $"{DateTime.Now.ToString("yyMM")}{Guid.NewGuid().ToString("N").Substring(0, 22)}{member.KID.ToString().PadLeft(5, '0')}{logintype}{Guid.NewGuid().ToString("N")}";
+
+                Task.Run(() =>
+                {
+                    var tokenres = LogintokenLogic.Add(new Logintoken
+                    {
+                        Token = token,
+                        TokenExpiration = tokenexpir,
+                        CreateTime = DateTime.Now,
+                        LoginUserId = member.KID.ToString(),
+                        LoginUserType = 0,
+                        LoginUserAccount = member.UserAccount,
+                        LoginResult = "登录成功",
+                        IpAddr = ipaddress,
+                        IsLogOut = 0
+                    }, new OpertionUser() { UserId = member?.KID.ToString() });
+                });
+                retmem.Token = token;
+                retmem.MemberInfo = member;
+                retmem.IsSucceed = true;
+
+
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(ex, "MemberLogic/MemberLogin");
+            }
+            return retmem;
+
+        }
 
         /// <summary>
         /// Gets the Member {TableNameMember} list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理

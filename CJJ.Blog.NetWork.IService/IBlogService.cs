@@ -31,8 +31,8 @@ namespace CJJ.Blog.NetWork.IService
     /// ICJJ.BlogService WCF服务契约接口层
     /// </summary>
     /// <seealso cref="CJJ.Blog.NetWork.IService.ICJJ.BlogService" />
-     [ServiceContract]
-	public interface IBlogService
+    [ServiceContract]
+    public interface IBlogService
     {
 
         #region Bloginfo 操作
@@ -52,7 +52,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="type">文章类型</param>
         /// <returns></returns>
         [OperationContract]
-        PrenextView GetPrenextBlog(string blogNum,int type);
+        PrenextView GetPrenextBlog(string blogNum, int type);
 
         /// <summary>
         /// Gets the menu list.
@@ -63,7 +63,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         List<BloginfoView> GetListPage_Bloginfo(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null);
 
-		/// <summary>
+        /// <summary>
         /// 获取Json格式的数据
         /// </summary>
         /// <param name="page">当前页码</param>
@@ -113,7 +113,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         Bloginfo GetModelByWhere_Bloginfo(Dictionary<string, object> dicwhere);
 
-		 /// <summary>
+        /// <summary>
         /// 查询数据
         /// </summary>
         /// <param name="dicwhere">条件查询</param>
@@ -162,7 +162,7 @@ namespace CJJ.Blog.NetWork.IService
 
         #region 添加
 
-       	/// <summary>
+        /// <summary>
         /// 添加数据 根据字典添加
         /// </summary>
         /// <param name="model">添加的字典实体</param>
@@ -170,8 +170,8 @@ namespace CJJ.Blog.NetWork.IService
         /// <returns>Result.</returns>
         [OperationContract]
         Result Add_Bloginfo(Dictionary<string, object> dicdata, OpertionUser opertionUser);
-		
-		/// <summary>
+
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="model">添加的字典实体</param>
@@ -221,7 +221,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         Result UpdateByWhere_Bloginfo(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser);
 
-		/// <summary>
+        /// <summary>
         /// 修改次数
         /// </summary>
         /// <param name="fields">需要修改的字段</param>
@@ -254,7 +254,7 @@ namespace CJJ.Blog.NetWork.IService
         Result DeleteByWhere_Bloginfo(Dictionary<string, object> keydata, OpertionUser opertionUser);
         #endregion
 
-		#region 数据导出
+        #region 数据导出
         /// <summary>
         ///// 数据导出
         ///// </summary>
@@ -269,7 +269,7 @@ namespace CJJ.Blog.NetWork.IService
 
         #endregion
 
-		#region Category 操作
+        #region Category 操作
 
         #region 查询
 
@@ -282,7 +282,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         List<Category> GetListPage_Category(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null);
 
-		/// <summary>
+        /// <summary>
         /// 获取Json格式的数据
         /// </summary>
         /// <param name="page">当前页码</param>
@@ -332,7 +332,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         Category GetModelByWhere_Category(Dictionary<string, object> dicwhere);
 
-		 /// <summary>
+        /// <summary>
         /// 查询数据
         /// </summary>
         /// <param name="dicwhere">条件查询</param>
@@ -381,7 +381,7 @@ namespace CJJ.Blog.NetWork.IService
 
         #region 添加
 
-       	/// <summary>
+        /// <summary>
         /// 添加数据 根据字典添加
         /// </summary>
         /// <param name="model">添加的字典实体</param>
@@ -389,8 +389,8 @@ namespace CJJ.Blog.NetWork.IService
         /// <returns>Result.</returns>
         [OperationContract]
         Result Add_Category(Dictionary<string, object> dicdata, OpertionUser opertionUser);
-		
-		/// <summary>
+
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="model">添加的字典实体</param>
@@ -440,7 +440,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         Result UpdateByWhere_Category(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser);
 
-		/// <summary>
+        /// <summary>
         /// 修改次数
         /// </summary>
         /// <param name="fields">需要修改的字段</param>
@@ -473,7 +473,7 @@ namespace CJJ.Blog.NetWork.IService
         Result DeleteByWhere_Category(Dictionary<string, object> keydata, OpertionUser opertionUser);
         #endregion
 
-		#region 数据导出
+        #region 数据导出
         /// <summary>
         /// 数据导出
         /// </summary>
@@ -488,7 +488,7 @@ namespace CJJ.Blog.NetWork.IService
 
         #endregion
 
-		#region Categorypic 操作
+        #region Categorypic 操作
 
         #region 查询
 
@@ -501,7 +501,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         List<Categorypic> GetListPage_Categorypic(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null);
 
-		/// <summary>
+        /// <summary>
         /// 获取Json格式的数据
         /// </summary>
         /// <param name="page">当前页码</param>
@@ -551,7 +551,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         Categorypic GetModelByWhere_Categorypic(Dictionary<string, object> dicwhere);
 
-		 /// <summary>
+        /// <summary>
         /// 查询数据
         /// </summary>
         /// <param name="dicwhere">条件查询</param>
@@ -600,7 +600,7 @@ namespace CJJ.Blog.NetWork.IService
 
         #region 添加
 
-       	/// <summary>
+        /// <summary>
         /// 添加数据 根据字典添加
         /// </summary>
         /// <param name="model">添加的字典实体</param>
@@ -608,8 +608,8 @@ namespace CJJ.Blog.NetWork.IService
         /// <returns>Result.</returns>
         [OperationContract]
         Result Add_Categorypic(Dictionary<string, object> dicdata, OpertionUser opertionUser);
-		
-		/// <summary>
+
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="model">添加的字典实体</param>
@@ -659,7 +659,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         Result UpdateByWhere_Categorypic(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser);
 
-		/// <summary>
+        /// <summary>
         /// 修改次数
         /// </summary>
         /// <param name="fields">需要修改的字段</param>
@@ -692,7 +692,7 @@ namespace CJJ.Blog.NetWork.IService
         Result DeleteByWhere_Categorypic(Dictionary<string, object> keydata, OpertionUser opertionUser);
         #endregion
 
-		#region 数据导出
+        #region 数据导出
         /// <summary>
         /// 数据导出
         /// </summary>
@@ -707,9 +707,18 @@ namespace CJJ.Blog.NetWork.IService
 
         #endregion
 
-		#region Member 操作
+        #region Member 操作
 
         #region 查询
+        /// <summary>
+        /// 会员登录
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="password"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        [OperationContract]
+        MemberAuthModel MemberLogin(string account,string password,string type, string ipaddress, string agent, string dns);
 
         /// <summary>
         /// Gets the menu list.
@@ -720,7 +729,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         List<Member> GetListPage_Member(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null);
 
-		/// <summary>
+        /// <summary>
         /// 获取Json格式的数据
         /// </summary>
         /// <param name="page">当前页码</param>
@@ -770,7 +779,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         Member GetModelByWhere_Member(Dictionary<string, object> dicwhere);
 
-		 /// <summary>
+        /// <summary>
         /// 查询数据
         /// </summary>
         /// <param name="dicwhere">条件查询</param>
@@ -819,7 +828,7 @@ namespace CJJ.Blog.NetWork.IService
 
         #region 添加
 
-       	/// <summary>
+        /// <summary>
         /// 添加数据 根据字典添加
         /// </summary>
         /// <param name="model">添加的字典实体</param>
@@ -827,8 +836,8 @@ namespace CJJ.Blog.NetWork.IService
         /// <returns>Result.</returns>
         [OperationContract]
         Result Add_Member(Dictionary<string, object> dicdata, OpertionUser opertionUser);
-		
-		/// <summary>
+
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="model">添加的字典实体</param>
@@ -878,7 +887,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         Result UpdateByWhere_Member(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser);
 
-		/// <summary>
+        /// <summary>
         /// 修改次数
         /// </summary>
         /// <param name="fields">需要修改的字段</param>
@@ -911,7 +920,7 @@ namespace CJJ.Blog.NetWork.IService
         Result DeleteByWhere_Member(Dictionary<string, object> keydata, OpertionUser opertionUser);
         #endregion
 
-		#region 数据导出
+        #region 数据导出
         /// <summary>
         /// 数据导出
         /// </summary>
@@ -926,7 +935,7 @@ namespace CJJ.Blog.NetWork.IService
 
         #endregion
 
-		#region Comment 操作
+        #region Comment 操作
 
         #region 查询
 
@@ -939,7 +948,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         List<Comment> GetListPage_Comment(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null);
 
-		/// <summary>
+        /// <summary>
         /// 获取Json格式的数据
         /// </summary>
         /// <param name="page">当前页码</param>
@@ -989,7 +998,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         Comment GetModelByWhere_Comment(Dictionary<string, object> dicwhere);
 
-		 /// <summary>
+        /// <summary>
         /// 查询数据
         /// </summary>
         /// <param name="dicwhere">条件查询</param>
@@ -1038,7 +1047,7 @@ namespace CJJ.Blog.NetWork.IService
 
         #region 添加
 
-       	/// <summary>
+        /// <summary>
         /// 添加数据 根据字典添加
         /// </summary>
         /// <param name="model">添加的字典实体</param>
@@ -1046,8 +1055,8 @@ namespace CJJ.Blog.NetWork.IService
         /// <returns>Result.</returns>
         [OperationContract]
         Result Add_Comment(Dictionary<string, object> dicdata, OpertionUser opertionUser);
-		
-		/// <summary>
+
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="model">添加的字典实体</param>
@@ -1097,7 +1106,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         Result UpdateByWhere_Comment(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser);
 
-		/// <summary>
+        /// <summary>
         /// 修改次数
         /// </summary>
         /// <param name="fields">需要修改的字段</param>
@@ -1130,7 +1139,7 @@ namespace CJJ.Blog.NetWork.IService
         Result DeleteByWhere_Comment(Dictionary<string, object> keydata, OpertionUser opertionUser);
         #endregion
 
-		#region 数据导出
+        #region 数据导出
         /// <summary>
         /// 数据导出
         /// </summary>
@@ -1158,7 +1167,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="dns"></param>
         /// <returns></returns>
         [OperationContract]
-        SysLoginUser EmployeePasswordLogin(string useraccount,string userpsw,string ipaddress,string agent,string dns);
+        SysLoginUser EmployeePasswordLogin(string useraccount, string userpsw, string ipaddress, string agent, string dns);
         /// <summary>
         /// 手机登录
         /// </summary>
@@ -1179,7 +1188,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         List<Employee> GetListPage_Employee(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null);
 
-		/// <summary>
+        /// <summary>
         /// 获取Json格式的数据
         /// </summary>
         /// <param name="page">当前页码</param>
@@ -1229,7 +1238,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         Employee GetModelByWhere_Employee(Dictionary<string, object> dicwhere);
 
-		 /// <summary>
+        /// <summary>
         /// 查询数据
         /// </summary>
         /// <param name="dicwhere">条件查询</param>
@@ -1284,10 +1293,10 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
         [OperationContract]
-        Result SetEmployeeRole(string empid,string roleids);
+        Result SetEmployeeRole(string empid, string roleids);
 
-		
-		/// <summary>
+
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="model">添加的字典实体</param>
@@ -1337,7 +1346,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         Result UpdateByWhere_Employee(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser);
 
-		/// <summary>
+        /// <summary>
         /// 修改次数
         /// </summary>
         /// <param name="fields">需要修改的字段</param>
@@ -1370,7 +1379,7 @@ namespace CJJ.Blog.NetWork.IService
         Result DeleteByWhere_Employee(Dictionary<string, object> keydata, OpertionUser opertionUser);
         #endregion
 
-		#region 数据导出
+        #region 数据导出
         /// <summary>
         /// 数据导出
         /// </summary>
@@ -1385,7 +1394,7 @@ namespace CJJ.Blog.NetWork.IService
 
         #endregion
 
-		#region Media 操作
+        #region Media 操作
 
         #region 查询
 
@@ -1398,7 +1407,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         List<Media> GetListPage_Media(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null);
 
-		/// <summary>
+        /// <summary>
         /// 获取Json格式的数据
         /// </summary>
         /// <param name="page">当前页码</param>
@@ -1448,7 +1457,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         Media GetModelByWhere_Media(Dictionary<string, object> dicwhere);
 
-		 /// <summary>
+        /// <summary>
         /// 查询数据
         /// </summary>
         /// <param name="dicwhere">条件查询</param>
@@ -1497,7 +1506,7 @@ namespace CJJ.Blog.NetWork.IService
 
         #region 添加
 
-       	/// <summary>
+        /// <summary>
         /// 添加数据 根据字典添加
         /// </summary>
         /// <param name="model">添加的字典实体</param>
@@ -1505,8 +1514,8 @@ namespace CJJ.Blog.NetWork.IService
         /// <returns>Result.</returns>
         [OperationContract]
         Result Add_Media(Dictionary<string, object> dicdata, OpertionUser opertionUser);
-		
-		/// <summary>
+
+        /// <summary>
         /// 添加多条数据 根据字典添加
         /// </summary>
         /// <param name="model">添加的字典实体</param>
@@ -1556,7 +1565,7 @@ namespace CJJ.Blog.NetWork.IService
         [OperationContract]
         Result UpdateByWhere_Media(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser);
 
-		/// <summary>
+        /// <summary>
         /// 修改次数
         /// </summary>
         /// <param name="fields">需要修改的字段</param>
@@ -1589,7 +1598,7 @@ namespace CJJ.Blog.NetWork.IService
         Result DeleteByWhere_Media(Dictionary<string, object> keydata, OpertionUser opertionUser);
         #endregion
 
-		#region 数据导出
+        #region 数据导出
         /// <summary>
         /// 数据导出
         /// </summary>
