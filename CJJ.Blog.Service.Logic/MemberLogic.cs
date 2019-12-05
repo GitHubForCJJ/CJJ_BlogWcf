@@ -73,7 +73,7 @@ namespace CJJ.Blog.Service.Logic
                         TokenExpiration = tokenexpir,
                         CreateTime = DateTime.Now,
                         LoginUserId = member.KID.ToString(),
-                        LoginUserType = 0,
+                        LoginUserType = 2,
                         LoginUserAccount = member.UserAccount,
                         LoginResult = "登录成功",
                         IpAddr = ipaddress,

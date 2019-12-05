@@ -1,9 +1,9 @@
 ﻿//-----------------------------------------------------------------------------------
-// <copyright file="Employee.cs" company="Go Enterprises">
+// <copyright file="ArticlePraise.cs" company="Go Enterprises">
 // * copyright: (C) 2018 东走西走科技有限公司 版权所有。
 // * version  : 1.0.0.0
 // * author   : chenjianjun
-// * fileName : Employee.cs
+// * fileName : ArticlePraise.cs
 // * history  : created by chenjianjun 2019-06-14 15:52:46
 // </copyright>
 //-----------------------------------------------------------------------------------
@@ -16,105 +16,29 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using CJJ.Blog.Service.Repository;
 using CJJ.Blog.Service.Models.Data;
-using DbLog = CJJ.Blog.Service.Logic.Fd_sys_operationlogLogic;
 using System.Data;
 using FastDev.Common.Extension;
 using CJJ.Blog.Service.Models.View;
-using CJJ.Blog.Service.Model.View;
+using DbLog = CJJ.Blog.Service.Logic.Fd_sys_operationlogLogic;
+using CJJ.Blog.Service.Model.Data;
 using FastDev.Log;
-using CJJ.Blog.Service.Logic.Common;
 
 namespace CJJ.Blog.Service.Logic
 {
     /// <summary>
-    /// Class Employee Logic.
+    /// Class ArticlePraise Logic.
     /// </summary>
-    public class EmployeeLogic
+    public class ArticlePraiseLogic
     {
         #region 查询
-        /// <summary>
-        /// 密码登录
-        /// </summary>
-        /// <param name="useraccount"></param>
-        /// <param name="userpsw"></param>
-        /// <param name="ipaddress"></param>
-        /// <param name="agent"></param>
-        /// <param name="dns"></param>
-        /// <returns></returns>
-        public static SysLoginUser EmployeePasswordLogin(string useraccount, string userpsw, string ipaddress, string agent, string dns)
-        {
-            SysLoginUser res = new SysLoginUser() { IsSucceed = false };
-            try
-            {
-                var psw = userpsw.ToUpper();
-                var emp = EmployeeLogic.GetModelByWhere(new Dictionary<string, object>()
-                {
-                    {nameof(Employee.UserAcount),useraccount },
-                   {nameof(Employee.IsDeleted),0 },
-                      {nameof(Employee.States),0 }
-                });
-                if (emp.UserPassword.ToUpper() != psw)
-                {
-                    return res;
-                }
-                #region 获取menu操作列表
-
-                res.UserAuthorMenu = Comlogic.GetMenulistByUserid(emp.KID);
-                // res.UserAuthorMenu = new UserAuthorMenu() { IsSucceed = true };
-
-                #endregion
-
-                var logintype = "1";
-                //总共64位，4+22+5+1+32
-                var token = $"{DateTime.Now.ToString("yyMM")}{Guid.NewGuid().ToString("N").Substring(0, 22)}{emp.KID.ToString().PadLeft(5, '0')}{logintype}{Guid.NewGuid().ToString("N")}";
-                var tokenexpir = DateTime.Now.AddDays(ConfigUnit.ExpirationTimeOut).ToString();
-                res.TokenExpiration = tokenexpir;
-                var tokenres = LogintokenLogic.Add(new Logintoken
-                {
-                    Token = token,
-                    TokenExpiration = tokenexpir,
-                    CreateTime = DateTime.Now,
-                    LoginUserId = emp.KID.ToString(),
-                    LoginUserType = 1,
-                    LoginUserAccount = emp.UserAcount,
-                    LoginResult = "登录成功",
-                    IpAddr = ipaddress,
-                    IsLogOut = 0
-                }, new OpertionUser() { UserId = emp?.KID.ToString() });
-
-
-                res.IsSucceed = res.UserAuthorMenu.IsSucceed;
-                res.Message = res.UserAuthorMenu.IsSucceed ? "登录成功菜单获取成功" : res.UserAuthorMenu.Message;
-                if (res.UserAuthorMenu.IsSucceed)
-                {
-                    res.Token = token;
-                    res.Model = emp;
-                    res.TokenExpiration = tokenexpir;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                LogHelper.WriteLog(ex, "登录出错", LogLevel.D错误事件);
-                res.IsSucceed = false;
-            }
-            return res;
-
-        }
-
-
-        public static SysLoginUser EmployeeMobileLogin(string useraccount, string ipaddress, string agent, string dns)
-        {
-            return new SysLoginUser();
-        }
 
         /// <summary>
-        /// Gets the Employee {TableNameComment} list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
+        /// Gets the ArticlePraise {TableNameComment} list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="page">The page.</param>
         /// <param name="limit">The limit.</param>
         /// <returns>System.Collections.Generic.List&lt;Jbst.Service.Models.Data.Sys_menu&gt;.</returns>
-        public static List<Employee> GetListPage(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
+        public static List<ArticlePraise> GetListPage(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
         {
             string orderby = "";
             if (dicwhere != null && dicwhere.ContainsKey(nameof(orderby)))
@@ -126,15 +50,15 @@ namespace CJJ.Blog.Service.Logic
             {
                 dicwhere = new Dictionary<string, object>();
             }
-            if (dicwhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(ArticlePraise.IsDeleted)))
             {
-                dicwhere[nameof(Employee.IsDeleted)] = 0;
+                dicwhere[nameof(ArticlePraise.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Employee.IsDeleted), 0);
+                dicwhere.Add(nameof(ArticlePraise.IsDeleted), 0);
             }
-            return EmployeeRepository.Instance.GetListPage<Employee>(limit, page, dicwhere, orderby).ToList();
+            return ArticlePraiseRepository.Instance.GetListPage<ArticlePraise>(limit, page, dicwhere, orderby).ToList();
         }
 
         /// <summary>
@@ -145,68 +69,68 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="orderby">排序字段</param>
         /// <param name="dicwhere">查询条件</param>
         /// <returns>FastJsonResult&lt;List&lt;Product&gt;&gt;.</returns>
-        public static FastJsonResult<List<Employee>> GetJsonListPage(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
+        public static FastJsonResult<List<ArticlePraise>> GetJsonListPage(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
         {
             if (dicwhere == null)
             {
                 dicwhere = new Dictionary<string, object>();
             }
-            if (dicwhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(ArticlePraise.IsDeleted)))
             {
-                dicwhere[nameof(Employee.IsDeleted)] = 0;
+                dicwhere[nameof(ArticlePraise.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Employee.IsDeleted), 0);
+                dicwhere.Add(nameof(ArticlePraise.IsDeleted), 0);
             }
-            return EmployeeRepository.Instance.GetJsonListPage<Employee>(limit, page, dicwhere, orderby);
+            return ArticlePraiseRepository.Instance.GetJsonListPage<ArticlePraise>(limit, page, dicwhere, orderby);
         }
 
         /// <summary>
         /// 不分页获取所有数据
         /// </summary>
-        /// <returns>List&lt;Employee&gt;.</returns>
-        public static List<Employee> GetAllList()
+        /// <returns>List&lt;ArticlePraise&gt;.</returns>
+        public static List<ArticlePraise> GetAllList()
         {
             var dic = new Dictionary<string, object>();
-            dic.Add(nameof(Employee.IsDeleted), 0);
-            return EmployeeRepository.Instance.GetList<Employee>(dic).ToList();
+            dic.Add(nameof(ArticlePraise.IsDeleted), 0);
+            return ArticlePraiseRepository.Instance.GetList<ArticlePraise>(dic).ToList();
         }
 
         /// <summary>
         /// 按条件获取数据列表 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
-        /// <returns>List&lt;Employee&gt;.</returns>
+        /// <returns>List&lt;ArticlePraise&gt;.</returns>
         public static DataTable GetDataTable(Dictionary<string, object> dicwhere, int page = 1, int limit = 10)
         {
-            if (dicwhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(ArticlePraise.IsDeleted)))
             {
-                dicwhere[nameof(Employee.IsDeleted)] = 0;
+                dicwhere[nameof(ArticlePraise.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Employee.IsDeleted), 0);
+                dicwhere.Add(nameof(ArticlePraise.IsDeleted), 0);
             }
-            return EmployeeRepository.Instance.GetDataTablePage<Employee>(limit, page, dicwhere);
+            return ArticlePraiseRepository.Instance.GetDataTablePage<ArticlePraise>(limit, page, dicwhere);
         }
 
         /// <summary> 
         /// 按条件获取数据列表 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
-        /// <returns>List&lt;Employee&gt;.</returns>
-        public static List<Employee> GetList(Dictionary<string, object> dicwhere)
+        /// <returns>List&lt;ArticlePraise&gt;.</returns>
+        public static List<ArticlePraise> GetList(Dictionary<string, object> dicwhere)
         {
-            if (dicwhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(ArticlePraise.IsDeleted)))
             {
-                dicwhere[nameof(Employee.IsDeleted)] = 0;
+                dicwhere[nameof(ArticlePraise.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Employee.IsDeleted), 0);
+                dicwhere.Add(nameof(ArticlePraise.IsDeleted), 0);
             }
-            return EmployeeRepository.Instance.GetList<Employee>(dicwhere).ToList();
+            return ArticlePraiseRepository.Instance.GetList<ArticlePraise>(dicwhere).ToList();
         }
 
         /// <summary>
@@ -219,15 +143,15 @@ namespace CJJ.Blog.Service.Logic
             {
                 dicwhere = new Dictionary<string, object>();
             }
-            if (dicwhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(ArticlePraise.IsDeleted)))
             {
-                dicwhere[nameof(Employee.IsDeleted)] = 0;
+                dicwhere[nameof(ArticlePraise.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Employee.IsDeleted), 0);
+                dicwhere.Add(nameof(ArticlePraise.IsDeleted), 0);
             }
-            return EmployeeRepository.Instance.GetCount<Employee>(dicwhere);
+            return ArticlePraiseRepository.Instance.GetCount<ArticlePraise>(dicwhere);
         }
 
         /// <summary>
@@ -235,9 +159,9 @@ namespace CJJ.Blog.Service.Logic
         /// </summary>
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
-        public static Employee GetModelByKID(int kID)
+        public static ArticlePraise GetModelByKID(int kID)
         {
-            var model = EmployeeRepository.Instance.GetEntityByKey<Employee>(kID);
+            var model = ArticlePraiseRepository.Instance.GetEntityByKey<ArticlePraise>(kID);
             if (model != null && model.IsDeleted == 0)
             {
                 return model;
@@ -253,17 +177,17 @@ namespace CJJ.Blog.Service.Logic
         /// </summary>
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
-        public static Employee GetModelByWhere(Dictionary<string, object> dicwhere)
+        public static ArticlePraise GetModelByWhere(Dictionary<string, object> dicwhere)
         {
-            if (dicwhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(ArticlePraise.IsDeleted)))
             {
-                dicwhere[nameof(Employee.IsDeleted)] = 0;
+                dicwhere[nameof(ArticlePraise.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Employee.IsDeleted), 0);
+                dicwhere.Add(nameof(ArticlePraise.IsDeleted), 0);
             }
-            return EmployeeRepository.Instance.GetEntity<Employee>(dicwhere);
+            return ArticlePraiseRepository.Instance.GetEntity<ArticlePraise>(dicwhere);
         }
 
         /// <summary>
@@ -278,26 +202,26 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="page">当前页数</param>
         /// <param name="limit">当前页显示的数据条数</param>
         /// <returns></returns>
-        public static List<Employee> GetListByInSelect(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
+        public static List<ArticlePraise> GetListByInSelect(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
         {
-            if (mainDicWhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (mainDicWhere.Keys.Contains(nameof(ArticlePraise.IsDeleted)))
             {
-                mainDicWhere[nameof(Employee.IsDeleted)] = 0;
+                mainDicWhere[nameof(ArticlePraise.IsDeleted)] = 0;
             }
             else
             {
-                mainDicWhere.Add(nameof(Employee.IsDeleted), 0);
+                mainDicWhere.Add(nameof(ArticlePraise.IsDeleted), 0);
             }
 
-            if (subDicWhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (subDicWhere.Keys.Contains(nameof(ArticlePraise.IsDeleted)))
             {
-                subDicWhere[nameof(Employee.IsDeleted)] = 0;
+                subDicWhere[nameof(ArticlePraise.IsDeleted)] = 0;
             }
             else
             {
-                subDicWhere.Add(nameof(Employee.IsDeleted), 0);
+                subDicWhere.Add(nameof(ArticlePraise.IsDeleted), 0);
             }
-            return EmployeeRepository.Instance.GetListByInSelect<Employee>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit).ToList();
+            return ArticlePraiseRepository.Instance.GetListByInSelect<ArticlePraise>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit).ToList();
         }
 
 
@@ -312,24 +236,24 @@ namespace CJJ.Blog.Service.Logic
         /// <returns></returns>
         public static int GetCountByInSelect(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere)
         {
-            if (mainDicWhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (mainDicWhere.Keys.Contains(nameof(ArticlePraise.IsDeleted)))
             {
-                mainDicWhere[nameof(Employee.IsDeleted)] = 0;
+                mainDicWhere[nameof(ArticlePraise.IsDeleted)] = 0;
             }
             else
             {
-                mainDicWhere.Add(nameof(Employee.IsDeleted), 0);
+                mainDicWhere.Add(nameof(ArticlePraise.IsDeleted), 0);
             }
 
-            if (subDicWhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (subDicWhere.Keys.Contains(nameof(ArticlePraise.IsDeleted)))
             {
-                subDicWhere[nameof(Employee.IsDeleted)] = 0;
+                subDicWhere[nameof(ArticlePraise.IsDeleted)] = 0;
             }
             else
             {
-                subDicWhere.Add(nameof(Employee.IsDeleted), 0);
+                subDicWhere.Add(nameof(ArticlePraise.IsDeleted), 0);
             }
-            return EmployeeRepository.Instance.GetCountByInSelect<Employee>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
+            return ArticlePraiseRepository.Instance.GetCountByInSelect<ArticlePraise>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
         }
 
         /// <summary>
@@ -342,15 +266,15 @@ namespace CJJ.Blog.Service.Logic
         /// <returns></returns>
         public static DataTable GetDataByGroup(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10)
         {
-            if (dicWhere.Keys.Contains(nameof(Employee.IsDeleted)))
+            if (dicWhere.Keys.Contains(nameof(ArticlePraise.IsDeleted)))
             {
-                dicWhere[nameof(Employee.IsDeleted)] = 0;
+                dicWhere[nameof(ArticlePraise.IsDeleted)] = 0;
             }
             else
             {
-                dicWhere.Add(nameof(Employee.IsDeleted), 0);
+                dicWhere.Add(nameof(ArticlePraise.IsDeleted), 0);
             }
-            return EmployeeRepository.Instance.GetDataByGroup<Employee>(groupByFields, dicWhere, page, limit);
+            return ArticlePraiseRepository.Instance.GetDataByGroup<ArticlePraise>(groupByFields, dicWhere, page, limit);
         }
 
         #endregion
@@ -365,11 +289,31 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result Add(Dictionary<string, object> dicwhere, OpertionUser opertionUser)
         {
-            var ret = EmployeeRepository.Instance.Add<Employee>(dicwhere);
+            try
+            {
+                var memid = dicwhere[nameof(ArticlePraise.MemberId)].ToString();
+                var blognum = dicwhere[nameof(ArticlePraise.BlogNum)].ToString();
+                var ap = ArticlePraiseLogic.GetModelByWhere(new Dictionary<string, object>()
+            {
+                { nameof(ArticlePraise.MemberId),memid},
+                {nameof(ArticlePraise.BlogNum),blognum }
+            });
+                if (ap != null || ap?.KID > 0)
+                {
+                    return new Result() { IsSucceed = false, Message = "该文章你已点赞" };
+                }
+                var ret = ArticlePraiseRepository.Instance.Add<ArticlePraise>(dicwhere);
 
-            DbLog.WriteDbLog(nameof(Employee), "添加记录", ret, dicwhere.ToJsonString(), opertionUser, OperLogType.添加);
+                DbLog.WriteDbLog(nameof(ArticlePraise), "添加记录", ret, dicwhere.ToJsonString(), opertionUser, OperLogType.添加);
 
-            return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
+                return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
+            }
+            catch(Exception ex)
+            {
+                LogHelper.WriteLog(ex, "ArticlePraiseLogic/add");
+                return new Result() { IsSucceed = false, Message = "系统错误"+ex.Message };
+            }
+
         }
 
         /// <summary>
@@ -378,19 +322,19 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="entity">The entity.</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public static Result Add(Employee entity, OpertionUser opertionUser)
+        public static Result Add(ArticlePraise entity, OpertionUser opertionUser)
         {
             try
             {
-                var ret = EmployeeRepository.Instance.Add<Employee>(entity);
+                var ret = ArticlePraiseRepository.Instance.Add<ArticlePraise>(entity);
 
-                DbLog.WriteDbLog(nameof(Employee), "添加记录", ret, entity.ToJsonString(), opertionUser, OperLogType.添加);
+                DbLog.WriteDbLog(nameof(ArticlePraise), "添加记录", ret, entity.ToJsonString(), opertionUser, OperLogType.添加);
 
                 return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
             }
             catch (Exception ex)
             {
-                FastDev.Log.LogHelper.WriteLog(ex, "EmployeeLogic.Add Entity异常");
+                FastDev.Log.LogHelper.WriteLog(ex, "ArticlePraiseLogic.Add Entity异常");
 
                 return new Result() { IsSucceed = false, Message = ex.Message };
             }
@@ -402,19 +346,19 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="entity">The entity.</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public static Result Adds(List<Employee> entity, OpertionUser opertionUser)
+        public static Result Adds(List<ArticlePraise> entity, OpertionUser opertionUser)
         {
             try
             {
-                var ret = EmployeeRepository.Instance.Adds<Employee>(entity);
+                var ret = ArticlePraiseRepository.Instance.Adds<ArticlePraise>(entity);
 
-                DbLog.WriteDbLog<List<Employee>>(nameof(Employee), "添加记录", ret, entity, opertionUser, OperLogType.添加);
+                DbLog.WriteDbLog<List<ArticlePraise>>(nameof(ArticlePraise), "添加记录", ret, entity, opertionUser, OperLogType.添加);
 
                 return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
             }
             catch (Exception ex)
             {
-                FastDev.Log.LogHelper.WriteLog(ex, "EmployeeLogic.Add Entity异常");
+                FastDev.Log.LogHelper.WriteLog(ex, "ArticlePraiseLogic.Add Entity异常");
 
                 return new Result() { IsSucceed = false, Message = ex.Message };
             }
@@ -431,15 +375,15 @@ namespace CJJ.Blog.Service.Logic
         {
             try
             {
-                var ret = EmployeeRepository.Instance.Adds<Employee>(diclst);
+                var ret = ArticlePraiseRepository.Instance.Adds<ArticlePraise>(diclst);
 
-                DbLog.WriteDbLog<List<Dictionary<string, object>>>(nameof(Employee), "添加记录", ret, diclst, opertionUser, OperLogType.添加);
+                DbLog.WriteDbLog<List<Dictionary<string, object>>>(nameof(ArticlePraise), "添加记录", ret, diclst, opertionUser, OperLogType.添加);
 
                 return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
             }
             catch (Exception ex)
             {
-                FastDev.Log.LogHelper.WriteLog(ex, "EmployeeLogic.Adds diclst异常");
+                FastDev.Log.LogHelper.WriteLog(ex, "ArticlePraiseLogic.Adds diclst异常");
 
                 return new Result() { IsSucceed = false, Message = ex.Message };
             }
@@ -447,42 +391,7 @@ namespace CJJ.Blog.Service.Logic
         #endregion
 
         #region 修改
-        /// <summary>
-        /// 会员添加角色
-        /// </summary>
-        /// <param name="dicwhere">修改条件</param>
-        /// <param name="kID">当前数据主键KID</param>
-        /// <param name="opertionUser">操作者信息</param>
-        /// <returns>Result.</returns>
-        public static Result SetEmployeeRole(string empid, string roleids)
-        {
-            var res = new Result();
-            var dickey = new Dictionary<string, object>();
-            dickey.Add(nameof(Sysuserrole.Userid), empid);
-            dickey.Add(nameof(Sysuserrole.IsDeleted), 0);
-            SysuserroleLogic.DeleteByWhere(dickey, new OpertionUser());
-            var list = new List<Sysuserrole>();
-            if (!string.IsNullOrEmpty(roleids))
-            {
-                var time = DateTime.Now;
-                foreach(var item in roleids.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    list.Add(new Sysuserrole
-                    {
-                        CreateTime= time,
-                        UpdateTime = time,
-                        CreateUserId ="1",
-                        CreateUserName="system",
-                        Userid = empid,
-                        Roleid = item,
-                        UserType = 0
-                    });
-                }
-            }
-            res = SysuserroleLogic.Adds(list, new OpertionUser());
 
-            return res;
-        }
         /// <summary>
         /// Edits the specified dicwhere.
         /// </summary>
@@ -492,9 +401,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result Update(Dictionary<string, object> dicwhere, int kID, OpertionUser opertionUser)
         {
-            var ret = EmployeeRepository.Instance.UpdateByKey<Employee>(dicwhere, kID);
+            var ret = ArticlePraiseRepository.Instance.UpdateByKey<ArticlePraise>(dicwhere, kID);
 
-            DbLog.WriteDbLog(nameof(Employee), "修改记录", kID, dicwhere, OperLogType.编辑, opertionUser);
+            DbLog.WriteDbLog(nameof(ArticlePraise), "修改记录", kID, dicwhere, OperLogType.编辑, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }
@@ -508,9 +417,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result UpdateByWhere(Dictionary<string, object> valuedata, Dictionary<string, object> dicwhere, OpertionUser opertionUser)
         {
-            var ret = EmployeeRepository.Instance.Update<Employee>(valuedata, dicwhere);
+            var ret = ArticlePraiseRepository.Instance.Update<ArticlePraise>(valuedata, dicwhere);
 
-            DbLog.WriteDbLog(nameof(Employee), "批量修改记录", valuedata.ToJsonString(), valuedata, OperLogType.编辑, opertionUser);
+            DbLog.WriteDbLog(nameof(ArticlePraise), "批量修改记录", valuedata.ToJsonString(), valuedata, OperLogType.编辑, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }
@@ -525,9 +434,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns></returns>
         public static Result UpdateNums(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
         {
-            var ret = EmployeeRepository.Instance.UpdateNums<Employee>(fields, addNums, whereKey);
+            var ret = ArticlePraiseRepository.Instance.UpdateNums<ArticlePraise>(fields, addNums, whereKey);
 
-            DbLog.WriteDbLog(nameof(Employee), "修改记录", whereKey.ToJsonString(), whereKey, OperLogType.编辑, opertionUser);
+            DbLog.WriteDbLog(nameof(ArticlePraise), "修改记录", whereKey.ToJsonString(), whereKey, OperLogType.编辑, opertionUser);
 
             return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
         }
@@ -544,20 +453,20 @@ namespace CJJ.Blog.Service.Logic
         public static Result Delete(string kid, OpertionUser opertionUser)
         {
             var deldic = new Dictionary<string, object>();
-            deldic.Add(nameof(Employee.IsDeleted), 1);
+            deldic.Add(nameof(ArticlePraise.IsDeleted), 1);
 
             var keydic = new Dictionary<string, object>();
             if (kid.IndexOf(",") > -1)
             {
-                keydic.Add(nameof(Employee.KID) + "|i", kid);
+                keydic.Add(nameof(ArticlePraise.KID) + "|i", kid);
             }
             else
             {
-                keydic.Add(nameof(Employee.KID), kid);
+                keydic.Add(nameof(ArticlePraise.KID), kid);
             }
-            var ret = EmployeeRepository.Instance.Update<Employee>(deldic, keydic);
+            var ret = ArticlePraiseRepository.Instance.Update<ArticlePraise>(deldic, keydic);
 
-            DbLog.WriteDbLog(nameof(Employee), "删除记录", kid, null, OperLogType.删除, opertionUser);
+            DbLog.WriteDbLog(nameof(ArticlePraise), "删除记录", kid, null, OperLogType.删除, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }
@@ -571,11 +480,11 @@ namespace CJJ.Blog.Service.Logic
         public static Result DeleteByWhere(Dictionary<string, object> dicwhere, OpertionUser opertionUser)
         {
             var deldic = new Dictionary<string, object>();
-            deldic.Add(nameof(Employee.IsDeleted), 1);
+            deldic.Add(nameof(ArticlePraise.IsDeleted), 1);
 
-            var ret = EmployeeRepository.Instance.Update<Employee>(deldic, dicwhere);
+            var ret = ArticlePraiseRepository.Instance.Update<ArticlePraise>(deldic, dicwhere);
 
-            DbLog.WriteDbLog(nameof(Employee), "批量删除记录", dicwhere.ToJsonString(), dicwhere, OperLogType.删除, opertionUser);
+            DbLog.WriteDbLog(nameof(ArticlePraise), "批量删除记录", dicwhere.ToJsonString(), dicwhere, OperLogType.删除, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }

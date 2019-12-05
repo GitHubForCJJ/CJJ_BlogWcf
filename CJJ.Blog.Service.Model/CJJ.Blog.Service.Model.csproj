@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\ArticlePraise.cs" />
     <Compile Include="Data\Blogcontent.cs" />
     <Compile Include="Data\Bloginfo.cs" />
     <Compile Include="Data\Category.cs" />

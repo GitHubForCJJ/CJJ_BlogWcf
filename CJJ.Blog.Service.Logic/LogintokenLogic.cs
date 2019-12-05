@@ -38,7 +38,7 @@ namespace CJJ.Blog.Service.Logic
         /// <returns></returns>
         public static SysLoginUser GetSysLoginUserByToken(string token)
         {
-            SysLoginUser ret = new SysLoginUser() { IsSucceed=false};
+            SysLoginUser ret = new SysLoginUser() { IsSucceed = false };
             if (string.IsNullOrEmpty(token))
             {
                 return null;
@@ -47,7 +47,7 @@ namespace CJJ.Blog.Service.Logic
             {
                 {nameof(Logintoken.Token),token }
             });
-            if (tokenmodel != null && !string.IsNullOrEmpty(tokenmodel.LoginUserId))
+            if (tokenmodel != null && !string.IsNullOrEmpty(tokenmodel.LoginUserId) && tokenmodel.LoginUserType == 1)
             {
                 var emp = EmployeeLogic.GetModelByKID(tokenmodel.LoginUserId.Toint());
                 ret.UserAuthorMenu = Comlogic.GetMenulistByUserid(emp.KID);
@@ -55,6 +55,15 @@ namespace CJJ.Blog.Service.Logic
                 ret.IsSucceed = true;
                 ret.TokenExpiration = tokenmodel.TokenExpiration;
                 ret.Token = tokenmodel.Token;
+
+            }
+            else if (tokenmodel != null && !string.IsNullOrEmpty(tokenmodel.LoginUserId) && tokenmodel.LoginUserType == 2)
+            {
+                var mem = MemberLogic.GetModelByKID(tokenmodel.LoginUserId.Toint());
+                ret.Token = token;
+                ret.MemberModel = mem;
+                ret.TokenExpiration = tokenmodel.TokenExpiration;
+                ret.IsSucceed = true;
             }
             return ret;
         }

@@ -3749,6 +3749,265 @@ namespace CJJ.Blog.NetWork.WcfHelper
 
         #endregion
 
+        #region ArticlePraise 操作
+
+        #region 查询
+
+        /// <summary>
+        /// Gets the menu list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="limit">The limit.</param>
+        /// <returns>System.Collections.Generic.List&lt;FastDev.Service.Models.Data.Sys_menu&gt;.</returns>
+        public static List<ArticlePraise> GetListPage_ArticlePraise(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
+        {
+            return Client.GetListPage_ArticlePraise(page, limit, dicwhere);
+        }
+
+        /// <summary>
+        /// 获取Json格式的数据 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
+        /// </summary>
+        /// <param name="page">当前页码</param>
+        /// <param name="limit">当前也显示条数</param>
+        /// <param name="orderby">排序字段</param>
+        /// <param name="dicwhere">查询条件</param>
+        /// <returns></returns>
+        public static FastJsonResult<List<ArticlePraise>> GetJsonListPage_ArticlePraise(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
+        {
+            return Client.GetJsonListPage_ArticlePraise(page, limit, orderby, dicwhere);
+        }
+
+        /// <summary>
+        /// 不分页获取所有数据
+        /// </summary>
+        /// <returns>List&lt;Sys_role&gt;.</returns>
+        public static List<ArticlePraise> GetAllList_ArticlePraise()
+        {
+            return Client.GetAllList_ArticlePraise();
+        }
+
+        /// <summary>
+        /// 按条件获取数据列表 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
+        /// </summary>
+        /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
+        /// <returns>List&lt;Sys_role&gt;.</returns>
+        public static List<ArticlePraise> GetList_ArticlePraise(Dictionary<string, object> dicwhere)
+        {
+            return Client.GetList_ArticlePraise(dicwhere);
+        }
+
+        /// <summary>
+        /// 获取数据总条数
+        /// </summary>
+        /// <returns>System.Int32.</returns>
+        public static int GetCount_ArticlePraise(Dictionary<string, object> dicwhere = null)
+        {
+            return Client.GetCount_ArticlePraise(dicwhere);
+        }
+
+        /// <summary>
+        /// 获取Model
+        /// </summary>
+        /// <param name="kID">The k identifier.</param>
+        /// <returns>System.Int32.</returns>
+        public static ArticlePraise GetModelByKID_ArticlePraise(int kID)
+        {
+            return Client.GetModelByKID_ArticlePraise(kID);
+        }
+
+        /// <summary>
+        /// 获取Model
+        /// </summary>
+        /// <param name="kID">The k identifier.</param>
+        /// <returns>System.Int32.</returns>
+        public static ArticlePraise GetModelByWhere_ArticlePraise(Dictionary<string, object> dicwhere)
+        {
+            return Client.GetModelByWhere_ArticlePraise(dicwhere);
+        }
+
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="dicwhere">条件查询</param>
+        /// <returns></returns>
+        public static DataTable GetDataTable_ArticlePraise(Dictionary<string, object> dicwhere, int page = 1, int limit = 10)
+        {
+            return Client.GetDataTable_ArticlePraise(dicwhere, page, limit);
+        }
+
+        /// <summary>
+        /// 根据In子查询查询数据
+        /// </summary>
+        /// <param name="subTableName">子表表名</param>
+        /// <param name="mainTableFields">主表 in 的字段名</param>
+        /// <param name="subTableFields">子表查询字段</param>
+        /// <param name="mainDicWhere">主表的Where条件</param>
+        /// <param name="subDicWhere">子表的Where条件</param>
+        /// <param name="page">当前页数</param>
+        /// <param name="limit">当前页显示的数据条数</param>
+        /// <returns></returns>
+        public static List<ArticlePraise> GetListByInSelect_ArticlePraise(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
+        {
+            return Client.GetListByInSelect_ArticlePraise(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit);
+        }
+
+        /// <summary>
+        /// 根据In子查询查询数据
+        /// </summary>
+        /// <param name="subTableName">子表表名</param>
+        /// <param name="mainTableFields">主表 in 的字段名</param>
+        /// <param name="subTableFields">子表查询字段</param>
+        /// <param name="mainDicWhere">主表的Where条件</param>
+        /// <param name="subDicWhere">子表的Where条件</param>
+        /// <returns></returns>
+        public static int GetCountByInSelect_ArticlePraise(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere)
+        {
+            return Client.GetCountByInSelect_ArticlePraise(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
+        }
+
+        /// <summary>
+        /// 根据Where条件Group查询数据,返回的列只比对Groupby的字段多一列,coun(1) As GroupCnt 目前只支持MySql
+        /// </summary>
+        /// <param name="groupByFields">分组字段</param>
+        /// <param name="dicWhere">查询条件</param>
+        /// <param name="page">当前页码</param>
+        /// <param name="limit">当前条数</param>
+        /// <returns></returns>
+        public static DataTable GetDataByGroup_ArticlePraise(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10)
+        {
+            return Client.GetDataByGroup_ArticlePraise(groupByFields, dicWhere, page, limit);
+        }
+
+        #endregion
+
+        #region 添加
+
+        /// <summary>
+        /// 添加数据 根据字典添加
+        /// </summary>
+        /// <param name="model">添加的字典实体</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public static Result Add_ArticlePraise(Dictionary<string, object> dicdata, OpertionUser opertionUser)
+        {
+            return Client.Add_ArticlePraise(dicdata, opertionUser);
+        }
+
+        /// <summary>
+        /// 添加多条数据 根据字典添加
+        /// </summary>
+        /// <param name="model">添加的字典实体</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public static Result Adds_ArticlePraise(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser)
+        {
+            return Client.Adds_ArticlePraise(dicdata, opertionUser);
+        }
+
+        /// <summary>
+        /// 添加实体
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public static Result AddByEntity_ArticlePraise(ArticlePraise entity, OpertionUser opertionUser)
+        {
+            return Client.AddByEntity_ArticlePraise(entity, opertionUser);
+        }
+
+        /// <summary>
+        /// 批量添加实体
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public static Result AddByEntitys_ArticlePraise(List<ArticlePraise> entitys, OpertionUser opertionUser)
+        {
+            return Client.AddByEntitys_ArticlePraise(entitys, opertionUser);
+        }
+        #endregion
+
+        #region 修改
+
+        /// <summary>
+        /// Edits the specified dicdata.
+        /// </summary>
+        /// <param name="dicdata">The dicdata.</param>
+        /// <param name="kID">The k identifier.</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public static Result Update_ArticlePraise(Dictionary<string, object> dicdata, int kID, OpertionUser opertionUser)
+        {
+            return Client.Update_ArticlePraise(dicdata, kID, opertionUser);
+        }
+
+        /// <summary>
+        /// Edits the specified dicdata.
+        /// </summary>
+        /// <param name="valuedata">The valuedata.</param>
+        /// <param name="keydata">The keydata.</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public static Result UpdateByWhere_ArticlePraise(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser)
+        {
+            return Client.UpdateByWhere_ArticlePraise(valuedata, keydata, opertionUser);
+        }
+
+        /// <summary>
+        /// 修改次数
+        /// </summary>
+        /// <param name="fields">需要修改的字段</param>
+        /// <param name="addNums">次数 负数表示减少 正数表示增加</param>
+        /// <param name="whereKey">字典条件</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns></returns>
+        public static Result UpdateNums_ArticlePraise(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
+        {
+            return Client.UpdateNums_ArticlePraise(fields, addNums, whereKey, opertionUser);
+        }
+
+        #endregion
+
+        #region 删除
+        /// <summary>
+        /// 删除数据,逗号连接多条
+        /// </summary>
+        /// <param name="kid">The kid.</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public static Result Delete_ArticlePraise(string kid, OpertionUser opertionUser)
+        {
+            return Client.Delete_ArticlePraise(kid, opertionUser);
+        }
+
+        /// <summary>
+        /// Deletes the specified kid.
+        /// </summary>
+        /// <param name="keydata">The keydata.</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public static Result DeleteByWhere_ArticlePraise(Dictionary<string, object> keydata, OpertionUser opertionUser)
+        {
+            return Client.DeleteByWhere_ArticlePraise(keydata, opertionUser);
+        }
+        #endregion
+
+        #region 数据导出
+        /// <summary>
+        /// 导出数据
+        /// </summary>
+        /// <param name="keydata">The keydata.</param>
+        /// <param name="fileFullName">Full name of the file.</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public static Result ExportExcelFile_ArticlePraise(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser)
+        {
+            return Client.ExportExcelFile_ArticlePraise(keydata, fileFullName, opertionUser);
+        }
+        #endregion
+
+        #endregion
+
         /*BC47A26EB9A59406057DDDD62D0898F4*/
 
 
