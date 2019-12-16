@@ -70,5 +70,11 @@ namespace CJJ.Blog.Service.Model.View
         /// </summary>
         [DataMember]
         public string Content { get; set; }
+
+        /// <summary>
+        /// 编号
+        /// </summary>
+        [DataMember]
+        public string BlogNum { get; set; }
     }
 }
