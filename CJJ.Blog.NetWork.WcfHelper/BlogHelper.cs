@@ -1152,7 +1152,7 @@ namespace CJJ.Blog.NetWork.WcfHelper
         /// </summary>
         /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
         /// <returns>List&lt;Sys_role&gt;.</returns>
-        public static List<Comment> GetList_Comment(Dictionary<string, object> dicwhere)
+        public static List<CommentView> GetList_Comment(Dictionary<string, object> dicwhere)
         {
             return Client.GetList_Comment(dicwhere);
         }

@@ -973,7 +973,7 @@ namespace CJJ.Blog.NetWork.IService
         /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
         /// <returns>List&lt;Comment&gt;.</returns>
         [OperationContract]
-        List<Comment> GetList_Comment(Dictionary<string, object> dicwhere);
+        List<CommentView> GetList_Comment(Dictionary<string, object> dicwhere);
 
         /// <summary>
         /// 获取数据总条数

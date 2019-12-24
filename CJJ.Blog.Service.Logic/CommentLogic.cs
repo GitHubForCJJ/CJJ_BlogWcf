@@ -21,6 +21,7 @@ using System.Data;
 using FastDev.Common.Extension;
 using CJJ.Blog.Service.Models.View;
 using CJJ.Blog.Service.Model.Data;
+using CJJ.Blog.Service.Model.View;
 
 namespace CJJ.Blog.Service.Logic
 {
@@ -119,8 +120,9 @@ namespace CJJ.Blog.Service.Logic
         /// </summary>
         /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
         /// <returns>List&lt;Comment&gt;.</returns>
-        public static List<Comment> GetList(Dictionary<string, object> dicwhere)
+        public static List<CommentView> GetList(Dictionary<string, object> dicwhere)
         {
+            var res = new List<CommentView>();
             if (dicwhere.Keys.Contains(nameof(Comment.IsDeleted)))
             {
                 dicwhere[nameof(Comment.IsDeleted)] = 0;
@@ -129,7 +131,33 @@ namespace CJJ.Blog.Service.Logic
             {
                 dicwhere.Add(nameof(Comment.IsDeleted), 0);
             }
-            return CommentRepository.Instance.GetList<Comment>(dicwhere).ToList();
+            var list = CommentRepository.Instance.GetList<Comment>(dicwhere).ToList();
+            if (list != null && list.Count > 0)
+            {
+                var sessionids = list.GroupBy(x => x.Commentid).Select(x => x.Key).Distinct().ToList();
+                sessionids.ForEach((item) =>
+                {
+                    var sessionList = list.Where(x => x.Commentid == item)?.OrderByDescending(x=>x.CreateTime)?.ToList();
+                    var mainSession = sessionList.Last();
+                    var replys = sessionList.Where(x => x.KID != mainSession.KID)?.ToList()?? null;
+                    res.Add(new CommentView()
+                    {
+                        KID = mainSession.KID,
+                        CreateTime = mainSession.CreateTime,
+                        Memberid = mainSession.Memberid,
+                        MemberName = mainSession.MemberName,
+                        BlogNum = mainSession.BlogNum,
+                        Commentid = mainSession.Commentid,
+                        ToMemberid = mainSession.ToMemberid,
+                        Content = mainSession.Content,
+                        Avatar = mainSession.Avatar,
+                        Replys = replys
+                    });
+                });
+            }
+
+            return res;
+
         }
 
         /// <summary>
