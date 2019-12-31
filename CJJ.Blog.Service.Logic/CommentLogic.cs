@@ -156,7 +156,7 @@ namespace CJJ.Blog.Service.Logic
                 });
             }
 
-            return res;
+            return res?.OrderByDescending(x=>x.CreateTime)?.ToList();
 
         }
 
