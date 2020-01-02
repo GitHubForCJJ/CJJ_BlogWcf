@@ -68,11 +68,14 @@ namespace CJJ.Blog.Service.Repository
 
                     var data = db.ExecuteDataTable(sql);
                     bloginfoView = ToEntity<BloginfoView>(data);
+                    sql = $"select count(*) from articlepraise where IsDeleted=0 and BlogNum='{blogNum}'";
+                    var count = db.ExecuteScalarInt(sql);
+                    bloginfoView.Start = count;
                 }
             }
             catch (Exception ex)
             {
-
+                LogHelper.WriteLog(ex, "BloginfoRepository/GetBlog");
             }
 
             return bloginfoView;
