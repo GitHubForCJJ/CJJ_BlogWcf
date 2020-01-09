@@ -128,7 +128,8 @@ namespace CJJ.Blog.Service.Logic
             {
                 dicwhere.Add(nameof(Category.IsDeleted), 0);
             }
-            return CategoryRepository.Instance.GetList<Category>(dicwhere).ToList();
+            var a= CategoryRepository.Instance.GetList<Category>(dicwhere)?.ToList();
+            return a;
         }
 
         /// <summary>
