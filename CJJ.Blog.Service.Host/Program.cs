@@ -56,6 +56,7 @@ namespace CJJ.Blog.Service.Host
             Console.WriteLine("                    当前版本号：" + AppDomain.CurrentDomain.BaseDirectory.Split(new char[] { Path.DirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries).Last());
             Console.Out.WriteLine("");
             StartService();
+
             Console.WriteLine("        " + ConsoleHelper.OutProcessRunPort());
             Console.Out.WriteLine("        ***************************************");
             Console.Out.WriteLine("        **                                   **");
