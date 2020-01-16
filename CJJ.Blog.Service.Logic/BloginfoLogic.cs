@@ -322,15 +322,18 @@ namespace CJJ.Blog.Service.Logic
             if (ret > 0)
             {
                 var content = BlogcontentRepository.Instance.Add<Blogcontent>(new Dictionary<string, object>() {
-                {nameof(Blogcontent.BloginfoNum),ret },
+                {nameof(Blogcontent.BloginfoNum),dicwhere[nameof(Blogcontent.BloginfoNum)] },
                 {nameof(Blogcontent.Content),dicwhere[nameof(Blogcontent.Content)] },
-                    {nameof(Blogcontent.CreateUserId),dicwhere[nameof(Blogcontent.CreateUserId)] },
-                        {nameof(Blogcontent.CreateUserName),dicwhere[nameof(Blogcontent.CreateUserName)] }
+                {nameof(Blogcontent.CreateUserId),dicwhere[nameof(Blogcontent.CreateUserId)] },
+                {nameof(Blogcontent.CreateUserName),dicwhere[nameof(Blogcontent.CreateUserName)] }
 
             });
+                if (content <= 0)
+                {
+                    return new Result { IsSucceed = false, Message = "部分添加失败" };
+                }
                 res.IsSucceed = true;
             }
-
 
             DbLog.WriteDbLog(nameof(Bloginfo), "添加记录", ret, dicwhere.ToJsonString(), opertionUser, OperLogType.添加);
 
