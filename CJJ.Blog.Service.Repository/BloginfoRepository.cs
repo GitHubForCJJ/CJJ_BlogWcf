@@ -95,19 +95,19 @@ namespace CJJ.Blog.Service.Repository
                 using (var db = new DBHelper())
                 {
                     var str = new StringBuilder();
-                    str.Append(@"select createtime from bloginfo where states=0 and IsDeleted=0 and BlogNum=? ");
-                    obj.Add(blogNum);
+                    str.Append($"select createtime from bloginfo where states=0 and IsDeleted=0 and BlogNum='{blogNum}' ");
+           
                     if (type > 0)
                     {
-                        str.Append(@" type=? ");
+                        str.Append(@" and type=? ");
                         obj.Add(type);
                     }
                     string strpre = $"select KID,BlogNum,Title from bloginfo where states=0 and  createtime < ({str.ToString() } ) ";
                     string strnext = $"select KID,BlogNum,Title from bloginfo where states=0 and createtime > ({str.ToString() } ) ";
                     if (type > 0)
                     {
-                        strpre += $" and blogtype=? ";
-                        strnext += $" and blogtype=? ";
+                        strpre += $" and type=? ";
+                        strnext += $" and type=? ";
                         obj.Add(type);
                     }
                     strpre += $" order by createtime desc limit 1 ;";
