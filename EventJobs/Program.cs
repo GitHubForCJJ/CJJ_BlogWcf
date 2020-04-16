@@ -28,10 +28,11 @@ namespace EventJobs
             Console.Out.WriteLine("");
 
             Console.Out.WriteLine("");
-            //Test();
+            Test();
 
-            Thread startquartzservice = new Thread(StartQuartzService);
-            startquartzservice.Start();
+            //Thread startquartzservice = new Thread(StartQuartzService);
+            //startquartzservice.Start();
+
             Console.Out.WriteLine("        ***************************************");
             Console.Out.WriteLine("        **                                    **");
             Console.Out.WriteLine("        **     mysql自动备份上传七牛已启动    **");
@@ -87,16 +88,18 @@ namespace EventJobs
 
         private static void Test()
         {
-            string qiniuak = ConfigHelper.GetConfigToString("qiniuak");
-            string qiniusk = ConfigHelper.GetConfigToString("qiniusk");
-            string qiniubk = ConfigHelper.GetConfigToString("qiniubk");
-            string a = ConfigHelper.GetConfigToString("backuppath");
-            string path = Path.Combine(a, $"blog.sql");
-            HttpResult res = QiniuHelper.UpFile(path, qiniuak, qiniusk, qiniubk, "blogdb", 0);
-            if (res.Code != 200)
-            {
-                LogHelper.WriteLog("上传失败" + res.SerializeObject());
-            }
+            //string qiniuak = ConfigHelper.GetConfigToString("qiniuak");
+            //string qiniusk = ConfigHelper.GetConfigToString("qiniusk");
+            //string qiniubk = ConfigHelper.GetConfigToString("qiniubk");
+            //string a = ConfigHelper.GetConfigToString("backuppath");
+            //string path = Path.Combine(a, $"blog.sql");
+            //HttpResult res = QiniuHelper.UpFile(path, qiniuak, qiniusk, qiniubk, "blogdb", 0);
+            //if (res.Code != 200)
+            //{
+            //    LogHelper.WriteLog("上传失败" + res.SerializeObject());
+            //}
+
+            //var a = PingYinHelper.GetTotalPingYin("家家")?.FirstPingYin;
 
         }
     }
