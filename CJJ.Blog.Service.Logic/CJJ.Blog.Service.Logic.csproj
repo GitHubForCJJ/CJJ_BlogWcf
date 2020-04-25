@@ -88,6 +88,10 @@
       <Project>{d78d2db0-6855-4b0f-9229-c00164b35b0c}</Project>
       <Name>FastDev.DbBase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Utils\FastDev.DBFactory\FastDev.DBFactory.csproj">
+      <Project>{49899957-a3cc-4c54-bcec-7b77ad4e8641}</Project>
+      <Name>FastDev.DBFactory</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

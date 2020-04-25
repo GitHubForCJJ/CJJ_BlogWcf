@@ -32,6 +32,60 @@ namespace CJJ.Blog.Service.Logic
     public class EmployeeLogic
     {
         #region 查询
+
+
+        /// <summary>
+        /// 获取Token
+        /// </summary>
+        /// <param name="token">Token值</param>
+        /// <param name="ipAddress">IP地址</param>
+        /// <param name="agent">浏览器标识</param>
+        /// <param name="dns">dns标识</param>
+        /// <returns>Fd_Sys_LoginUser.</returns>
+        public static SysLoginUser GetUserInfoByToken(string token, string ipAddress, string agent, string dns)
+        {
+            var ret = new SysLoginUser();
+
+            //if (TokenHelper.CheckToken(token, ipAddress, agent, dns) == false)
+            //{
+            //    return new SysLoginUser() { IsSucceed = false, Message = "Token不合法" };
+            //}
+            //else
+            //{
+            var tokenmodel = LogintokenLogic.GetModelByToken(token);
+
+            if (tokenmodel != null && tokenmodel.LoginUserId.Length > 0)
+            {
+                if (DateTime.TryParse(tokenmodel.TokenExpiration, out DateTime extime))
+                {
+                    if (extime < DateTime.Now)
+                    {
+                        ret.Message = "Token已过期";
+                        return ret;
+                    }
+                }
+                var user = EmployeeLogic.GetModelByKID(Convert.ToInt32(tokenmodel.LoginUserId));
+                if (user == null)
+                {
+                    ret.Message = "用户已被删除";
+                }
+                else
+                {
+                    ret.IsSucceed = true;
+                    ret.Model = user;
+                    ret.Token = token;
+                    ret.TokenExpiration = extime.ToString("yyyy-MM-dd hh:MM:ss");
+                    ret.UserAuthorMenu = SysmenuLogic.GetMenuByUserID(user.KID);
+                    ret.Message = "认证成功";
+                }
+            }
+            else
+            {
+                ret.Message = "Token不存在";
+            }
+            return ret;
+            //}
+        }
         /// <summary>
         /// 密码登录
         /// </summary>

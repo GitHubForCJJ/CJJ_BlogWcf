@@ -1383,6 +1383,18 @@ namespace CJJ.Blog.Service.Service
         #region Employee操作
 
         #region 查询
+        /// <summary>
+        /// 获取Token
+        /// </summary>
+        /// <param name="token">Token值</param>
+        /// <param name="ipAddress">IP地址</param>
+        /// <param name="agent">浏览器标识</param>
+        /// <param name="dns">dns标识</param>
+        /// <returns>Fd_Sys_LoginUser.</returns>
+        public SysLoginUser GetUserInfoByToken(string token, string ipAddress, string agent, string dns)
+        {
+            return EmployeeLogic.GetUserInfoByToken(token, ipAddress, agent, dns);
+        }
 
         public SysLoginUser EmployeePasswordLogin(string useraccount, string userpsw, string ipaddress, string agent, string dns)
         {
@@ -2714,6 +2726,20 @@ namespace CJJ.Blog.Service.Service
         #region Sysmenu操作
 
         #region 查询
+
+
+        /// <summary>
+        /// 不分页获取权限内的所有数据, 根据账户得到对应渠道管理员的所有权限,才能给下级分配权限
+        /// </summary>
+        /// <param name="userId">当前登陆用户的Id</param>
+        /// <param name="userType">用户类型 0员工 1会员</param>
+        /// <returns>
+        /// List&lt;Sys_role&gt;.
+        /// </returns>
+        public List<Sysmenu> GetListByUserId_Sysmenu(int userId, int userType)
+        {
+            return SysmenuLogic.GetListByUserId_Sysmenu(userId, userType);
+        }
         /// <summary>
         /// 
         /// </summary>

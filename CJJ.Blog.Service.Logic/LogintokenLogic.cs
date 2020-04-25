@@ -31,6 +31,18 @@ namespace CJJ.Blog.Service.Logic
     public class LogintokenLogic
     {
         #region 查询
+
+        /// <summary>
+        /// 获取Model
+        /// </summary>
+        /// <param name="Token">The k identifier.</param>
+        /// <returns>System.Int32.</returns>
+        public static Logintoken GetModelByToken(string Token)
+        {
+            var dic = new Dictionary<string, object>();
+            dic.Add(nameof(Logintoken.Token), Token);
+            return new LogintokenRepository(Token).GetEntity<Logintoken>(dic);
+        }
         /// <summary>
         /// 根据token获取登录者
         /// </summary>

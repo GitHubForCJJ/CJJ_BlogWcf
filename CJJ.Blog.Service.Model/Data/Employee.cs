@@ -146,7 +146,19 @@ namespace CJJ.Blog.Service.Models.Data
 		[DataMember]
 		public DateTime LastUpTime { get; set;}
 
+		/// <summary>
+		/// 所属渠道ID,根据不同的企业类型对应不同的渠道ID
+		/// </summary>
+		[DataMember]
+		public int CompanyId { get; set; }
 
-        /*BC47A26EB9A59406057DDDD62D0898F4*/
-    }
+		/// <summary>
+		/// 企业类型,1平台 2高校 3预留
+		/// </summary>
+		[DataMember]
+		public int CompanyType { get; set; }
+
+
+		/*BC47A26EB9A59406057DDDD62D0898F4*/
+	}
 }

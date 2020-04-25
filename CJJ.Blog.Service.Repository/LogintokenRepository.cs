@@ -40,7 +40,18 @@ namespace CJJ.Blog.Service.Repository
             this.KeyField = "KID";
         }
 
-		/// <summary>
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public LogintokenRepository(string token)
+        {
+            this.IsAddIntoCache = true;
+            this.TableName = "Logintoken"+token.Substring(0,6);
+            this.OrderbyFields = "KID DESC";
+            this.KeyField = "KID";
+        }
+
+        /// <summary>
         /// 带事务执行的构造函数
         /// </summary>
         /// <param name="dbconn">The dbconn.</param>
