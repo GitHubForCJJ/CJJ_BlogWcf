@@ -72,22 +72,11 @@ namespace EventJobs.Jobs
             string pwd = ConfigHelper.GetConfigToString("mysqlpwd");
             string db = ConfigHelper.GetConfigToString("backdb");
             string backuppath = ConfigHelper.GetConfigToString("backuppath");
-            string path = Path.Combine(backuppath, $"blogdb{DateTime.Now.ToString("yyyymmdd")}.sql");
+            string path = Path.Combine(backuppath, $"blogdb{DateTime.Now.ToString("yyyyMMdd")}.sql");
             string lague = $"mysqldump  --skip-add-locks  -hlocalhost -P3306 -uroot -p{pwd} --databases  {db}> {path}";
             proc.StandardInput.WriteLine(lague);
             proc.Close();
 
-            #region 上传七牛
-            string qiniuak = ConfigHelper.GetConfigToString("qiniuak");
-            string qiniusk = ConfigHelper.GetConfigToString("qiniusk");
-            string qiniubk = ConfigHelper.GetConfigToString("qiniubk");
-            HttpResult res = QiniuHelper.UpFile(path, qiniuak, qiniusk, qiniubk, "blogdb", 0);
-            if (res.Code != 200)
-            {
-                LogHelper.WriteLog("上传失败" + res.SerializeObject());
-            }
-
-            #endregion
         }
     }
 }

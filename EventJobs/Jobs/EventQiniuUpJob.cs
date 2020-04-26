@@ -59,7 +59,7 @@ namespace EventJobs.Jobs
             string qiniusk = ConfigHelper.GetConfigToString("qiniusk");
             string qiniubk = ConfigHelper.GetConfigToString("qiniubk");
             string a = ConfigHelper.GetConfigToString("backuppath");
-            string path = Path.Combine(a, $"blogdb{DateTime.Now.ToString("yyyymmdd")}.sql");
+            string path = Path.Combine(a, $"blogdb{DateTime.Now.ToString("yyyyMMdd")}.sql");
             HttpResult res = QiniuHelper.UpFile(path, qiniuak, qiniusk, qiniubk, "blogdb", 0);
             if (res.Code != 200)
             {

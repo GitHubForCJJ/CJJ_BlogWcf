@@ -28,10 +28,10 @@ namespace EventJobs
             Console.Out.WriteLine("");
 
             Console.Out.WriteLine("");
-            Test();
+            //Test();
 
-            //Thread startquartzservice = new Thread(StartQuartzService);
-            //startquartzservice.Start();
+            Thread startquartzservice = new Thread(StartQuartzService);
+            startquartzservice.Start();
 
             Console.Out.WriteLine("        ***************************************");
             Console.Out.WriteLine("        **                                    **");
