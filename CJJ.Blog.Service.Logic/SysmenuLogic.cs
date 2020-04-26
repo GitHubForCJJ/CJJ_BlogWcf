@@ -20,6 +20,7 @@ using DbLog = CJJ.Blog.Service.Logic.Fd_sys_operationlogLogic;
 using System.Data;
 using FastDev.Common.Extension;
 using CJJ.Blog.Service.Models.View;
+using CJJ.Blog.Service.Model.View;
 
 namespace CJJ.Blog.Service.Logic
 {
@@ -29,6 +30,168 @@ namespace CJJ.Blog.Service.Logic
     public class SysmenuLogic
     {
         #region 查询
+
+
+        /// <summary>
+        /// 不分页获取权限内的所有数据, 根据账户得到对应渠道管理员的所有权限,才能给下级分配权限
+        /// </summary>
+        /// <param name="userId">当前登陆用户的Id</param>
+        /// <param name="userType">用户类型 0员工 1会员</param>
+        /// <returns>
+        /// List&lt;Sys_role&gt;.
+        /// </returns>
+        public static List<Sysmenu> GetListByUserId_Sysmenu(int userId, int userType)
+        {
+            if (userId == 1)
+            {
+                return GetAllList();
+            }
+
+            if (userType == 0)
+            {
+                #region 处理员工 
+
+                var adminuser = EmployeeLogic.GetListByInSelect(nameof(Employee), nameof(Employee.CompanyId), nameof(Employee.CompanyId),
+                    new Dictionary<string, object>()
+                    {
+                        {nameof(Employee.IsDeleted), 0}
+                    }, new Dictionary<string, object>
+                    {
+                        {nameof(Employee.KID), userId},
+                        {nameof(Employee.IsDeleted), 0}
+                    }, 1, 1000).FirstOrDefault();
+
+                if (adminuser == null)
+                {
+                    return new List<Sysmenu>();
+                }
+
+                var allrole = SysroleLogic.GetListByInSelect(nameof(Sysuserrole), nameof(Sysrole.KID),
+                    nameof(Sysuserrole.Roleid), new Dictionary<string, object>
+                    {
+                        {nameof(Sysrole.IsDeleted), 0}
+                    }, new Dictionary<string, object>
+                    {
+                        {nameof(Sysuserrole.Userid), adminuser.KID},
+                        {nameof(Sysuserrole.UserType), 0},
+                    }, 1, 10000);
+
+                var menuids = string.Join(",", allrole.Select(p => p.MenuList).ToList());
+
+                if (menuids.Length > 1)
+                {
+                    return GetList(new Dictionary<string, object>()
+                    {
+                        {nameof(Sysmenu.KID) + "|i", menuids}
+                    });
+                }
+                #endregion
+            }
+
+            return new List<Sysmenu>();
+        }
+        /// <summary>
+        /// 根据员工账号查询菜单
+        /// </summary>
+        /// <param name="userKID">员工账号ID</param>
+        /// <returns>
+        /// UserAuthorMenu.
+        /// </returns>
+        public static UserAuthorMenu GetMenuByUserID(int userKID)
+        {
+            //递归查询得到菜单信息
+            UserAuthorMenu ret = new UserAuthorMenu() { UserMenuList = new List<zTreeModel>() };
+
+            var allmenu = GetAllList().OrderByDescending(t => t.Menusort);
+
+            var roleList = new List<Sysrole>();
+
+            var dic = new Dictionary<string, object>();
+
+            if (userKID > 1)
+            {
+                dic.Add(nameof(Sysuserrole.Userid), userKID);
+                var roleLst = SysuserroleLogic.GetList(dic);
+
+                if (roleLst.Count() == 0)
+                {
+                    return new UserAuthorMenu() { Message = "未分配权限角色,请联系管理员开通权限" };
+                }
+
+                var allRoleIds = string.Join(",", roleLst.Select(p => p.Roleid).ToArray());
+
+                if (allRoleIds.Count() == 0)
+                {
+                    return new UserAuthorMenu() { Message = "未分配权限角色,请联系管理员开通权限" };
+                }
+
+                dic = new Dictionary<string, object>();
+                dic.Add(nameof(Sysrole.KID) + "|i", allRoleIds);
+
+                dic.Add(nameof(Sysrole.IsDeleted), 0);
+
+                roleList = SysroleLogic.GetList(dic);
+
+                if (roleList.Count() == 0)
+                {
+                    return new UserAuthorMenu() { Message = "不存在对应角色,请联系管理员开通权限" };
+                }
+                List<string> removelst = new List<string>();
+
+                var allAuthMenu = string.Join(",", roleList.Select(p => p.MenuList).ToArray()).Split(',').ToList();
+
+                foreach (var item in allmenu.Where(p => allAuthMenu.Contains(p.KID.ToString())).OrderByDescending(k => k.Menusort))
+                {
+                    if (item.IsNull())
+                    {
+                        continue;
+                    }
+                    if (item.IsNull() || removelst.Contains(item.KID.ToString()))
+                    {
+                        continue;
+                    }
+                    removelst.Add(item.KID.ToString());
+
+                    ret.UserMenuList.Add(new zTreeModel()
+                    {
+                        id = item.KID.ToString(),
+                        pId = item.Fatherid.ToString(),
+                        name = item.Menuname,
+                        url = item.MenuUrl,
+                        sort = item.Menusort,
+                        ico = item.Menuicon,
+                        open = true
+                    });
+                }
+            }
+            else
+            {
+                foreach (var item in allmenu.OrderByDescending(p => p.Menusort))
+                {
+                    ret.UserMenuList.Add(new zTreeModel()
+                    {
+                        id = item.KID.ToString(),
+                        pId = item.Fatherid.ToString(),
+                        name = item.Menuname,
+                        url = item.MenuUrl,
+                        sort = item.Menusort,
+                        ico = item.Menuicon,
+                        open = true
+                    });
+                }
+            }
+            if (ret.UserMenuList.Count() > 0)
+            {
+                ret.IsSucceed = true;
+                ret.Message = "菜单获取成功";
+            }
+            else
+            {
+                ret.Message = "未找到对应菜单,请联系管理员";
+            }
+
+            return ret;
+        }
         /// <summary>
         /// 
         /// </summary>

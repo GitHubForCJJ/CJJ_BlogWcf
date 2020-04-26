@@ -1372,6 +1372,20 @@ namespace CJJ.Blog.NetWork.WcfHelper
         #region Employee 操作
 
         #region 查询
+
+
+        /// <summary>
+        /// 获取Token
+        /// </summary>
+        /// <param name="token">Token值</param>
+        /// <param name="ipAddress">IP地址</param>
+        /// <param name="agent">浏览器标识</param>
+        /// <param name="dns">dns标识</param>
+        /// <returns>Fd_Sys_LoginUser.</returns>
+        public static SysLoginUser GetUserInfoByToken(string token, string ipAddress, string agent, string dns)
+        {
+            return Client.GetUserInfoByToken(token, ipAddress, agent, dns);
+        }
         /// <summary>
         /// 密码登录
         /// </summary>
@@ -2699,6 +2713,20 @@ namespace CJJ.Blog.NetWork.WcfHelper
         #region Sysmenu 操作
 
         #region 查询
+
+
+        /// <summary>
+        /// 不分页获取权限内的所有数据, 根据账户得到对应渠道管理员的所有权限,才能给下级分配权限
+        /// </summary>
+        /// <param name="userId">当前登陆用户的Id</param>
+        /// <param name="userType">用户类型 0员工 1会员</param>
+        /// <returns>
+        /// List&lt;Sys_role&gt;.
+        /// </returns>
+        public static List<Sysmenu> GetListByUserId_Sysmenu(int userId, int userType)
+        {
+            return Client.GetListByUserId_Sysmenu(userId, userType);
+        }
         /// <summary>
         /// 根据userid获取可操作的menu
         /// </summary>
