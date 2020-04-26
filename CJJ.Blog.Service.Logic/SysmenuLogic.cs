@@ -21,6 +21,7 @@ using System.Data;
 using FastDev.Common.Extension;
 using CJJ.Blog.Service.Models.View;
 using CJJ.Blog.Service.Model.View;
+using CJJ.Blog.Service.Model.Data;
 
 namespace CJJ.Blog.Service.Logic
 {

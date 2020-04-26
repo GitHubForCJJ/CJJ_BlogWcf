@@ -1455,7 +1455,7 @@
             <param name="tableName">Name of the table.</param>
             <returns>DataTable.</returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "T:FastDev.DBFactory.Providers.Postgresql" -->
+        <!-- 对于成员“T:FastDev.DBFactory.Providers.Postgresql”忽略有格式错误的 XML 注释 -->
         <member name="F:FastDev.DBFactory.Providers.Postgresql._isInTransaction">
             <summary>
             当前是否在存储过程中

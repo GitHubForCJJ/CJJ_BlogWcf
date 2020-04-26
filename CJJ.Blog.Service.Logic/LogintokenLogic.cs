@@ -351,11 +351,16 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result Add(Logintoken entity, OpertionUser opertionUser)
         {
+            if (entity.Token.IsNull())
+            {
+                return new Result() { IsSucceed = false, Message = "Token不允许为空,请重试" };
+            }
+
             try
             {
-                var ret = LogintokenRepository.Instance.Add<Logintoken>(entity);
+                var ret = new LogintokenRepository(entity.Token).Add<Logintoken>(entity);
 
-                DbLog.WriteDbLog(nameof(Logintoken), "添加记录", ret, entity.ToJsonString(), opertionUser, OperLogType.添加);
+                DbLog.WriteDbLog(nameof(Logintoken), "添加记录", ret, entity.ToJsonString(), null, OperLogType.添加);
 
                 return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
             }

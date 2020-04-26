@@ -23,6 +23,7 @@ using CJJ.Blog.Service.Models.View;
 using CJJ.Blog.Service.Model.View;
 using FastDev.Log;
 using CJJ.Blog.Service.Logic.Common;
+using CJJ.Blog.Service.Model.Data;
 
 namespace CJJ.Blog.Service.Logic
 {

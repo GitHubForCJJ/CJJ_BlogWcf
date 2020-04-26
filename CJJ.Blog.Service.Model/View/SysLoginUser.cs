@@ -1,12 +1,8 @@
-﻿using CJJ.Blog.Service.Model.Data;
+﻿
+using CJJ.Blog.Service.Model.Data;
 using CJJ.Blog.Service.Models.Data;
 using FastDev.Common.Code;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CJJ.Blog.Service.Model.View
 {
@@ -38,5 +34,10 @@ namespace CJJ.Blog.Service.Model.View
         /// </summary>
         [DataMember]
         public UserAuthorMenu UserAuthorMenu { get; set; }
+        /// <summary>
+        /// 是否加盟
+        /// </summary>
+        [DataMember]
+        public bool DataIsEncrypt { get; set; }
     }
 }

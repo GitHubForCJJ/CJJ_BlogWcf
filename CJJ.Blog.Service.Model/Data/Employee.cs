@@ -11,7 +11,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace CJJ.Blog.Service.Models.Data
+namespace CJJ.Blog.Service.Model.Data
 {
     /// <summary>
     /// Employee

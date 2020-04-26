@@ -46,7 +46,7 @@ namespace CJJ.Blog.Service.Repository
         public LogintokenRepository(string token)
         {
             this.IsAddIntoCache = true;
-            this.TableName = "Logintoken"+token.Substring(0,6);
+            this.TableName = "Logintoken_20"+token.Substring(0,4);
             this.OrderbyFields = "KID DESC";
             this.KeyField = "KID";
         }
