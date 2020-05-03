@@ -302,16 +302,24 @@ namespace CJJ.Blog.Service.Logic
                 {
                     return new Result() { IsSucceed = false, Message = "该文章你已点赞" };
                 }
+
                 var ret = ArticlePraiseRepository.Instance.Add<ArticlePraise>(dicwhere);
+                Task.Run(() =>
+                {
+                    if (ret > 0)
+                    {
+                        ArticlePraiseRepository.UpdateBloginfo(blognum);
+                    }
+                });
 
                 DbLog.WriteDbLog(nameof(ArticlePraise), "添加记录", ret, dicwhere.ToJsonString(), opertionUser, OperLogType.添加);
 
                 return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogHelper.WriteLog(ex, "ArticlePraiseLogic/add");
-                return new Result() { IsSucceed = false, Message = "系统错误"+ex.Message };
+                return new Result() { IsSucceed = false, Message = "系统错误" + ex.Message };
             }
 
         }
@@ -402,6 +410,17 @@ namespace CJJ.Blog.Service.Logic
         public static Result Update(Dictionary<string, object> dicwhere, int kID, OpertionUser opertionUser)
         {
             var ret = ArticlePraiseRepository.Instance.UpdateByKey<ArticlePraise>(dicwhere, kID);
+            Task.Run(() =>
+            {
+                if (ret > 0)
+                {
+                    var model = ArticlePraiseRepository.Instance.GetEntityByKey<ArticlePraise>(kID);
+
+                    ArticlePraiseRepository.UpdateBloginfo(model.BlogNum);
+                }
+
+            });
+
 
             DbLog.WriteDbLog(nameof(ArticlePraise), "修改记录", kID, dicwhere, OperLogType.编辑, opertionUser);
 

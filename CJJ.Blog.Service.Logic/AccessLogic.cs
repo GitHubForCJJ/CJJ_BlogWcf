@@ -1,10 +1,10 @@
 ﻿//-----------------------------------------------------------------------------------
-// <copyright file="Logintoken.cs" company="Go Enterprises">
+// <copyright file="ArticlePraise.cs" company="Go Enterprises">
 // * copyright: (C) 2018 东走西走科技有限公司 版权所有。
 // * version  : 1.0.0.0
 // * author   : chenjianjun
-// * fileName : Logintoken.cs
-// * history  : created by chenjianjun 2019-06-27 15:21:33
+// * fileName : ArticlePraise.cs
+// * history  : created by chenjianjun 2019-06-14 15:52:46
 // </copyright>
 //-----------------------------------------------------------------------------------
 
@@ -16,76 +16,29 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using CJJ.Blog.Service.Repository;
 using CJJ.Blog.Service.Models.Data;
-using DbLog = CJJ.Blog.Service.Logic.Fd_sys_operationlogLogic;
 using System.Data;
 using FastDev.Common.Extension;
 using CJJ.Blog.Service.Models.View;
-using CJJ.Blog.Service.Model.View;
-using CJJ.Blog.Service.Logic.Common;
+using DbLog = CJJ.Blog.Service.Logic.Fd_sys_operationlogLogic;
+using CJJ.Blog.Service.Model.Data;
+using FastDev.Log;
 
 namespace CJJ.Blog.Service.Logic
 {
     /// <summary>
-    /// Class Logintoken Logic.
+    /// Class ArticlePraise Logic.
     /// </summary>
-    public class LogintokenLogic
+    public class AccessLogic
     {
         #region 查询
 
         /// <summary>
-        /// 获取Model
-        /// </summary>
-        /// <param name="Token">The k identifier.</param>
-        /// <returns>System.Int32.</returns>
-        public static Logintoken GetModelByToken(string Token)
-        {
-            var dic = new Dictionary<string, object>();
-            dic.Add(nameof(Logintoken.Token), Token);
-            return new LogintokenRepository(Token).GetEntity<Logintoken>(dic);
-        }
-        /// <summary>
-        /// 根据token获取登录者
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public static SysLoginUser GetSysLoginUserByToken(string token)
-        {
-            SysLoginUser ret = new SysLoginUser() { IsSucceed = false };
-            if (string.IsNullOrEmpty(token))
-            {
-                return null;
-            }
-            var tokenmodel = new LogintokenRepository(token).GetEntity<Logintoken>(new Dictionary<string, object>()
-            {
-                {nameof(Logintoken.Token),token }
-            });
-            if (tokenmodel != null && !string.IsNullOrEmpty(tokenmodel.LoginUserId) && tokenmodel.LoginUserType == 1)
-            {
-                var emp = EmployeeLogic.GetModelByKID(tokenmodel.LoginUserId.Toint());
-                ret.UserAuthorMenu = Comlogic.GetMenulistByUserid(emp.KID);
-                ret.Model = emp;
-                ret.IsSucceed = true;
-                ret.TokenExpiration = tokenmodel.TokenExpiration;
-                ret.Token = tokenmodel.Token;
-
-            }
-            else if (tokenmodel != null && !string.IsNullOrEmpty(tokenmodel.LoginUserId) && tokenmodel.LoginUserType == 2)
-            {
-                var mem = MemberLogic.GetModelByKID(tokenmodel.LoginUserId.Toint());
-                ret.Token = token;
-                ret.MemberModel = mem;
-                ret.TokenExpiration = tokenmodel.TokenExpiration;
-                ret.IsSucceed = true;
-            }
-            return ret;
-        }
-        /// <summary>
-        /// Gets the Logintoken {TableNameComment} list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
+        /// Gets the Access {TableNameComment} list. 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="page">The page.</param>
         /// <param name="limit">The limit.</param>
         /// <returns>System.Collections.Generic.List&lt;Jbst.Service.Models.Data.Sys_menu&gt;.</returns>
-        public static List<Logintoken> GetListPage(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
+        public static List<Access> GetListPage(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
         {
             string orderby = "";
             if (dicwhere != null && dicwhere.ContainsKey(nameof(orderby)))
@@ -97,15 +50,15 @@ namespace CJJ.Blog.Service.Logic
             {
                 dicwhere = new Dictionary<string, object>();
             }
-            if (dicwhere.Keys.Contains(nameof(Logintoken.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Access.IsDeleted)))
             {
-                dicwhere[nameof(Logintoken.IsDeleted)] = 0;
+                dicwhere[nameof(Access.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Logintoken.IsDeleted), 0);
+                dicwhere.Add(nameof(Access.IsDeleted), 0);
             }
-            return LogintokenRepository.Instance.GetListPage<Logintoken>(limit, page, dicwhere, orderby).ToList();
+            return AccessRepository.Instance.GetListPage<Access>(limit, page, dicwhere, orderby).ToList();
         }
 
         /// <summary>
@@ -116,68 +69,68 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="orderby">排序字段</param>
         /// <param name="dicwhere">查询条件</param>
         /// <returns>FastJsonResult&lt;List&lt;Product&gt;&gt;.</returns>
-        public static FastJsonResult<List<Logintoken>> GetJsonListPage(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
+        public static FastJsonResult<List<Access>> GetJsonListPage(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
         {
             if (dicwhere == null)
             {
                 dicwhere = new Dictionary<string, object>();
             }
-            if (dicwhere.Keys.Contains(nameof(Logintoken.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Access.IsDeleted)))
             {
-                dicwhere[nameof(Logintoken.IsDeleted)] = 0;
+                dicwhere[nameof(Access.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Logintoken.IsDeleted), 0);
+                dicwhere.Add(nameof(Access.IsDeleted), 0);
             }
-            return LogintokenRepository.Instance.GetJsonListPage<Logintoken>(limit, page, dicwhere, orderby);
+            return AccessRepository.Instance.GetJsonListPage<Access>(limit, page, dicwhere, orderby);
         }
 
         /// <summary>
         /// 不分页获取所有数据
         /// </summary>
-        /// <returns>List&lt;Logintoken&gt;.</returns>
-        public static List<Logintoken> GetAllList()
+        /// <returns>List&lt;Access&gt;.</returns>
+        public static List<Access> GetAllList()
         {
             var dic = new Dictionary<string, object>();
-            dic.Add(nameof(Logintoken.IsDeleted), 0);
-            return LogintokenRepository.Instance.GetList<Logintoken>(dic).ToList();
+            dic.Add(nameof(Access.IsDeleted), 0);
+            return AccessRepository.Instance.GetList<Access>(dic).ToList();
         }
 
         /// <summary>
         /// 按条件获取数据列表 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
-        /// <returns>List&lt;Logintoken&gt;.</returns>
+        /// <returns>List&lt;Access&gt;.</returns>
         public static DataTable GetDataTable(Dictionary<string, object> dicwhere, int page = 1, int limit = 10)
         {
-            if (dicwhere.Keys.Contains(nameof(Logintoken.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Access.IsDeleted)))
             {
-                dicwhere[nameof(Logintoken.IsDeleted)] = 0;
+                dicwhere[nameof(Access.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Logintoken.IsDeleted), 0);
+                dicwhere.Add(nameof(Access.IsDeleted), 0);
             }
-            return LogintokenRepository.Instance.GetDataTablePage<Logintoken>(limit, page, dicwhere);
+            return AccessRepository.Instance.GetDataTablePage<Access>(limit, page, dicwhere);
         }
 
         /// <summary> 
         /// 按条件获取数据列表 条件字典Key可以取固定值 selectfields orderby 框架将自动处理
         /// </summary>
         /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
-        /// <returns>List&lt;Logintoken&gt;.</returns>
-        public static List<Logintoken> GetList(Dictionary<string, object> dicwhere)
+        /// <returns>List&lt;Access&gt;.</returns>
+        public static List<Access> GetList(Dictionary<string, object> dicwhere)
         {
-            if (dicwhere.Keys.Contains(nameof(Logintoken.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Access.IsDeleted)))
             {
-                dicwhere[nameof(Logintoken.IsDeleted)] = 0;
+                dicwhere[nameof(Access.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Logintoken.IsDeleted), 0);
+                dicwhere.Add(nameof(Access.IsDeleted), 0);
             }
-            return LogintokenRepository.Instance.GetList<Logintoken>(dicwhere).ToList();
+            return AccessRepository.Instance.GetList<Access>(dicwhere).ToList();
         }
 
         /// <summary>
@@ -190,15 +143,15 @@ namespace CJJ.Blog.Service.Logic
             {
                 dicwhere = new Dictionary<string, object>();
             }
-            if (dicwhere.Keys.Contains(nameof(Logintoken.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Access.IsDeleted)))
             {
-                dicwhere[nameof(Logintoken.IsDeleted)] = 0;
+                dicwhere[nameof(Access.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Logintoken.IsDeleted), 0);
+                dicwhere.Add(nameof(Access.IsDeleted), 0);
             }
-            return LogintokenRepository.Instance.GetCount<Logintoken>(dicwhere);
+            return AccessRepository.Instance.GetCount<Access>(dicwhere);
         }
 
         /// <summary>
@@ -206,9 +159,9 @@ namespace CJJ.Blog.Service.Logic
         /// </summary>
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
-        public static Logintoken GetModelByKID(int kID)
+        public static Access GetModelByKID(int kID)
         {
-            var model = LogintokenRepository.Instance.GetEntityByKey<Logintoken>(kID);
+            var model = AccessRepository.Instance.GetEntityByKey<Access>(kID);
             if (model != null && model.IsDeleted == 0)
             {
                 return model;
@@ -224,17 +177,17 @@ namespace CJJ.Blog.Service.Logic
         /// </summary>
         /// <param name="kID">The k identifier.</param>
         /// <returns>System.Int32.</returns>
-        public static Logintoken GetModelByWhere(Dictionary<string, object> dicwhere)
+        public static Access GetModelByWhere(Dictionary<string, object> dicwhere)
         {
-            if (dicwhere.Keys.Contains(nameof(Logintoken.IsDeleted)))
+            if (dicwhere.Keys.Contains(nameof(Access.IsDeleted)))
             {
-                dicwhere[nameof(Logintoken.IsDeleted)] = 0;
+                dicwhere[nameof(Access.IsDeleted)] = 0;
             }
             else
             {
-                dicwhere.Add(nameof(Logintoken.IsDeleted), 0);
+                dicwhere.Add(nameof(Access.IsDeleted), 0);
             }
-            return LogintokenRepository.Instance.GetEntity<Logintoken>(dicwhere);
+            return AccessRepository.Instance.GetEntity<Access>(dicwhere);
         }
 
         /// <summary>
@@ -249,26 +202,26 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="page">当前页数</param>
         /// <param name="limit">当前页显示的数据条数</param>
         /// <returns></returns>
-        public static List<Logintoken> GetListByInSelect(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
+        public static List<Access> GetListByInSelect(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
         {
-            if (mainDicWhere.Keys.Contains(nameof(Logintoken.IsDeleted)))
+            if (mainDicWhere.Keys.Contains(nameof(Access.IsDeleted)))
             {
-                mainDicWhere[nameof(Logintoken.IsDeleted)] = 0;
+                mainDicWhere[nameof(Access.IsDeleted)] = 0;
             }
             else
             {
-                mainDicWhere.Add(nameof(Logintoken.IsDeleted), 0);
+                mainDicWhere.Add(nameof(Access.IsDeleted), 0);
             }
 
-            if (subDicWhere.Keys.Contains(nameof(Logintoken.IsDeleted)))
+            if (subDicWhere.Keys.Contains(nameof(Access.IsDeleted)))
             {
-                subDicWhere[nameof(Logintoken.IsDeleted)] = 0;
+                subDicWhere[nameof(Access.IsDeleted)] = 0;
             }
             else
             {
-                subDicWhere.Add(nameof(Logintoken.IsDeleted), 0);
+                subDicWhere.Add(nameof(Access.IsDeleted), 0);
             }
-            return LogintokenRepository.Instance.GetListByInSelect<Logintoken>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit).ToList();
+            return AccessRepository.Instance.GetListByInSelect<Access>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit).ToList();
         }
 
 
@@ -283,24 +236,24 @@ namespace CJJ.Blog.Service.Logic
         /// <returns></returns>
         public static int GetCountByInSelect(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere)
         {
-            if (mainDicWhere.Keys.Contains(nameof(Logintoken.IsDeleted)))
+            if (mainDicWhere.Keys.Contains(nameof(Access.IsDeleted)))
             {
-                mainDicWhere[nameof(Logintoken.IsDeleted)] = 0;
+                mainDicWhere[nameof(Access.IsDeleted)] = 0;
             }
             else
             {
-                mainDicWhere.Add(nameof(Logintoken.IsDeleted), 0);
+                mainDicWhere.Add(nameof(Access.IsDeleted), 0);
             }
 
-            if (subDicWhere.Keys.Contains(nameof(Logintoken.IsDeleted)))
+            if (subDicWhere.Keys.Contains(nameof(Access.IsDeleted)))
             {
-                subDicWhere[nameof(Logintoken.IsDeleted)] = 0;
+                subDicWhere[nameof(Access.IsDeleted)] = 0;
             }
             else
             {
-                subDicWhere.Add(nameof(Logintoken.IsDeleted), 0);
+                subDicWhere.Add(nameof(Access.IsDeleted), 0);
             }
-            return LogintokenRepository.Instance.GetCountByInSelect<Logintoken>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
+            return AccessRepository.Instance.GetCountByInSelect<Access>(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
         }
 
         /// <summary>
@@ -313,15 +266,15 @@ namespace CJJ.Blog.Service.Logic
         /// <returns></returns>
         public static DataTable GetDataByGroup(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10)
         {
-            if (dicWhere.Keys.Contains(nameof(Logintoken.IsDeleted)))
+            if (dicWhere.Keys.Contains(nameof(Access.IsDeleted)))
             {
-                dicWhere[nameof(Logintoken.IsDeleted)] = 0;
+                dicWhere[nameof(Access.IsDeleted)] = 0;
             }
             else
             {
-                dicWhere.Add(nameof(Logintoken.IsDeleted), 0);
+                dicWhere.Add(nameof(Access.IsDeleted), 0);
             }
-            return LogintokenRepository.Instance.GetDataByGroup<Logintoken>(groupByFields, dicWhere, page, limit);
+            return AccessRepository.Instance.GetDataByGroup<Access>(groupByFields, dicWhere, page, limit);
         }
 
         #endregion
@@ -336,11 +289,20 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result Add(Dictionary<string, object> dicwhere, OpertionUser opertionUser)
         {
-            var ret = LogintokenRepository.Instance.Add<Logintoken>(dicwhere);
+            try
+            {
+                var ret = AccessRepository.Instance.Add<Access>(dicwhere);
 
-            DbLog.WriteDbLog(nameof(Logintoken), "添加记录", ret, dicwhere.ToJsonString(), opertionUser, OperLogType.添加);
+                DbLog.WriteDbLog(nameof(Access), "添加记录", ret, dicwhere.ToJsonString(), opertionUser, OperLogType.添加);
 
-            return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
+                return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
+            }
+            catch (Exception ex)
+            {
+                LogHelper.WriteLog(ex, "AccessLogic/add");
+                return new Result() { IsSucceed = false, Message = "系统错误" + ex.Message };
+            }
+
         }
 
         /// <summary>
@@ -349,24 +311,19 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="entity">The entity.</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public static Result Add(Logintoken entity, OpertionUser opertionUser)
+        public static Result Add(Access entity, OpertionUser opertionUser)
         {
-            if (entity.Token.IsNull())
-            {
-                return new Result() { IsSucceed = false, Message = "Token不允许为空,请重试" };
-            }
-
             try
             {
-                var ret = new LogintokenRepository(entity.Token).Add<Logintoken>(entity);
+                var ret = AccessRepository.Instance.Add<Access>(entity);
 
-                DbLog.WriteDbLog(nameof(Logintoken), "添加记录", ret, entity.ToJsonString(), null, OperLogType.添加);
+                DbLog.WriteDbLog(nameof(Access), "添加记录", ret, entity.ToJsonString(), opertionUser, OperLogType.添加);
 
                 return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
             }
             catch (Exception ex)
             {
-                FastDev.Log.LogHelper.WriteLog(ex, "LogintokenLogic.Add Entity异常");
+                FastDev.Log.LogHelper.WriteLog(ex, "AccessLogic.Add Entity异常");
 
                 return new Result() { IsSucceed = false, Message = ex.Message };
             }
@@ -378,19 +335,19 @@ namespace CJJ.Blog.Service.Logic
         /// <param name="entity">The entity.</param>
 		/// <param name="opertionUser">操作者信息</param>
         /// <returns>Result.</returns>
-        public static Result Adds(List<Logintoken> entity, OpertionUser opertionUser)
+        public static Result Adds(List<Access> entity, OpertionUser opertionUser)
         {
             try
             {
-                var ret = LogintokenRepository.Instance.Adds<Logintoken>(entity);
+                var ret = AccessRepository.Instance.Adds<Access>(entity);
 
-                DbLog.WriteDbLog<List<Logintoken>>(nameof(Logintoken), "添加记录", ret, entity, opertionUser, OperLogType.添加);
+                DbLog.WriteDbLog<List<Access>>(nameof(Access), "添加记录", ret, entity, opertionUser, OperLogType.添加);
 
                 return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
             }
             catch (Exception ex)
             {
-                FastDev.Log.LogHelper.WriteLog(ex, "LogintokenLogic.Add Entity异常");
+                FastDev.Log.LogHelper.WriteLog(ex, "AccessLogic.Add Entity异常");
 
                 return new Result() { IsSucceed = false, Message = ex.Message };
             }
@@ -407,15 +364,15 @@ namespace CJJ.Blog.Service.Logic
         {
             try
             {
-                var ret = LogintokenRepository.Instance.Adds<Logintoken>(diclst);
+                var ret = AccessRepository.Instance.Adds<Access>(diclst);
 
-                DbLog.WriteDbLog<List<Dictionary<string, object>>>(nameof(Logintoken), "添加记录", ret, diclst, opertionUser, OperLogType.添加);
+                DbLog.WriteDbLog<List<Dictionary<string, object>>>(nameof(Access), "添加记录", ret, diclst, opertionUser, OperLogType.添加);
 
                 return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
             }
             catch (Exception ex)
             {
-                FastDev.Log.LogHelper.WriteLog(ex, "LogintokenLogic.Adds diclst异常");
+                FastDev.Log.LogHelper.WriteLog(ex, "AccessLogic.Adds diclst异常");
 
                 return new Result() { IsSucceed = false, Message = ex.Message };
             }
@@ -433,9 +390,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result Update(Dictionary<string, object> dicwhere, int kID, OpertionUser opertionUser)
         {
-            var ret = LogintokenRepository.Instance.UpdateByKey<Logintoken>(dicwhere, kID);
+            var ret = AccessRepository.Instance.UpdateByKey<Access>(dicwhere, kID);
 
-            DbLog.WriteDbLog(nameof(Logintoken), "修改记录", kID, dicwhere, OperLogType.编辑, opertionUser);
+            DbLog.WriteDbLog(nameof(Access), "修改记录", kID, dicwhere, OperLogType.编辑, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }
@@ -449,9 +406,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns>Result.</returns>
         public static Result UpdateByWhere(Dictionary<string, object> valuedata, Dictionary<string, object> dicwhere, OpertionUser opertionUser)
         {
-            var ret = LogintokenRepository.Instance.Update<Logintoken>(valuedata, dicwhere);
+            var ret = AccessRepository.Instance.Update<Access>(valuedata, dicwhere);
 
-            DbLog.WriteDbLog(nameof(Logintoken), "批量修改记录", valuedata.ToJsonString(), valuedata, OperLogType.编辑, opertionUser);
+            DbLog.WriteDbLog(nameof(Access), "批量修改记录", valuedata.ToJsonString(), valuedata, OperLogType.编辑, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }
@@ -466,9 +423,9 @@ namespace CJJ.Blog.Service.Logic
         /// <returns></returns>
         public static Result UpdateNums(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
         {
-            var ret = LogintokenRepository.Instance.UpdateNums<Logintoken>(fields, addNums, whereKey);
+            var ret = AccessRepository.Instance.UpdateNums<Access>(fields, addNums, whereKey);
 
-            DbLog.WriteDbLog(nameof(Logintoken), "修改记录", whereKey.ToJsonString(), whereKey, OperLogType.编辑, opertionUser);
+            DbLog.WriteDbLog(nameof(Access), "修改记录", whereKey.ToJsonString(), whereKey, OperLogType.编辑, opertionUser);
 
             return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
         }
@@ -485,20 +442,20 @@ namespace CJJ.Blog.Service.Logic
         public static Result Delete(string kid, OpertionUser opertionUser)
         {
             var deldic = new Dictionary<string, object>();
-            deldic.Add(nameof(Logintoken.IsDeleted), 1);
+            deldic.Add(nameof(Access.IsDeleted), 1);
 
             var keydic = new Dictionary<string, object>();
             if (kid.IndexOf(",") > -1)
             {
-                keydic.Add(nameof(Logintoken.KID) + "|i", kid);
+                keydic.Add(nameof(Access.KID) + "|i", kid);
             }
             else
             {
-                keydic.Add(nameof(Logintoken.KID), kid);
+                keydic.Add(nameof(Access.KID), kid);
             }
-            var ret = LogintokenRepository.Instance.Update<Logintoken>(deldic, keydic);
+            var ret = AccessRepository.Instance.Update<Access>(deldic, keydic);
 
-            DbLog.WriteDbLog(nameof(Logintoken), "删除记录", kid, null, OperLogType.删除, opertionUser);
+            DbLog.WriteDbLog(nameof(Access), "删除记录", kid, null, OperLogType.删除, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }
@@ -512,11 +469,11 @@ namespace CJJ.Blog.Service.Logic
         public static Result DeleteByWhere(Dictionary<string, object> dicwhere, OpertionUser opertionUser)
         {
             var deldic = new Dictionary<string, object>();
-            deldic.Add(nameof(Logintoken.IsDeleted), 1);
+            deldic.Add(nameof(Access.IsDeleted), 1);
 
-            var ret = LogintokenRepository.Instance.Update<Logintoken>(deldic, dicwhere);
+            var ret = AccessRepository.Instance.Update<Access>(deldic, dicwhere);
 
-            DbLog.WriteDbLog(nameof(Logintoken), "批量删除记录", dicwhere.ToJsonString(), dicwhere, OperLogType.删除, opertionUser);
+            DbLog.WriteDbLog(nameof(Access), "批量删除记录", dicwhere.ToJsonString(), dicwhere, OperLogType.删除, opertionUser);
 
             return new Result() { IsSucceed = ret > 0 };
         }

@@ -15,8 +15,6 @@ using FastDev.DbBase;
 using FastDev.DBFactory;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using FastDev.Common.Code;
-using CJJ.Blog.Service.Model.Data;
 
 namespace CJJ.Blog.Service.Repository
 {
@@ -24,60 +22,37 @@ namespace CJJ.Blog.Service.Repository
     /// ArticlePraise 仓储操作类
     /// </summary>
     /// <seealso cref="FastDev.DbBase.BaseQuery" />
-	public class ArticlePraiseRepository : BaseQuery
+	public class AccessRepository : BaseQuery
     {
         /// <summary>
         /// 单利实体操作对象
         /// </summary>
-        public static ArticlePraiseRepository Instance = new ArticlePraiseRepository();
+        public static AccessRepository Instance = new AccessRepository();
 
         /// <summary>
         /// 构造函数
         /// </summary>
-        private ArticlePraiseRepository()
+        private AccessRepository()
         {
             this.IsAddIntoCache = true;
-            this.TableName = "ArticlePraise";
+            this.TableName = "Access";
             this.OrderbyFields = "KID DESC";
             this.KeyField = "KID";
         }
 
-        /// <summary>
+		/// <summary>
         /// 带事务执行的构造函数
         /// </summary>
         /// <param name="dbconn">The dbconn.</param>
-        public ArticlePraiseRepository(DBOperator dbConn)
+        public AccessRepository(DBOperator dbConn)
         {
             this.IsAddIntoCache = false;
-            this.TableName = "ArticlePraise";
+            this.TableName = "Access";
             this.OrderbyFields = "KID DESC";
             this.KeyField = "KID";
             base.DbConn = dbConn;
         }
-        /// <summary>
-        /// 同步点赞数据
-        /// </summary>
-        /// <param name="blognum">The blognum.</param>
-        /// <param name="memid">The memid.</param>
-        /// <param name="isadd">if set to <c>true</c> [isadd].</param>
-        /// <returns></returns>
-        public static void UpdateBloginfo(string blognum)
-        {
-            try
-            {
-                using (DBHelper db = new DBHelper())
-                {
-                    string selsql = $"update bloginfo a ,(SELECT COUNT(1) as tcount,t.blognum FROM articlepraise t WHERE t.BlogNum='{blognum}' and t.IsDeleted=0 ) b SET a.Start = b.tcount where and a.start <> b.tcount  a.BlogNum = '{blognum}' and a.IsDeleted = 0";
-                    var cun = db.ExecuteNonQuery(selsql);
-                }
-            }
-            catch (Exception ex)
-            {
 
-            }
-
-        }
-
-        /*BC47A26EB9A59406057DDDD62D0898F4*/
+		/*BC47A26EB9A59406057DDDD62D0898F4*/
     }
 }

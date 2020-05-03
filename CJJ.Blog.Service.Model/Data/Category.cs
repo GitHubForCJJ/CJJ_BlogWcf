@@ -127,6 +127,12 @@ namespace CJJ.Blog.Service.Models.Data
 		/// </summary>
 		[DataMember]
 		public int Description { get; set;}
+        /// <summary>
+        /// 排序
+        /// </summary>
+        [DataMember]
+        public int Sort { get; set; }
+
 
 
         /*BC47A26EB9A59406057DDDD62D0898F4*/

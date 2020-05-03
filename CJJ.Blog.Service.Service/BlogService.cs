@@ -4062,6 +4062,268 @@ namespace CJJ.Blog.Service.Service
 
         #endregion
 
+        #region Access操作
+
+        #region 查询
+
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="page">页数</param>
+        /// <param name="limit">当前页条数</param>
+        /// <returns>System.Collections.Generic.List&lt;FastDev.Service.Models.Data.Sys_menu&gt;.</returns>
+        public List<Access> GetListPage_Access(int page = 1, int limit = 10, Dictionary<string, object> dicwhere = null)
+        {
+            return AccessLogic.GetListPage(page, limit, dicwhere).ToList();
+        }
+
+        /// <summary>
+        /// 获取Json格式的数据
+        /// </summary>
+        /// <param name="page">当前页码</param>
+        /// <param name="limit">当前也显示条数</param>
+        /// <param name="orderby">排序字段</param>
+        /// <param name="dicwhere">查询条件</param>
+        /// <returns></returns>
+        public FastJsonResult<List<Access>> GetJsonListPage_Access(int page = 1, int limit = 10, string orderby = "", Dictionary<string, object> dicwhere = null)
+        {
+            return AccessLogic.GetJsonListPage(page, limit, orderby, dicwhere);
+        }
+
+        /// <summary>
+        /// 不分页获取所有数据
+        /// </summary>
+        /// <returns>List&lt;Sys_role&gt;.</returns>
+        public List<Access> GetAllList_Access()
+        {
+            return AccessLogic.GetAllList();
+        }
+
+        /// <summary>
+        /// 按条件获取数据列表
+        /// </summary>
+        /// <param name="dicwhere">查询条件 字段名可以增加|b |s |l 等作为搜索条件</param>
+        /// <returns>List&lt;Sys_role&gt;.</returns>
+        public List<Access> GetList_Access(Dictionary<string, object> dicwhere)
+        {
+            return AccessLogic.GetList(dicwhere);
+        }
+
+        /// <summary>
+        /// 获取数据总条数
+        /// </summary>
+        /// <returns>System.Int32.</returns>
+        public int GetCount_Access(Dictionary<string, object> dicwhere = null)
+        {
+            return AccessLogic.GetCount(dicwhere);
+        }
+
+        /// <summary>
+        /// 获取Model
+        /// </summary>
+        /// <param name="kID">The k identifier.</param>
+        /// <returns>System.Int32.</returns>
+        public Access GetModelByKID_Access(int kID)
+        {
+            return AccessLogic.GetModelByKID(kID);
+        }
+
+        /// <summary>
+        /// 获取Model
+        /// </summary>
+        /// <param name="kID">The k identifier.</param>
+        /// <returns>System.Int32.</returns>
+        public Access GetModelByWhere_Access(Dictionary<string, object> dicwhere)
+        {
+            return AccessLogic.GetModelByWhere(dicwhere);
+        }
+
+
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <param name="dicwhere">条件查询</param>
+        /// <returns></returns>
+        public DataTable GetDataTable_Access(Dictionary<string, object> dicwhere, int page = 1, int limit = 10)
+        {
+            return AccessLogic.GetDataTable(dicwhere, page, limit);
+        }
+
+        /// <summary>
+        /// 根据In子查询查询数据
+        /// </summary>
+        /// <param name="subTableName">子表表名</param>
+        /// <param name="mainTableFields">主表 in 的字段名</param>
+        /// <param name="subTableFields">子表查询字段</param>
+        /// <param name="mainDicWhere">主表的Where条件</param>
+        /// <param name="subDicWhere">子表的Where条件</param>
+        /// <param name="page">当前页数</param>
+        /// <param name="limit">当前页显示的数据条数</param>
+        /// <returns></returns>
+        public List<Access> GetListByInSelect_Access(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere, int page = 1, int limit = 10)
+        {
+            return AccessLogic.GetListByInSelect(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere, page, limit);
+        }
+
+        /// <summary>
+        /// 根据In子查询查询数据
+        /// </summary>
+        /// <param name="subTableName">子表表名</param>
+        /// <param name="mainTableFields">主表 in 的字段名</param>
+        /// <param name="subTableFields">子表查询字段</param>
+        /// <param name="mainDicWhere">主表的Where条件</param>
+        /// <param name="subDicWhere">子表的Where条件</param>
+        /// <returns></returns>
+        public int GetCountByInSelect_Access(string subTableName, string mainTableFields, string subTableFields, Dictionary<string, object> mainDicWhere, Dictionary<string, object> subDicWhere)
+        {
+            return AccessLogic.GetCountByInSelect(subTableName, mainTableFields, subTableFields, mainDicWhere, subDicWhere);
+        }
+
+        /// <summary>
+        /// 根据Where条件Group查询数据,返回的列只比对Groupby的字段多一列,coun(1) As GroupCnt 目前只支持MySql
+        /// </summary>
+        /// <param name="groupByFields">分组字段</param>
+        /// <param name="dicWhere">查询条件</param>
+        /// <param name="page">当前页码</param>
+        /// <param name="limit">当前条数</param>
+        /// <returns></returns>
+        public DataTable GetDataByGroup_Access(List<string> groupByFields, Dictionary<string, object> dicWhere, int page = 1, int limit = 10)
+        {
+            return AccessLogic.GetDataByGroup(groupByFields, dicWhere, page, limit);
+        }
+
+        #endregion
+
+        #region 添加
+
+        /// <summary>
+        /// 添加多条数据 根据字典添加
+        /// </summary>
+        /// <param name="dicdata">添加的字典实体</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result Add_Access(Dictionary<string, object> dicdata, OpertionUser opertionUser)
+        {
+            return AccessLogic.Add(dicdata, opertionUser);
+        }
+
+        /// <summary>
+        /// 添加多条数据 根据字典添加
+        /// </summary>
+        /// <param name="dicdata">添加的字典实体</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns></returns>
+        public Result Adds_Access(List<Dictionary<string, object>> dicdata, OpertionUser opertionUser)
+        {
+            return AccessLogic.Adds(dicdata, opertionUser);
+        }
+
+        /// <summary>
+        /// 添加实体
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+		/// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result AddByEntity_Access(Access entity, OpertionUser opertionUser)
+        {
+            return AccessLogic.Add(entity, opertionUser);
+        }
+
+        /// <summary>
+        /// 批量添加实体
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+		/// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result AddByEntitys_Access(List<Access> entitys, OpertionUser opertionUser)
+        {
+            return AccessLogic.Adds(entitys, opertionUser);
+        }
+        #endregion
+
+        #region 修改
+
+        /// <summary>
+        /// Edits the specified dicdata.
+        /// </summary>
+        /// <param name="dicdata">修改条件</param>
+        /// <param name="kID">当前数据主键KID</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result Update_Access(Dictionary<string, object> dicdata, int kID, OpertionUser opertionUser)
+        {
+            return AccessLogic.Update(dicdata, kID, opertionUser);
+        }
+
+        /// <summary>
+        /// Edits the specified dicdata.
+        /// </summary>
+        /// <param name="valuedata">修改值</param>
+        /// <param name="keydata">编辑的Where条件</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result UpdateByWhere_Access(Dictionary<string, object> valuedata, Dictionary<string, object> keydata, OpertionUser opertionUser)
+        {
+            return AccessLogic.UpdateByWhere(valuedata, keydata, opertionUser);
+        }
+
+        /// <summary>
+        /// 修改次数
+        /// </summary>
+        /// <param name="fields">需要修改的字段</param>
+        /// <param name="addNums">次数 负数表示减少 正数表示增加</param>
+        /// <param name="whereKey">字典条件</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns></returns>
+        public Result UpdateNums_Access(string fields, int addNums, Dictionary<string, object> whereKey, OpertionUser opertionUser)
+        {
+            return AccessLogic.UpdateNums(fields, addNums, whereKey, opertionUser);
+        }
+
+        #endregion
+
+        #region 删除
+        /// <summary>
+        /// 删除数据,逗号连接多条
+        /// </summary>
+        /// <param name="kid">主键ID,多个逗号连接</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result Delete_Access(string kid, OpertionUser opertionUser)
+        {
+            return AccessLogic.Delete(kid, opertionUser);
+        }
+
+        /// <summary>
+        /// Deletes the specified kid.
+        /// </summary>
+        /// <param name="keydata">Where条件</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>Result.</returns>
+        public Result DeleteByWhere_Access(Dictionary<string, object> keydata, OpertionUser opertionUser)
+        {
+            return AccessLogic.DeleteByWhere(keydata, opertionUser);
+        }
+        #endregion
+
+        #region 数据导出
+
+        /// <summary>
+        /// Exports the excel file_ product.
+        /// </summary>
+        /// <param name="keydata">查询条件</param>
+        /// <param name="fileFullName">文件名全路径</param>
+        /// <param name="opertionUser">操作者信息</param>
+        /// <returns>FastDev.Common.Code.Result.</returns>
+        public Result ExportExcelFile_Access(Dictionary<string, object> keydata, string fileFullName, OpertionUser opertionUser)
+        {
+            return AccessLogic.ExportExcelFile(keydata, fileFullName, opertionUser);
+        }
+
+        #endregion
+
+        #endregion
+
         /*BC47A26EB9A59406057DDDD62D0898F4*/
 
 
