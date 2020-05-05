@@ -67,7 +67,7 @@ namespace CJJ.Blog.Service.Repository
             {
                 using (DBHelper db = new DBHelper())
                 {
-                    string selsql = $"update bloginfo a ,(SELECT COUNT(1) as tcount,t.blognum FROM articlepraise t WHERE t.BlogNum='{blognum}' and t.IsDeleted=0 ) b SET a.Start = b.tcount where and a.start <> b.tcount  a.BlogNum = '{blognum}' and a.IsDeleted = 0";
+                    string selsql = $"update bloginfo a ,(SELECT COUNT(1) as tcount,t.blognum FROM articlepraise t WHERE t.BlogNum='{blognum}' and t.IsDeleted=0 ) b SET a.Start = b.tcount where  a.start <> b.tcount and a.BlogNum = '{blognum}' and a.IsDeleted = 0";
                     var cun = db.ExecuteNonQuery(selsql);
                 }
             }

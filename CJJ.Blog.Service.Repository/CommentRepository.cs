@@ -52,7 +52,29 @@ namespace CJJ.Blog.Service.Repository
             this.KeyField = "KID";
             base.DbConn = dbConn;
         }
+        /// <summary>
+        /// 同步评论数据
+        /// </summary>
+        /// <param name="blognum">The blognum.</param>
+        /// <param name="memid">The memid.</param>
+        /// <param name="isadd">if set to <c>true</c> [isadd].</param>
+        /// <returns></returns>
+        public static void UpdateBloginfo(string blognum)
+        {
+            try
+            {
+                using (DBHelper db = new DBHelper())
+                {
+                    string selsql = $"update bloginfo a ,(select count(*)as tcount,BlogNum from `comment` c where c.ToMemberid='' and c.IsDeleted=0 and c.BlogNum='{blognum}' ) b set a.Comments=b.tcount WHERE a.BlogNum=b.BlogNum and b.BlogNum = '{blognum}' and a.Comments<> b.tcount and a.IsDeleted = 0";
+                    var cun = db.ExecuteNonQuery(selsql);
+                }
+            }
+            catch (Exception ex)
+            {
 
-		/*BC47A26EB9A59406057DDDD62D0898F4*/
+            }
+
+        }
+        /*BC47A26EB9A59406057DDDD62D0898F4*/
     }
 }

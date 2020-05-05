@@ -319,6 +319,13 @@ namespace CJJ.Blog.Service.Logic
             var ret = CommentRepository.Instance.Add<Comment>(dicwhere);
 
             DbLog.WriteDbLog(nameof(Comment), "添加记录", ret, dicwhere.ToJsonString(), opertionUser, OperLogType.添加);
+            Task.Run(() =>
+            {
+                if (ret > 0)
+                {
+                    CommentRepository.UpdateBloginfo(dicwhere[nameof(Comment.BlogNum)].ToString());
+                }
+            });
 
             return new Result() { IsSucceed = ret > 0, Message = ret.ToString() };
         }
