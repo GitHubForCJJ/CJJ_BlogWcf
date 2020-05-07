@@ -83,7 +83,27 @@ namespace CJJ.Blog.Service.Logic
             {
                 dicwhere.Add(nameof(ArticlePraise.IsDeleted), 0);
             }
-            return ArticlePraiseRepository.Instance.GetJsonListPage<ArticlePraise>(limit, page, dicwhere, orderby);
+            var ret = ArticlePraiseRepository.Instance.GetJsonListPage<ArticlePraise>(limit, page, dicwhere, orderby);
+            if (ret != null && ret.code.Toint() == 0 && ret.data.Count > 0)
+            {
+                string memberids = string.Join(",", ret.data.Select(x => x.MemberId).Distinct());
+                string blognums = string.Join(",", ret.data.Select(x => x.BlogNum).Distinct());
+                List<Member> members = MemberLogic.GetList(new Dictionary<string, object>()
+                {
+                    {$"{nameof(Member.KID)}|i",memberids },
+                });
+                List<Bloginfo> blogs = BloginfoLogic.GetList(new Dictionary<string, object>()
+                {
+                  {$"{nameof(Bloginfo.BlogNum)}|i",blognums },
+                });
+                ret.data.ForEach((item) =>
+                {
+                    item.Extend4 = members.FirstOrDefault(x => x.KID == item.MemberId.Toint())?.UserName;
+                    item.Extend5 = members.FirstOrDefault(x => x.KID == item.MemberId.Toint())?.UserAccount;
+                    item.Extend6 = blogs.FirstOrDefault(x => x.BlogNum == item.BlogNum)?.Title;
+                });
+            }
+            return ret;
         }
 
         /// <summary>

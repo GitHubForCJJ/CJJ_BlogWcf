@@ -35,9 +35,15 @@ namespace CJJ.Blog.Service.Model.View
         [DataMember]
         public UserAuthorMenu UserAuthorMenu { get; set; }
         /// <summary>
-        /// 是否加盟
+        /// 是否加密
         /// </summary>
         [DataMember]
         public bool DataIsEncrypt { get; set; }
+        /// <summary>
+        /// 是否是管理员
+        /// </summary>
+        [DataMember]
+        public bool IsAdmin { get; set; }
+
     }
 }

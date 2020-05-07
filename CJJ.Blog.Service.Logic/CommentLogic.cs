@@ -83,7 +83,20 @@ namespace CJJ.Blog.Service.Logic
             {
                 dicwhere.Add(nameof(Comment.IsDeleted), 0);
             }
-            return CommentRepository.Instance.GetJsonListPage<Comment>(limit, page, dicwhere, orderby);
+            var ret= CommentRepository.Instance.GetJsonListPage<Comment>(limit, page, dicwhere, orderby);
+            if (ret != null && ret.code.Toint() == 0 && ret.data.Count > 0)
+            {
+                string blognums = string.Join(",", ret.data.Select(x => x.BlogNum).Distinct());
+                List<Bloginfo> blogs = BloginfoLogic.GetList(new Dictionary<string, object>()
+                {
+                  {$"{nameof(Bloginfo.BlogNum)}|i",blognums },
+                });
+                ret.data.ForEach((item) =>
+                {
+                    item.Extend4 = blogs.FirstOrDefault(x => x.BlogNum == item.BlogNum)?.Title;
+                });
+            }
+            return ret;
         }
 
         /// <summary>

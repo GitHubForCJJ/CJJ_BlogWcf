@@ -78,6 +78,7 @@ namespace CJJ.Blog.Service.Logic
                     ret.TokenExpiration = extime.ToString("yyyy-MM-dd hh:MM:ss");
                     ret.UserAuthorMenu = SysmenuLogic.GetMenuByUserID(user.KID);
                     ret.Message = "认证成功";
+                    ret.IsAdmin = user.IsAdmin > 0;
                 }
             }
             else
@@ -520,14 +521,14 @@ namespace CJJ.Blog.Service.Logic
             if (!string.IsNullOrEmpty(roleids))
             {
                 var time = DateTime.Now;
-                foreach(var item in roleids.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var item in roleids.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     list.Add(new Sysuserrole
                     {
-                        CreateTime= time,
+                        CreateTime = time,
                         UpdateTime = time,
-                        CreateUserId ="1",
-                        CreateUserName="system",
+                        CreateUserId = "1",
+                        CreateUserName = "system",
                         Userid = empid,
                         Roleid = item,
                         UserType = 0
